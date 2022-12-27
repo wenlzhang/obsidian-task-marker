@@ -139,7 +139,7 @@ export class TaskCollector {
 
         if (this.settings.incompleteTaskValues.indexOf(" ") < 0) {
             this.settings.incompleteTaskValues =
-                " " + this.settings.incompleteTaskValues;
+                " " + this.settings.incompleteTaskValues; // Not working if removing space
         }
 
         const rightClickTaskMenu =
