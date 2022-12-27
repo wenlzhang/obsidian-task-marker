@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-task-collector",
-	"name": "Task Collector (TC)",
-	"version": "0.7.8",
+	"id": "obsidian-task-marker",
+	"name": "Task Marker",
+	"version": "0.0.1",
 	"minAppVersion": "0.13.10",
-	"description": "Manage completed tasks within a document",
-	"author": "ebullient",
-	"authorUrl": "https://github.com/ebullient",
+	"description": "Manage task status",
+	"author": "wenlzhang",
+	"authorUrl": "https://github.com/wenlzhang",
 	"isDesktopOnly": false
 }

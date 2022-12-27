@@ -1,8 +1,8 @@
 {
-  "name": "obsidian-task-collector",
-  "version": "0.8.1",
+  "name": "obsidian-task-marker",
+  "version": "0.0.1",
   "private": true,
-  "description": "Manage completed tasks within a document in Obsidian (https://obsidian.md)",
+  "description": "Manage task status in Obsidian (https://obsidian.md)",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
@@ -20,8 +20,8 @@
     "obsidian-plugin",
     "obsidian-md-plugin"
   ],
-  "author": "ebullient",
-  "repository": "github.com:ebullient/obsidian-task-collector",
+  "author": "wenlzhang",
+  "repository": "github.com:wenlzhang/obsidian-task-marker",
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@types/jest": "^27.0.2",
