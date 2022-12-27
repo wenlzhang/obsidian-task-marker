@@ -226,13 +226,7 @@ For the current document:
 
 ## Credits
 
-- [Completed Area Plugin](https://github.com/DahaWong/obsidian-completed) -- general premise of moving completed tasks to a different area within the document (delimited by a heading).
-- [JeppeKlitgaard/ObsidianTweaks](https://github.com/JeppeKlitgaard/ObsidianTweaks/) -- simple/clear event triggers
-- [ivan-lednev/obsidian-task-archiver](https://github.com/ivan-lednev/obsidian-task-archiver) -- Treatment of sub-elements
-- [Darakah/obsidian-timelines](https://github.com/Darakah/obsidian-timelines) -- Editor select/replace
-- [Customizable Sidebar](https://github.com/phibr0/obsidian-customizable-sidebar) -- GH Action
-- [Dataview](https://github.com/blacksmithgu/obsidian-dataview) -- Jest/Testing
-- [Bootstrap Icons](https://icons.getbootstrap.com/)
+- [ebullient/obsidian-task-collector: Plugin for https://obsidian.md/ that assists with managing tasks within a document.](https://github.com/ebullient/obsidian-task-collector) -- Most code directly comes from this plugin.
 
 
-<a href="https://www.buymeacoffee.com/ebullient" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<!-- <a href="https://www.buymeacoffee.com/ebullient" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a> -->
