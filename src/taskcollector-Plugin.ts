@@ -17,13 +17,13 @@ import { API } from "./@types/api";
 import { TaskCollectorApi } from "./taskcollector-Api";
 
 enum Icons {
-    COMPLETE = "tc-complete-item",
-    CANCEL = "tc-cancel-item",
-    RESET = "tc-reset-item",
-    MARK = "tc-mark-item",
-    COMPLETE_ALL = "tc-complete-all-items",
-    CLEAR = "tc-clear-all-items",
-    MOVE = "tc-move-all-checked-items",
+    COMPLETE = "tm-complete-item",
+    CANCEL = "tm-cancel-item",
+    RESET = "tm-reset-item",
+    MARK = "tm-mark-item",
+    COMPLETE_ALL = "tm-complete-all-items",
+    CLEAR = "tm-clear-all-items",
+    MOVE = "tm-move-all-checked-items",
 }
 
 export class TaskCollectorPlugin extends Plugin {

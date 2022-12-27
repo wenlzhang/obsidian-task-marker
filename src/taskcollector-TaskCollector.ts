@@ -255,16 +255,17 @@ export class TaskCollector {
             if (this.isCompletedTaskLine(lineText)) {
                 if (completeMark) {
                     console.log("Task Marker: task already completed: %s", lineText);
-                } else {
-                    lineText = this.resetTaskLine(lineText, mark); // Only update the mark
+                } else if (mark === " ") { // Reset tasks
+                    lineText = this.resetTaskLine(lineText, mark);
                 }
-            } else if (this.isIncompleteTaskLine(lineText)) {
+            } else if (this.isIncompleteTaskLine(lineText)) { // Including marked tasks
                 if (completeMark) {
                     lineText = this.settings.appendRemoveAllTasks
                         ? this.resetTaskLine(lineText, mark)
                         : this.completeTaskLine(lineText, mark);
-                } else {
-                    // lineText = this.resetTaskLine(lineText, mark); // Original code
+                } else if (mark === " ") { // Reset tasks
+                    lineText = this.resetTaskLine(lineText, mark); // Original code
+                } else { // Mark tasks
                     let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
                     if (this.initSettings.removeRegExp) {
                         marked = marked.replace(this.initSettings.removeRegExp, "");
@@ -287,29 +288,8 @@ export class TaskCollector {
                     }
                     lineText = marked;
                 }
-            } else if (mark === " ") {
-                // lineText = this.resetTaskLine(lineText, mark); // Original code
-                let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
-                    if (this.initSettings.removeRegExp) {
-                        marked = marked.replace(this.initSettings.removeRegExp, "");
-                    }
-                    if (this.settings.appendTextFormatMark) {
-                        const strictLineEnding = lineText.endsWith("  ");
-                        let blockid = "";
-                        const match = this.blockRef.exec(marked);
-                        if (match && match[2]) {
-                            marked = match[1];
-                            blockid = match[2];
-                        }
-                        if (!marked.endsWith(" ")) {
-                            marked += " ";
-                        }
-                        marked += moment().format(this.settings.appendTextFormatMark) + blockid;
-                        if (strictLineEnding) {
-                            marked += "  ";
-                        }
-                    }
-                    lineText = marked;
+            } else if (mark === " ") { // Reset tasks
+                lineText = this.resetTaskLine(lineText, mark); // Original code
             } else {
                 console.log(
                     "Task Marker: unknown mark (%s), leaving unchanged: %s",
@@ -351,6 +331,7 @@ export class TaskCollector {
         if (this.settings.appendRemoveAllTasks && mark !== " ") {
             // clear previous appended text
             lineText = this.completeTaskLine(lineText, mark);
+            // lineText = this.markTaskLine(lineText, mark);
         }
         if (strictLineEnding) {
             lineText += "  ";
