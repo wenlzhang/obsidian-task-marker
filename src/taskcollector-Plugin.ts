@@ -64,10 +64,10 @@ export class TaskCollectorPlugin extends Plugin {
             Icons.CLEAR,
             '<svg class="bi bi-square-fill" fill="currentColor" version="1.1" width="100px" height="100px" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="m2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-12a2 2 0 00-2-2h-12zm1.5098 2.041h1.5a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-1.5 1.5h-1.5a1.5 1.5 0 01-1.5-1.5v-1.5a1.5 1.5 0 011.5-1.5zm4.3945 1.2207h5.6895a.40645.5 0 01.40625.5v1a.40645.5 0 01-.40625.5h-5.6895a.40645.5 0 01-.40625-.5v-1a.40645.5 0 01.40625-.5zm-4.4023 6.2656h1.5a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-1.5 1.5h-1.5a1.5 1.5 0 01-1.5-1.5v-1.5a1.5 1.5 0 011.5-1.5zm4.4023 1.2656h5.6895a.40645.5 0 01.40625.5v1a.40645.5 0 01-.40625.5h-5.6895a.40645.5 0 01-.40625-.5v-1a.40645.5 0 01.40625-.5z"/></svg>'
         );
-        addIcon(
-            Icons.MOVE,
-            '<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 14 14">  <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/></svg>'
-        );
+        // addIcon(
+        //     Icons.MOVE,
+        //     '<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 14 14">  <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/></svg>'
+        // );
 
         const completeTaskCommand: Command = {
             id: "task-collector-mark-done",
@@ -138,14 +138,14 @@ export class TaskCollectorPlugin extends Plugin {
             },
         };
 
-        const moveTaskCommand: Command = {
-            id: "task-collector-move-completed-tasks",
-            name: "Move all completed tasks to configured heading",
-            icon: Icons.MOVE,
-            callback: async () => {
-                this.moveAllTasks();
-            },
-        };
+        // const moveTaskCommand: Command = {
+        //     id: "task-collector-move-completed-tasks",
+        //     name: "Move all completed tasks to configured heading",
+        //     icon: Icons.MOVE,
+        //     callback: async () => {
+        //         this.moveAllTasks();
+        //     },
+        // };
 
         this.addCommand(completeTaskCommand);
         if (this.taskCollector.settings.supportCanceledTasks) {
@@ -153,7 +153,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
         this.addCommand(markTaskCommand);
         this.addCommand(resetTaskCommand);
-        this.addCommand(moveTaskCommand);
+        // this.addCommand(moveTaskCommand);
         this.addCommand(completeAllTasksCommand);
         this.addCommand(clearAllTasksCommand);
         this.registerHandlers();
@@ -231,16 +231,16 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // If right-click move completed items is enabled:
-        if (this.taskCollector.settings.rightClickMove) {
-            menu.addItem((item) =>
-                item
-                    .setTitle("(TC) Move completed tasks")
-                    .setIcon(Icons.MOVE)
-                    .onClick(async () => {
-                        this.moveAllTasks();
-                    })
-            );
-        }
+        // if (this.taskCollector.settings.rightClickMove) {
+        //     menu.addItem((item) =>
+        //         item
+        //             .setTitle("(TC) Move completed tasks")
+        //             .setIcon(Icons.MOVE)
+        //             .onClick(async () => {
+        //                 this.moveAllTasks();
+        //             })
+        //     );
+        // }
 
         // If right-click toggle-all menu items are enabled:
         if (this.taskCollector.settings.rightClickToggleAll) {
@@ -274,12 +274,12 @@ export class TaskCollectorPlugin extends Plugin {
         this.app.vault.modify(activeFile, result);
     }
 
-    async moveAllTasks(): Promise<void> {
-        const activeFile = this.app.workspace.getActiveFile();
-        const source = await this.app.vault.read(activeFile);
-        const result = this.taskCollector.moveCompletedTasksInFile(source);
-        this.app.vault.modify(activeFile, result);
-    }
+    // async moveAllTasks(): Promise<void> {
+    //     const activeFile = this.app.workspace.getActiveFile();
+    //     const source = await this.app.vault.read(activeFile);
+    //     const result = this.taskCollector.moveCompletedTasksInFile(source);
+    //     this.app.vault.modify(activeFile, result);
+    // }
 
     async completeAllTasks(): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();

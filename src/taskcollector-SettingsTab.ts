@@ -23,7 +23,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
     display(): void {
         this.containerEl.empty();
 
-        this.containerEl.createEl("h1", { text: "Task Collector" });
+        this.containerEl.createEl("h1", { text: "Task Marker" });
 
         const tempSettings: TaskCollectorSettings = Object.assign(
             this.taskCollector.settings
@@ -169,38 +169,38 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
 
-        this.containerEl.createEl("h2", { text: "Moving completed tasks" });
+        // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
-        new Setting(this.containerEl)
-            .setName("Completed area header")
-            .setDesc(
-                `Completed (or canceled) items will be inserted under the specified header (most recent at the top). When scanning the document for completed/canceled tasks, the contents from this configured header to the next heading or separator (---) will be ignored. This heading will be created if the command is invoked and the heading does not exist. The default heading is '${DEFAULT_SETTINGS.completedAreaHeader}'.`
-            )
-            .addText((text) =>
-                text
-                    .setPlaceholder("## Log")
-                    .setValue(tempSettings.completedAreaHeader)
-                    .onChange(async (value) => {
-                        tempSettings.completedAreaHeader = value.trim();
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        // new Setting(this.containerEl)
+        //     .setName("Completed area header")
+        //     .setDesc(
+        //         `Completed (or canceled) items will be inserted under the specified header (most recent at the top). When scanning the document for completed/canceled tasks, the contents from this configured header to the next heading or separator (---) will be ignored. This heading will be created if the command is invoked and the heading does not exist. The default heading is '${DEFAULT_SETTINGS.completedAreaHeader}'.`
+        //     )
+        //     .addText((text) =>
+        //         text
+        //             .setPlaceholder("## Log")
+        //             .setValue(tempSettings.completedAreaHeader)
+        //             .onChange(async (value) => {
+        //                 tempSettings.completedAreaHeader = value.trim();
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
 
-        new Setting(this.containerEl)
-            .setName("Remove the checkbox from moved items")
-            .setDesc(
-                `Remove the checkbox from completed (or canceled) tasks during the move to the completed area. This transforms tasks into normal list items. Task Collector will not be able to reset these items. They also will not appear in task searches or queries. The default value is: '${DEFAULT_SETTINGS.completedAreaRemoveCheckbox}'.`
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.completedAreaRemoveCheckbox)
-                    .onChange(async (value) => {
-                        tempSettings.completedAreaRemoveCheckbox = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        // new Setting(this.containerEl)
+        //     .setName("Remove the checkbox from moved items")
+        //     .setDesc(
+        //         `Remove the checkbox from completed (or canceled) tasks during the move to the completed area. This transforms tasks into normal list items. Task Collector will not be able to reset these items. They also will not appear in task searches or queries. The default value is: '${DEFAULT_SETTINGS.completedAreaRemoveCheckbox}'.`
+        //     )
+        //     .addToggle((toggle) =>
+        //         toggle
+        //             .setValue(tempSettings.completedAreaRemoveCheckbox)
+        //             .onChange(async (value) => {
+        //                 tempSettings.completedAreaRemoveCheckbox = value;
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
 
         this.containerEl.createEl("h2", {
             text: "Marking items using menus",
@@ -302,19 +302,19 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
 
-        new Setting(this.containerEl)
-            .setName("Add menu item for moving all completed tasks")
-            .setDesc(
-                "Add an item to the right-click menu to move all completed (or canceled) tasks."
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.rightClickMove)
-                    .onChange(async (value) => {
-                        tempSettings.rightClickMove = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        // new Setting(this.containerEl)
+        //     .setName("Add menu item for moving all completed tasks")
+        //     .setDesc(
+        //         "Add an item to the right-click menu to move all completed (or canceled) tasks."
+        //     )
+        //     .addToggle((toggle) =>
+        //         toggle
+        //             .setValue(tempSettings.rightClickMove)
+        //             .onChange(async (value) => {
+        //                 tempSettings.rightClickMove = value;
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
     }
 }

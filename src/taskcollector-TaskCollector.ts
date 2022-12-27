@@ -93,7 +93,7 @@ export class TaskCollector {
         const rightClickTaskMenu =
             this.settings.rightClickComplete ||
             this.settings.rightClickMark ||
-            this.settings.rightClickMove ||
+            // this.settings.rightClickMove ||
             this.settings.rightClickResetTask ||
             this.settings.rightClickResetAll ||
             this.settings.rightClickToggleAll;
@@ -265,7 +265,7 @@ export class TaskCollector {
     }
 
     resetAllTasks(source: string): string {
-        const LOG_HEADING = this.settings.completedAreaHeader || "## Log";
+        // const LOG_HEADING = this.settings.completedAreaHeader || "## Log";
         const lines = source.split("\n");
 
         const result: string[] = [];
@@ -276,9 +276,9 @@ export class TaskCollector {
                     inCompletedSection = false;
                 }
                 result.push(line);
-            } else if (line.trim() === LOG_HEADING) {
-                inCompletedSection = true;
-                result.push(line);
+            // } else if (line.trim() === LOG_HEADING) {
+            //     inCompletedSection = true;
+            //     result.push(line);
             } else if (this.isCompletedTaskLine(line)) {
                 result.push(this.resetTaskLine(line));
             } else {
@@ -288,68 +288,68 @@ export class TaskCollector {
         return result.join("\n");
     }
 
-    moveCompletedTasksInFile(source: string): string {
-        const LOG_HEADING = this.settings.completedAreaHeader || "## Log";
-        const lines = source.split("\n");
+    // moveCompletedTasksInFile(source: string): string {
+    //     const LOG_HEADING = this.settings.completedAreaHeader || "## Log";
+    //     const lines = source.split("\n");
 
-        if (source.indexOf(LOG_HEADING) < 0) {
-            if (lines[lines.length - 1].trim() !== "") {
-                lines.push("");
-            }
-            lines.push(LOG_HEADING);
-        }
+    //     if (source.indexOf(LOG_HEADING) < 0) {
+    //         if (lines[lines.length - 1].trim() !== "") {
+    //             lines.push("");
+    //         }
+    //         lines.push(LOG_HEADING);
+    //     }
 
-        const remaining = [];
-        const completedSection = [];
-        const newTasks = [];
-        let inCompletedSection = false;
-        let inTask = false;
-        let inCallout = false;
-        let completedItemsIndex = lines.length;
+    //     const remaining = [];
+    //     const completedSection = [];
+    //     const newTasks = [];
+    //     let inCompletedSection = false;
+    //     let inTask = false;
+    //     let inCallout = false;
+    //     let completedItemsIndex = lines.length;
 
-        for (let line of lines) {
-            if (inCompletedSection) {
-                if (line.startsWith("#") || line.trim() === "---") {
-                    inCompletedSection = false;
-                    remaining.push(line);
-                } else {
-                    completedSection.push(line);
-                }
-            } else if (line.trim() === LOG_HEADING) {
-                inCompletedSection = true;
-                completedItemsIndex = remaining.push(line);
-                remaining.push("%%%COMPLETED_ITEMS_GO_HERE%%%");
-            } else {
-                if (this.isCompletedTaskLine(line)) {
-                    if (this.settings.completedAreaRemoveCheckbox) {
-                        line = this.removeCheckboxFromLine(line);
-                    }
-                    inTask = true;
-                    inCallout = this.isCallout(line); // is task _inside_ the callout
-                    newTasks.push(line);
-                } else if (
-                    inTask &&
-                    !this.isTaskLine(line) &&
-                    this.isContinuation(line, inCallout)
-                ) {
-                    newTasks.push(line);
-                } else {
-                    inTask = false;
-                    inCallout = false;
-                    remaining.push(line);
-                }
-            }
-        }
+    //     for (let line of lines) {
+    //         if (inCompletedSection) {
+    //             if (line.startsWith("#") || line.trim() === "---") {
+    //                 inCompletedSection = false;
+    //                 remaining.push(line);
+    //             } else {
+    //                 completedSection.push(line);
+    //             }
+    //         } else if (line.trim() === LOG_HEADING) {
+    //             inCompletedSection = true;
+    //             completedItemsIndex = remaining.push(line);
+    //             remaining.push("%%%COMPLETED_ITEMS_GO_HERE%%%");
+    //         } else {
+    //             if (this.isCompletedTaskLine(line)) {
+    //                 if (this.settings.completedAreaRemoveCheckbox) {
+    //                     line = this.removeCheckboxFromLine(line);
+    //                 }
+    //                 inTask = true;
+    //                 inCallout = this.isCallout(line); // is task _inside_ the callout
+    //                 newTasks.push(line);
+    //             } else if (
+    //                 inTask &&
+    //                 !this.isTaskLine(line) &&
+    //                 this.isContinuation(line, inCallout)
+    //             ) {
+    //                 newTasks.push(line);
+    //             } else {
+    //                 inTask = false;
+    //                 inCallout = false;
+    //                 remaining.push(line);
+    //             }
+    //         }
+    //     }
 
-        let result = remaining
-            .slice(0, completedItemsIndex)
-            .concat(...newTasks)
-            .concat(...completedSection);
-        if (completedItemsIndex < remaining.length - 1) {
-            result = result.concat(remaining.slice(completedItemsIndex + 1));
-        }
-        return result.join("\n");
-    }
+    //     let result = remaining
+    //         .slice(0, completedItemsIndex)
+    //         .concat(...newTasks)
+    //         .concat(...completedSection);
+    //     if (completedItemsIndex < remaining.length - 1) {
+    //         result = result.concat(remaining.slice(completedItemsIndex + 1));
+    //     }
+    //     return result.join("\n");
+    // }
 
     private isCompletedTaskLine(lineText: string): boolean {
         return this.initSettings.completedTaskRegExp.test(lineText);
