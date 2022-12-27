@@ -108,7 +108,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Append text to completed task")
             .setDesc(
-                "If non-empty, append today's date in the given moment.js string format to the end of the task text."
+                "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
@@ -178,7 +178,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Append text to marked task")
             .setDesc(
-                "If non-empty, append today's date in the given moment.js string format to the end of the task text."
+                "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
