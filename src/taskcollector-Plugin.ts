@@ -138,6 +138,84 @@ export class TaskCollectorPlugin extends Plugin {
             },
         };
 
+        // Set hotkeys for additional task statuses
+        const incompleteTaskValuesLength = this.taskCollector.settings.incompleteTaskValues.length
+
+        if (incompleteTaskValuesLength >= 2) {
+            const markItemStatus1Command: Command = {
+                id: "task-marker-mark-item-status-1",
+                name: "Mark item status 1",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValues[1],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus1Command);
+        }
+
+        if (incompleteTaskValuesLength >= 3){
+            const markItemStatus2Command: Command = {
+                id: "task-marker-mark-item-status-2",
+                name: "Mark item status 2",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValues[2],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus2Command);
+        }
+
+        if (incompleteTaskValuesLength >= 4){
+            const markItemStatus3Command: Command = {
+                id: "task-marker-mark-item-status-3",
+                name: "Mark item status 3",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValues[3],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus3Command);
+        }
+
+        if (incompleteTaskValuesLength >= 5){
+            const markItemStatus4Command: Command = {
+                id: "task-marker-mark-item-status-4",
+                name: "Mark item status 4",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValues[4],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus4Command);
+        }
+        
+        if (incompleteTaskValuesLength >= 6){
+            const markItemStatus5Command: Command = {
+                id: "task-marker-mark-item-status-5",
+                name: "Mark item status 5",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValues[5],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus5Command);
+        }
+
         // const moveTaskCommand: Command = {
         //     id: "task-collector-move-completed-tasks",
         //     name: "Move all completed tasks to configured heading",

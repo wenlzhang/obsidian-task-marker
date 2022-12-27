@@ -60,9 +60,9 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
             );
 
         new Setting(this.containerEl)
-            .setName("Additional task types")
+            .setName("Additional task statuses")
             .setDesc(
-                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'i> !?D'."
+                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'i> !?D'. **The first five (excluding the first open status) of them can also be assigned with hotkeys.**"
             )
             .addText((text) =>
                 text
