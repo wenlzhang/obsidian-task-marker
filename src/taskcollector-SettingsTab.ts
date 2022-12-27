@@ -88,10 +88,10 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                                 `Set of characters should not contain the marker for canceled tasks (-): ${value}`
                             );
                         } else {
-                            if (!value.contains(" ")) {
-                                // make sure space is included
-                                value = " " + value;
-                            }
+                            // if (!value.contains(" ")) { // Not necessary to add reset at the beginning
+                            //     // make sure space is included
+                            //     value = " " + value;
+                            // }
                             tempSettings.incompleteTaskValues = value;
                             this.taskCollector.updateSettings(tempSettings);
                             await this.plugin.saveSettings();
