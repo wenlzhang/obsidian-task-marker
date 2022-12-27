@@ -113,7 +113,7 @@ export class TaskCollector {
             completedTaskRegExp: this.tryCreateCompleteRegex(completedTasks),
         };
         console.debug(
-            "TC: updated configuration %o, %o",
+            "Task Marker: updated configuration %o, %o",
             this.settings,
             this.initSettings
         );
@@ -141,7 +141,7 @@ export class TaskCollector {
 
     /** _Complete_ an item: append completion text, remove configured strings */
     private completeTaskLine(lineText: string, mark = "x"): string {
-        console.debug("TC: complete task with %s: %s", mark, lineText);
+        console.debug("Task Marker: complete task with %s: %s", mark, lineText);
         let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
         if (this.initSettings.removeRegExp) {
             marked = marked.replace(this.initSettings.removeRegExp, "");
@@ -202,7 +202,7 @@ export class TaskCollector {
 
             if (this.isCompletedTaskLine(lineText)) {
                 if (completeMark) {
-                    console.log("TC: task already completed: %s", lineText);
+                    console.log("Task Marker: task already completed: %s", lineText);
                 } else {
                     lineText = this.resetTaskLine(lineText, mark);
                 }
@@ -212,13 +212,55 @@ export class TaskCollector {
                         ? this.resetTaskLine(lineText, mark)
                         : this.completeTaskLine(lineText, mark);
                 } else {
-                    lineText = this.resetTaskLine(lineText, mark);
+                    // lineText = this.resetTaskLine(lineText, mark); // Original code
+                    let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+                    if (this.initSettings.removeRegExp) {
+                        marked = marked.replace(this.initSettings.removeRegExp, "");
+                    }
+                    if (this.settings.appendDateFormat) {
+                        const strictLineEnding = lineText.endsWith("  ");
+                        let blockid = "";
+                        const match = this.blockRef.exec(marked);
+                        if (match && match[2]) {
+                            marked = match[1];
+                            blockid = match[2];
+                        }
+                        if (!marked.endsWith(" ")) {
+                            marked += " ";
+                        }
+                        marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        if (strictLineEnding) {
+                            marked += "  ";
+                        }
+                    }
+                    lineText = marked;
                 }
             } else if (mark === " ") {
-                lineText = this.resetTaskLine(lineText, mark);
+                // lineText = this.resetTaskLine(lineText, mark); // Original code
+                let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+                    if (this.initSettings.removeRegExp) {
+                        marked = marked.replace(this.initSettings.removeRegExp, "");
+                    }
+                    if (this.settings.appendDateFormat) {
+                        const strictLineEnding = lineText.endsWith("  ");
+                        let blockid = "";
+                        const match = this.blockRef.exec(marked);
+                        if (match && match[2]) {
+                            marked = match[1];
+                            blockid = match[2];
+                        }
+                        if (!marked.endsWith(" ")) {
+                            marked += " ";
+                        }
+                        marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        if (strictLineEnding) {
+                            marked += "  ";
+                        }
+                    }
+                    lineText = marked;
             } else {
                 console.log(
-                    "TC: unknown mark (%s), leaving unchanged: %s",
+                    "Task Marker: unknown mark (%s), leaving unchanged: %s",
                     mark,
                     lineText
                 );
@@ -226,21 +268,21 @@ export class TaskCollector {
         } else if (mark !== "Backspace") {
             const match = this.anyListItem.exec(lineText);
             if (match && match[2]) {
-                console.debug("TC: list item, convert to a task %s", lineText);
+                console.debug("Task Marker: list item, convert to a task %s", lineText);
                 // convert to a task, and then mark
                 lineText = this.markTaskLine(
                     `${match[1]}[ ] ${match[2]}`,
                     mark
                 );
             } else {
-                console.debug("TC: not a task or list item %s", lineText);
+                console.debug("Task Marker: not a task or list item %s", lineText);
             }
         }
         return lineText;
     }
 
     private resetTaskLine(lineText: string, mark = " "): string {
-        console.debug("TC: reset task with %s: %s", mark, lineText);
+        console.debug("Task Marker: reset task with %s: %s", mark, lineText);
         lineText = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
         const strictLineEnding = lineText.endsWith("  ");
 

@@ -33,7 +33,7 @@ export class TaskCollectorPlugin extends Plugin {
     public api: API;
 
     async onload(): Promise<void> {
-        console.log("loading Task Collector (TC)");
+        console.log("loading Task Marker (TM)");
         this.taskCollector = new TaskCollector(this.app);
         this.addSettingTab(
             new TaskCollectorSettingsTab(this.app, this, this.taskCollector)
@@ -180,7 +180,7 @@ export class TaskCollectorPlugin extends Plugin {
         if (this.taskCollector.settings.rightClickMark) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TC) Mark Task")
+                    .setTitle("(TM) Mark Task")
                     .setIcon(Icons.MARK)
                     .onClick(async () => {
                         const mark = await promptForMark(
@@ -198,7 +198,7 @@ export class TaskCollectorPlugin extends Plugin {
         if (this.taskCollector.settings.rightClickComplete) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TC) Complete Task")
+                    .setTitle("(TM) Complete Task")
                     .setIcon(Icons.COMPLETE)
                     .onClick(() => {
                         this.markTaskOnLines("x", lines);
@@ -209,7 +209,7 @@ export class TaskCollectorPlugin extends Plugin {
             if (this.taskCollector.settings.supportCanceledTasks) {
                 menu.addItem((item) =>
                     item
-                        .setTitle("(TC) Cancel Task")
+                        .setTitle("(TM) Cancel Task")
                         .setIcon(Icons.CANCEL)
                         .onClick(() => {
                             this.markTaskOnLines("-", lines);
@@ -222,7 +222,7 @@ export class TaskCollectorPlugin extends Plugin {
         if (this.taskCollector.settings.rightClickResetTask) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TC) Reset Task")
+                    .setTitle("(TM) Reset Task")
                     .setIcon(Icons.RESET)
                     .onClick(() => {
                         this.markTaskOnLines(" ", lines);
@@ -234,7 +234,7 @@ export class TaskCollectorPlugin extends Plugin {
         // if (this.taskCollector.settings.rightClickMove) {
         //     menu.addItem((item) =>
         //         item
-        //             .setTitle("(TC) Move completed tasks")
+        //             .setTitle("(TM) Move completed tasks")
         //             .setIcon(Icons.MOVE)
         //             .onClick(async () => {
         //                 this.moveAllTasks();
@@ -246,7 +246,7 @@ export class TaskCollectorPlugin extends Plugin {
         if (this.taskCollector.settings.rightClickToggleAll) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TC) Complete All Tasks")
+                    .setTitle("(TM) Complete All Tasks")
                     .setIcon(Icons.COMPLETE_ALL)
                     .onClick(async () => {
                         this.completeAllTasks();
@@ -258,7 +258,7 @@ export class TaskCollectorPlugin extends Plugin {
         if (this.taskCollector.settings.rightClickResetAll) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TC) Reset All Tasks")
+                    .setTitle("(TM) Reset All Tasks")
                     .setIcon(Icons.CLEAR)
                     .onClick(async () => {
                         this.resetAllTasks();
