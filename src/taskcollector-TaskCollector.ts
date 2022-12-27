@@ -81,6 +81,58 @@ export class TaskCollector {
             momentMatchString = `\\s*${momentMatchString}\\s*`;
         }
 
+        if (settings.appendTextFormatMark) {
+            // YYYY-MM-DD or DD MM, YYYY or .. [(]YYYY-MM-DD[)] where the stuff in the brackets is literal
+            const literals = [];
+
+            const regex1 = RegExp("(\\[.*?\\]\\]?)", "g");
+            let match;
+            let i = 0;
+
+            momentMatchString = settings.appendTextFormatMark;
+            while ((match = regex1.exec(momentMatchString)) !== null) {
+                momentMatchString = momentMatchString.replace(
+                    match[0],
+                    `%$${i}$%`
+                );
+                literals.push(
+                    match[0]
+                        .substring(1, match[0].length - 1)
+                        .replace(/\(/g, "\\(") // escape a naked (
+                        .replace(/\)/g, "\\)") // escape a naked )
+                        .replace(/\[/g, "\\[") // escape a naked [
+                        .replace(/\]/g, "\\]")
+                ); // escape a naked ]
+                i++;
+            }
+
+            // Now let's replace moment date formatting
+            momentMatchString = momentMatchString
+                .replace("YYYY", "\\d{4}") // 4-digit year
+                .replace("YY", "\\d{2}") // 2-digit year
+                .replace("DD", "\\d{2}") // day of month, padded
+                .replace("D", "\\d{1,2}") // day of month, not padded
+                .replace("MMM", "[A-Za-z]{3}") // month, abbrv
+                .replace("MM", "\\d{2}") // month, padded
+                .replace("M", "\\d{1,2}") // month, not padded
+                .replace("HH", "\\d{2}") // 24-hour, padded
+                .replace("H", "\\d{1,2}") // 24-hour, not padded
+                .replace("hh", "\\d{2}") // 12-hour, padded
+                .replace("h", "\\d{1,2}") // 12-hour, not padded
+                .replace("mm", "\\d{2}") // minute, padded
+                .replace("m", "\\d{1,2}"); // minute, not padded
+
+            if (literals.length > 0) {
+                for (let i = 0; i < literals.length; i++) {
+                    momentMatchString = momentMatchString.replace(
+                        `%$${i}$%`,
+                        literals[i]
+                    );
+                }
+            }
+            momentMatchString = `\\s*${momentMatchString}\\s*`;
+        }
+
         const completedTasks =
             (this.settings.onlyLowercaseX ? "x" : "xX") +
             (this.settings.supportCanceledTasks ? "-" : "");
@@ -204,7 +256,7 @@ export class TaskCollector {
                 if (completeMark) {
                     console.log("Task Marker: task already completed: %s", lineText);
                 } else {
-                    lineText = this.resetTaskLine(lineText, mark);
+                    lineText = this.resetTaskLine(lineText, mark); // Only update the mark
                 }
             } else if (this.isIncompleteTaskLine(lineText)) {
                 if (completeMark) {
@@ -217,7 +269,7 @@ export class TaskCollector {
                     if (this.initSettings.removeRegExp) {
                         marked = marked.replace(this.initSettings.removeRegExp, "");
                     }
-                    if (this.settings.appendDateFormat) {
+                    if (this.settings.appendTextFormatMark) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);
@@ -228,7 +280,7 @@ export class TaskCollector {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        marked += moment().format(this.settings.appendTextFormatMark) + blockid;
                         if (strictLineEnding) {
                             marked += "  ";
                         }
@@ -241,7 +293,7 @@ export class TaskCollector {
                     if (this.initSettings.removeRegExp) {
                         marked = marked.replace(this.initSettings.removeRegExp, "");
                     }
-                    if (this.settings.appendDateFormat) {
+                    if (this.settings.appendTextFormatMark) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);
@@ -252,7 +304,7 @@ export class TaskCollector {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        marked += moment().format(this.settings.appendTextFormatMark) + blockid;
                         if (strictLineEnding) {
                             marked += "  ";
                         }

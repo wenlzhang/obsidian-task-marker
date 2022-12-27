@@ -2,6 +2,7 @@ export interface TaskCollectorSettings {
     // completedAreaHeader: string;
     removeExpression: string;
     appendDateFormat: string;
+    appendTextFormatMark: string;
     appendRemoveAllTasks: boolean;
     incompleteTaskValues: string;
     supportCanceledTasks: boolean;
@@ -20,6 +21,7 @@ export const DEFAULT_SETTINGS: TaskCollectorSettings = {
     // completedAreaHeader: "## Log",
     removeExpression: "",
     appendDateFormat: "",
+    appendTextFormatMark: "",
     appendRemoveAllTasks: false,
     incompleteTaskValues: " ",
     onlyLowercaseX: false,

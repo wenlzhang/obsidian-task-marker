@@ -106,7 +106,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         });
 
         new Setting(this.containerEl)
-            .setName("Append date to completed task")
+            .setName("Append text to completed task")
             .setDesc(
                 "If non-empty, append today's date in the given moment.js string format to the end of the task text."
             )
@@ -154,21 +154,51 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
 
+        // new Setting(this.containerEl)
+        //     .setName("Apply these settings to all tasks")
+        //     .setDesc(
+        //         "Append and remove text as configured above when marking tasks with anything other than a space (to reset)."
+        //     )
+        //     .addToggle((toggle) =>
+        //         toggle
+        //             .setValue(tempSettings.appendRemoveAllTasks)
+        //             .onChange(async (value) => {
+        //                 tempSettings.appendRemoveAllTasks = value;
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
+
+        this.containerEl.createEl("h2", { text: "Marking tasks" });
+
+        this.containerEl.createEl("p", {
+            text: "Marked tasks gain special treatment based on the settings below.",
+        });
+
         new Setting(this.containerEl)
-            .setName("Apply these settings to all tasks")
+            .setName("Append text to marked task")
             .setDesc(
-                "Append and remove text as configured above when marking tasks with anything other than a space (to reset)."
+                "If non-empty, append today's date in the given moment.js string format to the end of the task text."
             )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.appendRemoveAllTasks)
+            .addMomentFormat((momentFormat) =>
+                momentFormat
+                    .setPlaceholder("YYYY-MM-DD")
+                    .setValue(tempSettings.appendTextFormatMark)
                     .onChange(async (value) => {
-                        tempSettings.appendRemoveAllTasks = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
+                        try {
+                            // Try formatting "now" with the specified format string
+                            moment().format(value);
+                            tempSettings.appendTextFormatMark = value;
+                            this.taskCollector.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        } catch (e) {
+                            console.log(
+                                `Error parsing specified date format: ${value}`
+                            );
+                        }
                     })
             );
-
+        
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
         // new Setting(this.containerEl)
