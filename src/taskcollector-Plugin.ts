@@ -294,6 +294,22 @@ export class TaskCollectorPlugin extends Plugin {
             this.addCommand(markItemStatus5Command);
         }
 
+        // Add a hotkey for cycling task statuses
+        const cycleItemStatusCommand: Command = {
+            id: "task-marker-cycle-item-status",
+            name: "Cycle item status",
+            icon: Icons.MARK,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                // this.markTaskOnLines(
+                //     this.taskCollector.settings.incompleteTaskValuesRow2[4],
+                //     this.getCurrentLinesFromEditor(editor)
+                // );
+                this.toggleTodos()
+            },
+        };
+
+        this.addCommand(cycleItemStatusCommand);
+
         // const moveTaskCommand: Command = {
         //     id: "task-collector-move-completed-tasks",
         //     name: "Move all completed tasks to configured heading",
@@ -430,6 +446,82 @@ export class TaskCollectorPlugin extends Plugin {
         this.app.vault.modify(activeFile, result);
     }
 
+    getSelectedText(editor: Editor) {
+        if (editor.somethingSelected()) {
+          // Toggle to-dos under the selection
+          const cursorStart = editor.getCursor('from');
+          const cursorEnd = editor.getCursor('to');
+          const content = editor.getRange(
+            { line: cursorStart.line, ch: 0 },
+            { line: cursorEnd.line, ch: editor.getLine(cursorEnd.line).length },
+          );
+    
+          return {
+            start: { line: cursorStart.line, ch: 0 },
+            end: {
+              line: cursorEnd.line,
+              ch: editor.getLine(cursorEnd.line).length,
+            },
+            content: content,
+          };
+        } else {
+          // Toggle the todo in the line
+          const lineNr = editor.getCursor().line;
+          const contents = editor.getDoc().getLine(lineNr);
+          const cursorStart = {
+            line: lineNr,
+            ch: 0,
+          };
+          const cursorEnd = {
+            line: lineNr,
+            ch: contents.length,
+          };
+          const content = editor.getRange(cursorStart, cursorEnd);
+          return { start: cursorStart, end: cursorEnd, content: content };
+        }
+    }
+    
+    toggleElement(re: RegExp, subst: any) {
+        const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+        if (!view) return;
+    
+        const editor = view.editor;
+        const selection = editor.somethingSelected();
+        const selectedText = this.getSelectedText(editor);
+    
+        const newString = selectedText.content.replace(re, subst);
+        editor.replaceRange(newString, selectedText.start, selectedText.end);
+    
+        // Keep cursor in the same place
+        if (selection) {
+          editor.setSelection(selectedText.start, {
+            line: selectedText.end.line,
+            ch: editor.getLine(selectedText.end.line).length,
+          });
+        }
+      }
+    
+    toggleTodos() {
+        const re =
+          /(^\s*|^\t*)(-\s\[ \]\s|-\s\[>\]\s|\*\s|-\s|\d*\.\s|\*\s|\b|^)([^\n\r]*)/gim;
+        return this.toggleElement(re, this.replaceTodoElement);
+    }
+    
+    replaceTodoElement(
+        match: string,
+        spaces: string,
+        startText: string,
+        sentence: string,
+    ) {
+        if (startText === '- [ ] ') {
+            return spaces + '- [>] ' + sentence;
+        } else if (startText === '- [>] ') {
+            return spaces + '- ' + sentence;
+        } else {
+            return spaces + '- [ ] ' + sentence;
+        }
+    }
+
     // async moveAllTasks(): Promise<void> {
     //     const activeFile = this.app.workspace.getActiveFile();
     //     const source = await this.app.vault.read(activeFile);
@@ -556,7 +648,7 @@ export class TaskCollectorPlugin extends Plugin {
     }
 
     onunload(): void {
-        console.log("unloading Task Collector");
+        console.log("unloading Task Marker (TM)");
     }
 
     async loadSettings(): Promise<void> {
