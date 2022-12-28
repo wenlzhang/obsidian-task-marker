@@ -412,9 +412,9 @@ export class TaskCollector {
             marked = match[1];
             blockid = match[2];
         }
-        if (!marked.endsWith(" ")) {
-            marked += " ";
-        }
+        // if (!marked.endsWith(" ")) { // Not sure why?
+        //     marked += " ";
+        // }
         marked += blockid;
         if (strictLineEnding) {
             marked += "  ";
