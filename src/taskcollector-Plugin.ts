@@ -304,7 +304,7 @@ export class TaskCollectorPlugin extends Plugin {
                 //     this.taskCollector.settings.incompleteTaskValuesRow2[0],
                 //     this.getCurrentLinesFromEditor(editor)
                 // );
-                this.toggleTodos()
+                this.toggleTodos(this.taskCollector.settings.incompleteTaskValuesRow2)
             },
         };
         this.addCommand(cycleItemStatusCommand);
@@ -513,27 +513,51 @@ export class TaskCollectorPlugin extends Plugin {
     //     return this.toggleElement(re, this.replaceTodoElement);
     // }
 
-    toggleTodos() {
-        var markGroup1 = "(^\\s*|^\\t*)"; // Not sure
-        var markGroup2 = "(-\\s\\[ \\]\\s|-\\s\\[>\\]\\s|\\*\\s|-\\s|\\d*\\.\\s|\\*\\s|\\b|^)"; // - [ ], - [>], - ,
+    toggleTodos(markArray: string) {
+        var markArrayLength = markArray.length;
+
+        var markGroup1 = "(^\\s*|^\\t*)("; // Not sure
+        var markGroup21 = "";
+
+        for (let i = 0; i < markArrayLength; i++) {
+            markGroup21 += "-\\s\\[" + markArray[i] + "\\]\\s|";
+        }
+
+        var markGroup22 = "\\*\\s|-\\s|\\d*\\.\\s|\\*\\s|\\b|^)";
         var markGroup3 = "([^\\n\\r]*)"; // Not sure; line change?
-        const re = new RegExp(markGroup1 + markGroup2 + markGroup3);
+
+        const re = new RegExp(markGroup1 + markGroup21 + markGroup22 + markGroup3);
         return this.toggleElement(re, this.replaceTodoElement);
     }
     
     replaceTodoElement(
+        // markArray: string,
         match: string,
         spaces: string,
         startText: string,
         sentence: string,
     ) {
-        if (startText === '- [ ] ') {
-            return spaces + '- [>] ' + sentence;
-        } else if (startText === '- [>] ') {
+        var markArray = 'Rip';
+
+        if (startText === '- [' + markArray[0] + '] ') {
+            return spaces + '- [' + markArray[1] + '] ' + sentence;
+        } else if (startText === '- [' + markArray[1] + '] ') {
+                return spaces + '- [' + markArray[2] + '] ' + sentence;
+        } else if (startText === '- [' + markArray[2] + '] ') {
             return spaces + '- ' + sentence;
         } else {
-            return spaces + '- [ ] ' + sentence;
+            return spaces + '- [' + markArray[0] + '] ' + sentence;
         }
+
+        // if (startText === '- [R] ') {
+        //     return spaces + '- [i] ' + sentence;
+        // } else if (startText === '- [i] ') {
+        //         return spaces + '- [p] ' + sentence;
+        // } else if (startText === '- [p] ') {
+        //     return spaces + '- ' + sentence;
+        // } else {
+        //     return spaces + '- [R] ' + sentence;
+        // }
     }
 
     // async moveAllTasks(): Promise<void> {
