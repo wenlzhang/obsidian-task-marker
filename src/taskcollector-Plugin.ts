@@ -300,11 +300,11 @@ export class TaskCollectorPlugin extends Plugin {
             name: "Cycle item status",
             icon: Icons.MARK,
             editorCallback: (editor: Editor, view: MarkdownView) => {
-                this.markTaskOnLinesCycle(
-                    this.taskCollector.settings.incompleteTaskValuesRow2[0],
-                    this.getCurrentLinesFromEditor(editor)
-                );
-                // this.toggleTodos()
+                // this.markTaskOnLinesCycle(
+                //     this.taskCollector.settings.incompleteTaskValuesRow2[0],
+                //     this.getCurrentLinesFromEditor(editor)
+                // );
+                this.toggleTodos()
             },
         };
         this.addCommand(cycleItemStatusCommand);
@@ -507,19 +507,19 @@ export class TaskCollectorPlugin extends Plugin {
         }
       }
     
-    toggleTodos() {
-        const re =
-          /(^\s*|^\t*)(-\s\[ \]\s|-\s\[>\]\s|\*\s|-\s|\d*\.\s|\*\s|\b|^)([^\n\r]*)/gim;
-        return this.toggleElement(re, this.replaceTodoElement);
-    }
-
     // toggleTodos() {
-    //     var markGroup1 = new RegExp(/^\s*|^\t*/); // Not sure
-    //     var markGroup2 = new RegExp(/-\s\[ \]\s|-\s\[>\]\s|-\s|\b|^/); // - [ ], - [>], - ,
-    //     var markGroup3 = new RegExp(/[^\n\r]*/); // Not sure; line change?
-    //     var re = new RegExp(markGroup1 + "|" + markGroup2 + "|" + markGroup3);
+    //     const re =
+    //       /(^\s*|^\t*)(-\s\[ \]\s|-\s\[>\]\s|\*\s|-\s|\d*\.\s|\*\s|\b|^)([^\n\r]*)/gim;
     //     return this.toggleElement(re, this.replaceTodoElement);
     // }
+
+    toggleTodos() {
+        var markGroup1 = "(^\\s*|^\\t*)"; // Not sure
+        var markGroup2 = "(-\\s\\[ \\]\\s|-\\s\\[>\\]\\s|\\*\\s|-\\s|\\d*\\.\\s|\\*\\s|\\b|^)"; // - [ ], - [>], - ,
+        var markGroup3 = "([^\\n\\r]*)"; // Not sure; line change?
+        const re = new RegExp(markGroup1 + markGroup2 + markGroup3);
+        return this.toggleElement(re, this.replaceTodoElement);
+    }
     
     replaceTodoElement(
         match: string,
