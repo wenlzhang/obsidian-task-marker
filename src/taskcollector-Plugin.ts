@@ -506,6 +506,14 @@ export class TaskCollectorPlugin extends Plugin {
           /(^\s*|^\t*)(-\s\[ \]\s|-\s\[>\]\s|\*\s|-\s|\d*\.\s|\*\s|\b|^)([^\n\r]*)/gim;
         return this.toggleElement(re, this.replaceTodoElement);
     }
+
+    // toggleTodos() {
+    //     var markGroup1 = new RegExp(/^\s*|^\t*/); // Not sure
+    //     var markGroup2 = new RegExp(/-\s\[ \]\s|-\s\[>\]\s|-\s|\b|^/); // - [ ], - [>], - ,
+    //     var markGroup3 = new RegExp(/[^\n\r]*/); // Not sure; line change?
+    //     var re = new RegExp(markGroup1 + "|" + markGroup2 + "|" + markGroup3);
+    //     return this.toggleElement(re, this.replaceTodoElement);
+    // }
     
     replaceTodoElement(
         match: string,
