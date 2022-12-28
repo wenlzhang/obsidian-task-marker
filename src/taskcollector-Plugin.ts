@@ -300,14 +300,13 @@ export class TaskCollectorPlugin extends Plugin {
             name: "Cycle item status",
             icon: Icons.MARK,
             editorCallback: (editor: Editor, view: MarkdownView) => {
-                // this.markTaskOnLines(
-                //     this.taskCollector.settings.incompleteTaskValuesRow2[4],
-                //     this.getCurrentLinesFromEditor(editor)
-                // );
-                this.toggleTodos()
+                this.markTaskOnLinesCycle(
+                    this.taskCollector.settings.incompleteTaskValuesRow2[0],
+                    this.getCurrentLinesFromEditor(editor)
+                );
+                // this.toggleTodos()
             },
         };
-
         this.addCommand(cycleItemStatusCommand);
 
         // const moveTaskCommand: Command = {
@@ -443,6 +442,13 @@ export class TaskCollectorPlugin extends Plugin {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
         const result = this.taskCollector.markTaskInSource(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async markTaskOnLinesCycle(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskCollector.markTaskInSourceCycle(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 

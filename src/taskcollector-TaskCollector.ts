@@ -300,6 +300,18 @@ export class TaskCollector {
         return split.join("\n");
     }
 
+    markTaskInSourceCycle(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.markTaskLineCycle(split[n], mark);
+        }
+        return split.join("\n");
+    }
+
     markTaskLine(lineText: string, mark: string): string {
         const taskMatch = this.anyTaskMark.exec(lineText);
 
@@ -382,6 +394,34 @@ export class TaskCollector {
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
         }
+        return lineText;
+    }
+
+    markTaskLineCycle(lineText: string, mark: string): string {
+
+        let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+
+        if (this.initSettings.removeRegExp) {
+            marked = marked.replace(this.initSettings.removeRegExp, "");
+        }
+
+        const strictLineEnding = lineText.endsWith("  ");
+        let blockid = "";
+        const match = this.blockRef.exec(marked);
+        if (match && match[2]) {
+            marked = match[1];
+            blockid = match[2];
+        }
+        if (!marked.endsWith(" ")) {
+            marked += " ";
+        }
+        marked += blockid;
+        if (strictLineEnding) {
+            marked += "  ";
+        }
+
+        lineText = marked;
+
         return lineText;
     }
 
@@ -503,7 +543,7 @@ export class TaskCollector {
     }
 
     private isIncompleteTaskLine(lineText: string): boolean {
-        return this.initSettings.incompleteTaskRegExp.test(lineText); // Add Row2 here or not?
+        return this.initSettings.incompleteTaskRegExp.test(lineText) || this.initSettings.incompleteTaskRegExpRow2.test(lineText); // Add Row2 here or not? Yes.
     }
 
     private isTaskLine(lineText: string): boolean {
