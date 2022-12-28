@@ -3,8 +3,10 @@ export interface TaskCollectorSettings {
     removeExpression: string;
     appendDateFormat: string;
     appendTextFormatMark: string;
+    appendTextFormatMarkRow2: string;
     appendRemoveAllTasks: boolean;
     incompleteTaskValues: string;
+    incompleteTaskValuesRow2: string;
     supportCanceledTasks: boolean;
     previewOnClick: boolean;
     rightClickComplete: boolean;
@@ -22,8 +24,10 @@ export const DEFAULT_SETTINGS: TaskCollectorSettings = {
     removeExpression: "",
     appendDateFormat: "",
     appendTextFormatMark: "",
+    appendTextFormatMarkRow2: "",
     appendRemoveAllTasks: false,
     incompleteTaskValues: " ",
+    incompleteTaskValuesRow2: "", // For choosing whether to show in the second row
     onlyLowercaseX: false,
     supportCanceledTasks: true,
     previewOnClick: false,
@@ -39,6 +43,7 @@ export interface CompiledTasksSettings {
     removeRegExp: RegExp;
     resetRegExp: RegExp;
     incompleteTaskRegExp: RegExp;
+    incompleteTaskRegExpRow2: RegExp;
     rightClickTaskMenu: boolean;
     completedTasks: string;
     completedTaskRegExp: RegExp;

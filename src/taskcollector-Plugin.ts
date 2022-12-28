@@ -138,13 +138,13 @@ export class TaskCollectorPlugin extends Plugin {
             },
         };
 
-        // Set hotkeys for additional task statuses
+        // Set hotkeys for additional task statuses (row 1)
         const incompleteTaskValuesLength = this.taskCollector.settings.incompleteTaskValues.length
 
         if (incompleteTaskValuesLength >= 2) {
             const markItemStatus1Command: Command = {
-                id: "task-marker-mark-item-status-1",
-                name: "Mark item status 1",
+                id: "task-marker-mark-item-status-row1-1",
+                name: "Mark item (row 1) status 1",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -158,8 +158,8 @@ export class TaskCollectorPlugin extends Plugin {
 
         if (incompleteTaskValuesLength >= 3){
             const markItemStatus2Command: Command = {
-                id: "task-marker-mark-item-status-2",
-                name: "Mark item status 2",
+                id: "task-marker-mark-item-status-row1-2",
+                name: "Mark item (row 1) status 2",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -173,8 +173,8 @@ export class TaskCollectorPlugin extends Plugin {
 
         if (incompleteTaskValuesLength >= 4){
             const markItemStatus3Command: Command = {
-                id: "task-marker-mark-item-status-3",
-                name: "Mark item status 3",
+                id: "task-marker-mark-item-status-row1-3",
+                name: "Mark item (row 1) status 3",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -188,8 +188,8 @@ export class TaskCollectorPlugin extends Plugin {
 
         if (incompleteTaskValuesLength >= 5){
             const markItemStatus4Command: Command = {
-                id: "task-marker-mark-item-status-4",
-                name: "Mark item status 4",
+                id: "task-marker-mark-item-status-row1-4",
+                name: "Mark item (row 1) status 4",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -203,12 +203,90 @@ export class TaskCollectorPlugin extends Plugin {
         
         if (incompleteTaskValuesLength >= 6){
             const markItemStatus5Command: Command = {
-                id: "task-marker-mark-item-status-5",
-                name: "Mark item status 5",
+                id: "task-marker-mark-item-status-row1-5",
+                name: "Mark item (row 1) status 5",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskCollector.settings.incompleteTaskValues[5],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus5Command);
+        }
+
+        // Set hotkeys for additional task statuses (row 2)
+        const incompleteTaskValuesRow2Length = this.taskCollector.settings.incompleteTaskValuesRow2.length
+
+        if (incompleteTaskValuesRow2Length >= 1) {
+            const markItemStatus1Command: Command = {
+                id: "task-marker-mark-item-status-row2-1",
+                name: "Mark item (row 2) status 1",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValuesRow2[0],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus1Command);
+        }
+
+        if (incompleteTaskValuesRow2Length >= 2){
+            const markItemStatus2Command: Command = {
+                id: "task-marker-mark-item-status-row2-2",
+                name: "Mark item (row 2) status 2",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValuesRow2[1],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus2Command);
+        }
+
+        if (incompleteTaskValuesRow2Length >= 3){
+            const markItemStatus3Command: Command = {
+                id: "task-marker-mark-item-status-row2-3",
+                name: "Mark item (row 2) status 3",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValuesRow2[2],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus3Command);
+        }
+
+        if (incompleteTaskValuesRow2Length >= 4){
+            const markItemStatus4Command: Command = {
+                id: "task-marker-mark-item-status-row2-4",
+                name: "Mark item (row 2) status 4",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValuesRow2[3],
+                        this.getCurrentLinesFromEditor(editor)
+                    );
+                },
+            };
+            this.addCommand(markItemStatus4Command);
+        }
+        
+        if (incompleteTaskValuesRow2Length >= 5){
+            const markItemStatus5Command: Command = {
+                id: "task-marker-mark-item-status-row2-5",
+                name: "Mark item (row 2) status 5",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
+                    this.markTaskOnLines(
+                        this.taskCollector.settings.incompleteTaskValuesRow2[4],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },

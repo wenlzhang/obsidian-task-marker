@@ -58,47 +58,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-
-        new Setting(this.containerEl)
-            .setName("Additional task statuses")
-            .setDesc(
-                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'i> !?D'. **The first five (excluding the first open status) of them can also be assigned with hotkeys.**"
-            )
-            .addText((text) =>
-                text
-                    .setPlaceholder("> !?")
-                    .setValue(tempSettings.incompleteTaskValues)
-                    .onChange(async (value) => {
-                        if (value.contains("x")) {
-                            console.log(
-                                `Set of characters should not contain the marker for completed tasks (x): ${value}`
-                            );
-                        } else if (
-                            !tempSettings.onlyLowercaseX &&
-                            value.contains("X")
-                        ) {
-                            console.log(
-                                `Set of characters should not contain the marker for completed tasks (X): ${value}`
-                            );
-                        } else if (
-                            tempSettings.supportCanceledTasks &&
-                            value.contains("-")
-                        ) {
-                            console.log(
-                                `Set of characters should not contain the marker for canceled tasks (-): ${value}`
-                            );
-                        } else {
-                            if (!value.contains(" ")) { // Not working if removed
-                                // make sure space is included
-                                value = " " + value;
-                            }
-                            tempSettings.incompleteTaskValues = value;
-                            this.taskCollector.updateSettings(tempSettings);
-                            await this.plugin.saveSettings();
-                        }
-                    })
-            );
-
+        
         this.containerEl.createEl("h2", { text: "Completing tasks" });
 
         this.containerEl.createEl("p", {
@@ -168,15 +128,55 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //                 await this.plugin.saveSettings();
         //             })
         //     );
-
+        
         this.containerEl.createEl("h2", { text: "Marking tasks" });
 
         this.containerEl.createEl("p", {
-            text: "Marked tasks gain special treatment based on the settings below.",
+            text: "Marked tasks gain special treatment based on the settings below. **Restart Obsidian to take effect.**",
         });
 
         new Setting(this.containerEl)
-            .setName("Append text to marked task")
+            .setName("Additional task statuses (row 1)")
+            .setDesc(
+                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'i> !?D'. **The first five (excluding the first open status) of them can be assigned with hotkeys.**"
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("> !?")
+                    .setValue(tempSettings.incompleteTaskValues)
+                    .onChange(async (value) => {
+                        if (value.contains("x")) {
+                            console.log(
+                                `Set of characters should not contain the marker for completed tasks (x): ${value}`
+                            );
+                        } else if (
+                            !tempSettings.onlyLowercaseX &&
+                            value.contains("X")
+                        ) {
+                            console.log(
+                                `Set of characters should not contain the marker for completed tasks (X): ${value}`
+                            );
+                        } else if (
+                            tempSettings.supportCanceledTasks &&
+                            value.contains("-")
+                        ) {
+                            console.log(
+                                `Set of characters should not contain the marker for canceled tasks (-): ${value}`
+                            );
+                        } else {
+                            if (!value.contains(" ")) { // Not working if removed
+                                // make sure space is included
+                                value = " " + value;
+                            }
+                            tempSettings.incompleteTaskValues = value;
+                            this.taskCollector.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        }
+                    })
+            );
+        
+        new Setting(this.containerEl)
+            .setName("Append text to marked task (row 1)")
             .setDesc(
                 "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
             )
@@ -189,6 +189,69 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                             // Try formatting "now" with the specified format string
                             moment().format(value);
                             tempSettings.appendTextFormatMark = value;
+                            this.taskCollector.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        } catch (e) {
+                            console.log(
+                                `Error parsing specified date format: ${value}`
+                            );
+                        }
+                    })
+            );
+        
+            new Setting(this.containerEl)
+            .setName("Additional task statuses (row 2)")
+            .setDesc(
+                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("Rip")
+                    .setValue(tempSettings.incompleteTaskValuesRow2)
+                    .onChange(async (value) => {
+                        if (value.contains("x")) {
+                            console.log(
+                                `Set of characters should not contain the marker for completed tasks (x): ${value}`
+                            );
+                        } else if (
+                            !tempSettings.onlyLowercaseX &&
+                            value.contains("X")
+                        ) {
+                            console.log(
+                                `Set of characters should not contain the marker for completed tasks (X): ${value}`
+                            );
+                        } else if (
+                            tempSettings.supportCanceledTasks &&
+                            value.contains("-")
+                        ) {
+                            console.log(
+                                `Set of characters should not contain the marker for canceled tasks (-): ${value}`
+                            );
+                        } else {
+                            if (!value.contains(" ")) {
+                                value = value;
+                            }
+                            tempSettings.incompleteTaskValuesRow2 = value;
+                            this.taskCollector.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        }
+                    })
+            );
+        
+        new Setting(this.containerEl)
+            .setName("Append text to marked task (row 2)")
+            .setDesc(
+                "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
+            )
+            .addMomentFormat((momentFormat) =>
+                momentFormat
+                    .setPlaceholder("YYYY-MM-DD")
+                    .setValue(tempSettings.appendTextFormatMarkRow2)
+                    .onChange(async (value) => {
+                        try {
+                            // Try formatting "now" with the specified format string
+                            moment().format(value);
+                            tempSettings.appendTextFormatMarkRow2 = value;
                             this.taskCollector.updateSettings(tempSettings);
                             await this.plugin.saveSettings();
                         } catch (e) {

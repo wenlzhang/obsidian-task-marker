@@ -46,6 +46,14 @@ export class TaskMarkModal extends Modal {
             false
         );
 
+        const listRow2 = selector.createEl("ul");
+        listRow2.addClass("contains-task-list");
+        this.addTaskValues(
+            listRow2,
+            this.taskCollector.settings.incompleteTaskValuesRow2,
+            false
+        );
+
         const footer = selector.createEl("nav");
         const esc = footer.createSpan();
         esc.innerHTML = "<b>esc</b> to dismiss";
