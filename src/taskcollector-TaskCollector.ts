@@ -327,7 +327,7 @@ export class TaskCollector {
                     if (this.initSettings.removeRegExp) {
                         marked = marked.replace(this.initSettings.removeRegExp, "");
                     }
-                    if (this.settings.appendTextFormatMark) {
+                    if (this.settings.appendTextFormatMark && this.settings.incompleteTaskValues.indexOf(mark) >= 0) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);
@@ -342,7 +342,7 @@ export class TaskCollector {
                         if (strictLineEnding) {
                             marked += "  ";
                         }
-                    } else if (this.settings.appendTextFormatMarkRow2) {
+                    } else if (this.settings.appendTextFormatMarkRow2 && this.settings.incompleteTaskValuesRow2.indexOf(mark) >= 0) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);

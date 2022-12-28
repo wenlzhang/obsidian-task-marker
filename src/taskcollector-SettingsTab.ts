@@ -132,7 +132,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Marking tasks" });
 
         this.containerEl.createEl("p", {
-            text: "Marked tasks gain special treatment based on the settings below. **Restart Obsidian to take effect.**",
+            text: "**Restart Obsidian to take effect.** Marked tasks gain special treatment based on the settings below. **Note that if a mark contains both in row 1 and row 2, the mark would work as specified in row 1.**",
         });
 
         new Setting(this.containerEl)
