@@ -93,30 +93,30 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
 
-        new Setting(this.containerEl)
-            .setName("Remove text in completed task")
-            .setDesc(
-                "Text matching this regular expression should be removed from the task text. Be careful! Test your expression first. The global flag, 'g' is used for a per-line match."
-            )
-            .addText((text) =>
-                text
-                    .setPlaceholder(" #(todo|task)")
-                    .setValue(tempSettings.removeExpression)
-                    .onChange(async (value) => {
-                        try {
-                            // try compiling the regular expression
-                            this.taskCollector.tryCreateRemoveRegex(value);
+        // new Setting(this.containerEl)
+        //     .setName("Remove text in completed task")
+        //     .setDesc(
+        //         "Text matching this regular expression should be removed from the task text. Be careful! Test your expression first. The global flag, 'g' is used for a per-line match."
+        //     )
+        //     .addText((text) =>
+        //         text
+        //             .setPlaceholder(" #(todo|task)")
+        //             .setValue(tempSettings.removeExpression)
+        //             .onChange(async (value) => {
+        //                 try {
+        //                     // try compiling the regular expression
+        //                     this.taskCollector.tryCreateRemoveRegex(value);
 
-                            tempSettings.removeExpression = value;
-                            this.taskCollector.updateSettings(tempSettings);
-                            await this.plugin.saveSettings();
-                        } catch (e) {
-                            console.log(
-                                `Error parsing regular expression for text replacement: ${value}`
-                            );
-                        }
-                    })
-            );
+        //                     tempSettings.removeExpression = value;
+        //                     this.taskCollector.updateSettings(tempSettings);
+        //                     await this.plugin.saveSettings();
+        //                 } catch (e) {
+        //                     console.log(
+        //                         `Error parsing regular expression for text replacement: ${value}`
+        //                     );
+        //                 }
+        //             })
+        //     );
 
         // new Setting(this.containerEl)
         //     .setName("Apply these settings to all tasks")
@@ -385,35 +385,35 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
 
-        new Setting(this.containerEl)
-            .setName("Add menu items for completing all tasks")
-            .setDesc(
-                "Add an item to the right-click menu in edit mode to mark all incomplete tasks in the current document complete."
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.rightClickToggleAll)
-                    .onChange(async (value) => {
-                        tempSettings.rightClickToggleAll = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        // new Setting(this.containerEl)
+        //     .setName("Add menu items for completing all tasks")
+        //     .setDesc(
+        //         "Add an item to the right-click menu in edit mode to mark all incomplete tasks in the current document complete."
+        //     )
+        //     .addToggle((toggle) =>
+        //         toggle
+        //             .setValue(tempSettings.rightClickToggleAll)
+        //             .onChange(async (value) => {
+        //                 tempSettings.rightClickToggleAll = value;
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
 
-        new Setting(this.containerEl)
-            .setName("Add menu item for resetting all tasks")
-            .setDesc(
-                "Add an item to the right-click menu to reset all completed (or canceled) tasks."
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.rightClickResetAll)
-                    .onChange(async (value) => {
-                        tempSettings.rightClickResetAll = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        // new Setting(this.containerEl)
+        //     .setName("Add menu item for resetting all tasks")
+        //     .setDesc(
+        //         "Add an item to the right-click menu to reset all completed (or canceled) tasks."
+        //     )
+        //     .addToggle((toggle) =>
+        //         toggle
+        //             .setValue(tempSettings.rightClickResetAll)
+        //             .onChange(async (value) => {
+        //                 tempSettings.rightClickResetAll = value;
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
 
         // new Setting(this.containerEl)
         //     .setName("Add menu item for moving all completed tasks")
