@@ -1,6 +1,6 @@
 import { App } from "obsidian";
-import { TaskCollector } from "../src/taskcollector-TaskCollector";
-import { DEFAULT_SETTINGS, TaskCollectorSettings } from "../src/taskcollector-Settings";
+import { TaskMarker } from "../src/taskmarker-TaskMarker";
+import { DEFAULT_SETTINGS, TaskMarkerSettings } from "../src/taskmarker-Settings";
 import * as Moment from 'moment';
 
 jest.mock('obsidian', () => ({
@@ -8,7 +8,7 @@ jest.mock('obsidian', () => ({
     moment: () => Moment()
 }));
 
-const config: TaskCollectorSettings = Object.assign({}, DEFAULT_SETTINGS);;
+const config: TaskMarkerSettings = Object.assign({}, DEFAULT_SETTINGS);;
 
 afterEach(() => {
     // reset config to defaults
@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 test('Match blockquotes / callouts', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     expect('> - [x] ').toMatch(tc.initSettings.completedTaskRegExp);
@@ -26,7 +26,7 @@ test('Match blockquotes / callouts', () => {
 });
 
 test('Match only lowercase x', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.onlyLowercaseX = true;
     tc.updateSettings(config);
 
@@ -36,7 +36,7 @@ test('Match only lowercase x', () => {
 });
 
 test('Match specified removal patterns', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.incompleteTaskValues = ' >';
     config.removeExpression = "#(task|todo)";
     tc.updateSettings(config);
@@ -54,7 +54,7 @@ test('Match specified removal patterns', () => {
 
 describe('Set an append date', () => {
     test('YYYY-MM-DD append string', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = 'YYYY-MM-DD';
         tc.updateSettings(config);
 
@@ -71,7 +71,7 @@ describe('Set an append date', () => {
     });
 
     test('(YYYY-MM-DD) append string', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[(]YYYY-MM-DD[)]';
         tc.updateSettings(config);
 
@@ -86,7 +86,7 @@ describe('Set an append date', () => {
     });
 
     test('(D MMM, YYYY) append string', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[(]D MMM, YYYY[)]';
         tc.updateSettings(config);
 
@@ -102,7 +102,7 @@ describe('Set an append date', () => {
     });
 
     test('DD MMM, YYYY append string', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = 'DD MMM, YYYY';
         tc.updateSettings(config);
 
@@ -119,7 +119,7 @@ describe('Set an append date', () => {
     });
 
     test('[(completed on ]D MMM, YYYY[)] append string', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[(completed on ]D MMM, YYYY[)]';
         tc.updateSettings(config);
 
@@ -136,7 +136,7 @@ describe('Set an append date', () => {
     });
 
     test('[✅ ]YYYY-MM-DDTHH:mm append string', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[✅ ]YYYY-MM-DDTHH:mm';
         tc.updateSettings(config);
 
@@ -153,7 +153,7 @@ describe('Set an append date', () => {
     });
 
     test('Dataview annotated string [completion::2021-08-15]', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[[completion::]YYYY-MM-DD[]]';
         tc.updateSettings(config);
 
@@ -170,7 +170,7 @@ describe('Set an append date', () => {
     });
 
     test('Correctly insert annotation ahead of block reference', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[[completion::]YYYY-MM-DD[]]';
         tc.updateSettings(config);
 
@@ -187,7 +187,7 @@ describe('Set an append date', () => {
     });
 
     test('Preserve continuation with strict line-break', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[(]YYYY-MM-DD[)]';
         tc.updateSettings(config);
 
@@ -196,7 +196,7 @@ describe('Set an append date', () => {
     });
 
     test('Preserve continuation with strict line-break across reset', () => {
-        const tc = new TaskCollector(new App());
+        const tc = new TaskMarker(new App());
         config.appendDateFormat = '[(]YYYY-MM-DD[)]';
         config.appendRemoveAllTasks = true;
         config.incompleteTaskValues = '>';
@@ -215,7 +215,7 @@ describe('Set an append date', () => {
 });
 
 test('Apply text stripping/reset rules to all tasks', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.appendDateFormat = '[(]YYYY-MM-DD[)]';
     config.removeExpression = "#(task|todo)";
     config.incompleteTaskValues = '>';
@@ -237,7 +237,7 @@ test('Apply text stripping/reset rules to all tasks', () => {
 });
 
 test('Deal with unknown task value', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.appendDateFormat = '[(]YYYY-MM-DD[)]';
     config.removeExpression = "#(task|todo)";
     config.incompleteTaskValues = '>';

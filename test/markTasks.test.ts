@@ -1,6 +1,6 @@
 import { App } from "obsidian";
-import { TaskCollector } from "../src/taskcollector-TaskCollector";
-import { DEFAULT_SETTINGS, TaskCollectorSettings } from "../src/taskcollector-Settings";
+import { TaskMarker } from "../src/taskmarker-TaskMarker";
+import { DEFAULT_SETTINGS, TaskMarkerSettings } from "../src/taskmarker-Settings";
 import * as Moment from 'moment';
 
 jest.mock('obsidian', () => ({
@@ -8,7 +8,7 @@ jest.mock('obsidian', () => ({
     moment: () => Moment()
 }));
 
-const config: TaskCollectorSettings = Object.assign({}, DEFAULT_SETTINGS);;
+const config: TaskMarkerSettings = Object.assign({}, DEFAULT_SETTINGS);;
 
 afterEach(() => {
     // reset config to defaults
@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 test('Test default settings', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     expect(tc.initSettings.removeRegExp).toBeNull();
@@ -40,7 +40,7 @@ test('Test default settings', () => {
 });
 
 test('Complete > when included in incomplete pattern', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.incompleteTaskValues = ' >';
     tc.updateSettings(config);
 
@@ -54,7 +54,7 @@ test('Complete > when included in incomplete pattern', () => {
 });
 
 test('- behaves like completed item when cancelled items are enabled', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.supportCanceledTasks = true;
     tc.updateSettings(config);
 
@@ -69,7 +69,7 @@ test('- behaves like completed item when cancelled items are enabled', () => {
 });
 
 test('Test with empty incomplete pattern', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.incompleteTaskValues = '';
     tc.updateSettings(config);
 
@@ -84,7 +84,7 @@ test('Test with empty incomplete pattern', () => {
 });
 
 test('Correctly mark complete or incomplete items in a selection', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.incompleteTaskValues = ' >';
     config.supportCanceledTasks = true;
     config.removeExpression = "#(task|todo)";
@@ -98,7 +98,7 @@ test('Correctly mark complete or incomplete items in a selection', () => {
 });
 
 test('Remove checkbox from line', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.completedAreaRemoveCheckbox = true;
     tc.updateSettings(config);
 
@@ -112,7 +112,7 @@ test('Remove checkbox from line', () => {
 });
 
 test('Create and Mark a normal list item', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.supportCanceledTasks = true;
     config.incompleteTaskValues = ' >';
     config.removeExpression = "#(task|todo)";
@@ -126,7 +126,7 @@ test('Create and Mark a normal list item', () => {
 });
 
 test('Mark tasks within a callout', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.supportCanceledTasks = true;
     tc.updateSettings(config);
 

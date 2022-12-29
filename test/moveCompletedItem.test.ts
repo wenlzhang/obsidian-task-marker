@@ -1,6 +1,6 @@
 import { App } from "obsidian";
-import { TaskCollector } from "../src/taskcollector-TaskCollector";
-import { DEFAULT_SETTINGS, TaskCollectorSettings } from "../src/taskcollector-Settings";
+import { TaskMarker } from "../src/taskmarker-TaskMarker";
+import { DEFAULT_SETTINGS, TaskMarkerSettings } from "../src/taskmarker-Settings";
 import * as Moment from 'moment';
 
 jest.mock('obsidian', () => ({
@@ -8,7 +8,7 @@ jest.mock('obsidian', () => ({
     moment: () => Moment()
 }));
 
-const config: TaskCollectorSettings = Object.assign({}, DEFAULT_SETTINGS);;
+const config: TaskMarkerSettings = Object.assign({}, DEFAULT_SETTINGS);;
 
 afterEach(() => {
     // reset config to defaults
@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 test('Test move -- no completed items', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     const text = "- [ ] Incomplete";
@@ -26,7 +26,7 @@ test('Test move -- no completed items', () => {
 });
 
 test('Test move -- no completed items; continuation', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     const text = "a  \n    text continuation";
@@ -36,7 +36,7 @@ test('Test move -- no completed items; continuation', () => {
 });
 
 test('Move completed items to archive area', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     config.supportCanceledTasks = true;
     tc.updateSettings(config);
 
@@ -46,7 +46,7 @@ test('Move completed items to archive area', () => {
 });
 
 test('Test move completed item', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     const start = "\n- [x] a  \n    text continuation  \n    \n    Including a longer paragraph in the same bullet\n";
@@ -56,7 +56,7 @@ test('Test move completed item', () => {
 });
 
 test('Test move completed item from callout', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     const start =
@@ -81,7 +81,7 @@ test('Test move completed item from callout', () => {
 });
 
 test('Test move callout associated with completed item', () => {
-    const tc = new TaskCollector(new App());
+    const tc = new TaskMarker(new App());
     tc.updateSettings(config);
 
     const start =
