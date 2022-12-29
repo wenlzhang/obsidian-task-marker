@@ -399,7 +399,28 @@ export class TaskCollector {
 
     markTaskLineCycle(lineText: string, mark: string): string {
 
-        let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+        var markValue = this.settings.incompleteTaskValuesRow2;
+        var markValueLength = markValue.length;
+
+        // Regroup mark as string array
+        let markStringArray = new Array<string>(markValueLength);
+        for (let i = 0; i < markValueLength; i++) {
+            markStringArray[i] = "- [" + markValue[i] + "] ";
+        }
+
+        // Find the next index
+        var markIndex = 0;
+        for (let i = 0; i < markValueLength; i++) {
+            if (lineText.contains(markStringArray[i])) {
+                if (i + 2 <= markValueLength) {
+                    markIndex = i + 1;
+                } else {
+                    markIndex = 0;
+                }
+            }
+        }
+        
+        let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
 
         if (this.initSettings.removeRegExp) {
             marked = marked.replace(this.initSettings.removeRegExp, "");
