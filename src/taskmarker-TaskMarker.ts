@@ -399,8 +399,8 @@ export class TaskMarker {
 
     markTaskLineCycle(lineText: string, mark: string): string {
 
-        var markValue = this.settings.cycleTaskValues;
-        var markValueLength = markValue.length;
+        const markValue = this.settings.cycleTaskValues;
+        const markValueLength = markValue.length;
 
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);
@@ -409,7 +409,7 @@ export class TaskMarker {
         }
 
         // Find the next index
-        var markIndex = 0;
+        let markIndex = 0;
         for (let i = 0; i < markValueLength; i++) {
             if (lineText.contains(markStringArray[i])) {
                 if (i + 2 <= markValueLength) {

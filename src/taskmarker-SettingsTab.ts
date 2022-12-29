@@ -1,7 +1,7 @@
 import { App, moment, PluginSettingTab, Setting } from "obsidian";
 import {
     TaskMarkerSettings,
-    DEFAULT_SETTINGS,
+    // DEFAULT_SETTINGS,
 } from "./taskmarker-Settings";
 import { TaskMarker } from "./taskmarker-TaskMarker";
 import TaskMarkerPlugin from "./main";
@@ -232,9 +232,6 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                             `Set of characters should not contain the marker for canceled tasks (-): ${value}`
                         );
                     } else {
-                        if (!value.contains(" ")) {
-                            value = value;
-                        }
                         tempSettings.incompleteTaskValuesRow2 = value;
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
