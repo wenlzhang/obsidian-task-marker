@@ -14,7 +14,7 @@
 ## Marking tasks
 
 - **Additional task statuses**
-    - Example:
+    - Examples:
         - `>?!`
         - Minimally a space (`[ ]`)
     - Notes:
@@ -26,3 +26,9 @@
     - See "**Append text to completed task**".
     - Notes:
         - In one row, one can choose to append text when marking an item; in another row, nothing would be appended.
+
+## Cycling tasks
+
+- **Cycled task statuses**
+    - Examples:
+        - `x- Rip`

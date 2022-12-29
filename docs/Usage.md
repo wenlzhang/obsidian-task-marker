@@ -24,8 +24,6 @@ If the current line is (or selection contains) a task, and the task matches the 
 
 ## Cycle task statuses
 
-Hotkeys can be used to cycle among task statuses configured in settings.
-
 1. If the current status of the item matches one of the configured statuses, the status would change to the next one.
       - For instance, if `Rip` is configured and the current status is `R`, then the status become `i` after executing the command.
 1. If the current status of the item does not match any of the configured statuses, the status would change to the first one.
