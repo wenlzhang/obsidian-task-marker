@@ -30,7 +30,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         );
         
         this.containerEl.createEl("p", {
-            text: "**Restart Obsidian to take effect.**",
+            text: "**Restart Obsidian if the following setting changes do not take effect.**",
         });
 
         this.containerEl.createEl("h2", { text: "Completing tasks" });
@@ -320,7 +320,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         });
 
         this.containerEl.createEl("p", {
-            text: "Task Marker creates commands that can be bound to hotkeys or accessed using slash commands for completing, marking and resetting tasks. The following settings add right click context menu items for those commands.",
+            text: "Task Marker creates commands that can be bound to hotkeys for completing, marking and resetting tasks in Editing view. The following settings add right click context menu items for those commands.",
         });
 
         // new Setting(this.containerEl)
@@ -343,7 +343,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for marking a task")
             .setDesc(
-                "Add an item to the right-click menu in edit mode to mark the task on the current line (or within the current selection). The selected value will mark the task in a way as specified in the section **Marking tasks**."
+                "The selected value will mark the task, on the current line (or within the current selection), in a way as specified in the section **Marking tasks**."
             )
             .addToggle((toggle) =>
                 toggle
@@ -358,7 +358,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for completing a task")
             .setDesc(
-                "Add an item to the right-click menu in edit mode to complete the task on the current line (or within the current selection). It will complete the task in a way as specified in the section **Completing tasks**."
+                "The menu item will complete the task, on the current line (or within the current selection), in a way as specified in the section **Completing tasks**."
             )
             .addToggle((toggle) =>
                 toggle
@@ -373,7 +373,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for resetting a task")
             .setDesc(
-                "Add an item to the right-click menu in edit mode to reset the task on the current line (or within the current selection)."
+                "The menu item will reset the task on the current line (or within the current selection)."
             )
             .addToggle((toggle) =>
                 toggle
