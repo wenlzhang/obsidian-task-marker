@@ -36,10 +36,15 @@ See [Setting](docs/Setting.md) for details.
 
 ## How to install
 
-1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) settings and **disable** Safe Mode
-2. Click on **Browse** and search for "task marker"
-3. Click install
-4. "Enable" the plugin directly after installation, or use the toggle on the community plugins tab to enable the plugin after it has been installed.
+The plugin has been submitted to the Obsidian **Community Plugins** for review but is not available in the community plugin store yet. For now, there are two methods to install this plugin:
+
+- Manually download `main.js`, `manifest.json` and `styles.css` and put them inside `.obsidian/obsidian-task-marker` of your Obsidian vault.
+- Alternatively, you can use [obsidian42-brat](https://github.com/TfTHacker/obsidian42-brat) to install and update the plugin.
+
+<!-- 1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) settings and **disable** Safe Mode
+1. Click on **Browse** and search for "task marker"
+2. Click install
+3. "Enable" the plugin directly after installation, or use the toggle on the community plugins tab to enable the plugin after it has been installed. -->
 
 ---
 
