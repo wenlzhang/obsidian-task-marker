@@ -98,8 +98,8 @@ If the current line is (or selection contains) a task:
 
 ## Credits
 
-- [ebullient/obsidian-task-collector: Plugin for https://obsidian.md/ that assists with managing tasks within a document.](https://github.com/ebullient/obsidian-task-collector)
-    - This plugin serves as a starting template for this plugin.
+- [Obsidian: Task Collector](https://github.com/ebullient/obsidian-task-collector)
+    - This plugin serves as a starting template.
 
 ## Support me
 
