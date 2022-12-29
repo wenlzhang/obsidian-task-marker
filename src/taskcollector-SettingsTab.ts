@@ -28,6 +28,16 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         const tempSettings: TaskCollectorSettings = Object.assign(
             this.taskCollector.settings
         );
+        
+        this.containerEl.createEl("p", {
+            text: "**Restart Obsidian to take effect.**",
+        });
+
+        this.containerEl.createEl("h2", { text: "Completing tasks" });
+
+        this.containerEl.createEl("p", {
+            text: "Completed tasks (and optionally '-' for canceled items) gain special treatment based on the settings below.",
+        });
 
         new Setting(this.containerEl)
             .setName("Only support x for completed tasks")
@@ -58,12 +68,6 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-        
-        this.containerEl.createEl("h2", { text: "Completing tasks" });
-
-        this.containerEl.createEl("p", {
-            text: "Completed tasks (and optionally '-' for canceled items) gain special treatment based on the settings below.",
-        });
 
         new Setting(this.containerEl)
             .setName("Append text to completed task")
@@ -259,6 +263,22 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                                 `Error parsing specified date format: ${value}`
                             );
                         }
+                    })
+            );
+        
+            new Setting(this.containerEl)
+            .setName("Cycle task statuses")
+            .setDesc(
+                "Specify the set of single characters that indicate any task statuses, e.g. 'x- Rip>'. A hotkey can be used to cycle among these statuses."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("x- Rip")
+                    .setValue(tempSettings.cycleTaskValues)
+                    .onChange(async (value) => {
+                        tempSettings.cycleTaskValues = value;
+                        this.taskCollector.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
                     })
             );
         

@@ -399,7 +399,7 @@ export class TaskCollector {
 
     markTaskLineCycle(lineText: string, mark: string): string {
 
-        var markValue = this.settings.incompleteTaskValuesRow2;
+        var markValue = this.settings.cycleTaskValues;
         var markValueLength = markValue.length;
 
         // Regroup mark as string array

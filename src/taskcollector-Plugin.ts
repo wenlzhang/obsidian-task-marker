@@ -301,7 +301,7 @@ export class TaskCollectorPlugin extends Plugin {
             icon: Icons.MARK,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycle(
-                    this.taskCollector.settings.incompleteTaskValuesRow2[0],
+                    'y', // This value does not matter.
                     this.getCurrentLinesFromEditor(editor)
                 );
                 // this.toggleTodos()

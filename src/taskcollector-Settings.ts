@@ -7,6 +7,7 @@ export interface TaskCollectorSettings {
     appendRemoveAllTasks: boolean;
     incompleteTaskValues: string;
     incompleteTaskValuesRow2: string;
+    cycleTaskValues: string;
     supportCanceledTasks: boolean;
     previewOnClick: boolean;
     rightClickComplete: boolean;
@@ -28,6 +29,7 @@ export const DEFAULT_SETTINGS: TaskCollectorSettings = {
     appendRemoveAllTasks: false,
     incompleteTaskValues: " ",
     incompleteTaskValuesRow2: "", // For choosing whether to show in the second row
+    cycleTaskValues: "",
     onlyLowercaseX: false,
     supportCanceledTasks: true,
     previewOnClick: false,
