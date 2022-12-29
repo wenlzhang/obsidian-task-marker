@@ -36,7 +36,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Completing tasks" });
 
         this.containerEl.createEl("p", {
-            text: "Completed tasks (and optionally '-' for canceled items) gain special treatment based on the settings below.",
+            text: "Completed tasks (and optionally '-' for canceled items) gain treatment based on the settings below.",
         });
 
         new Setting(this.containerEl)
@@ -57,7 +57,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Support canceled tasks")
             .setDesc(
-                "Use a - to indicate canceled tasks. Canceled tasks are processed in the same way as completed tasks using options below."
+                "Use '-' to indicate canceled tasks. Canceled tasks are processed in the same way as completed tasks."
             )
             .addToggle((toggle) =>
                 toggle
@@ -72,7 +72,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Append text to completed task")
             .setDesc(
-                "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the task text."
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
@@ -136,7 +136,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Marking tasks" });
 
         this.containerEl.createEl("p", {
-            text: "**Restart Obsidian to take effect.** Marked tasks gain special treatment based on the settings below. **Note that if a mark contains both in row 1 and row 2, the mark would work as specified in row 1.**",
+            text: "Marked tasks gain treatment based on the settings below. **Note that if a mark contains both in row 1 and row 2, then the mark would work as specified in row 1.**",
         });
 
         new Setting(this.containerEl)
@@ -182,7 +182,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Append text to marked task (row 1)")
             .setDesc(
-                "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the task text."
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
@@ -206,7 +206,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
             new Setting(this.containerEl)
             .setName("Additional task statuses (row 2)")
             .setDesc(
-                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
+                "Specify the set of single characters that indicate task status, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
             )
             .addText((text) =>
                 text
@@ -245,7 +245,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Append text to marked task (row 2)")
             .setDesc(
-                "Default empty. If set non-empty, append the string of the moment.js format to the end of the task text."
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the task text."
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
@@ -269,7 +269,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
             new Setting(this.containerEl)
             .setName("Cycle task statuses")
             .setDesc(
-                "Specify the set of single characters that indicate any task statuses, e.g. 'x- Rip>'. A hotkey can be used to cycle among these statuses."
+                "Specify the set of single characters that indicate any task statuses, e.g. 'x- Rip>'. Hotkeys can be used to cycle among these statuses."
             )
             .addText((text) =>
                 text
@@ -320,30 +320,30 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         });
 
         this.containerEl.createEl("p", {
-            text: "Task Collector creates commands that can be bound to hotkeys or accessed using slash commands for marking tasks complete (or canceled) and resetting tasks to an incomplete state. The following settings add right click context menu items for those commands.",
+            text: "Task Marker creates commands that can be bound to hotkeys or accessed using slash commands for completing, marking and resetting tasks. The following settings add right click context menu items for those commands.",
         });
 
-        new Setting(this.containerEl)
-            .setName(
-                "Preview / Live preview: Show the selection menu when a checkbox is clicked"
-            )
-            .setDesc(
-                "Display a panel that allows you to select (with mouse or keyboard) the value to assign when you click the task. The selected value will determine follow-on actions: complete, cancel, or reset."
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.previewOnClick)
-                    .onChange(async (value) => {
-                        tempSettings.previewOnClick = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        // new Setting(this.containerEl)
+        //     .setName(
+        //         "Preview / Live preview: Show the selection menu when a checkbox is clicked"
+        //     )
+        //     .setDesc(
+        //         "Display a panel that allows you to select (with mouse or keyboard) the value to assign when you click the task. The selected value will determine follow-on actions: complete, cancel, or reset."
+        //     )
+        //     .addToggle((toggle) =>
+        //         toggle
+        //             .setValue(tempSettings.previewOnClick)
+        //             .onChange(async (value) => {
+        //                 tempSettings.previewOnClick = value;
+        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 await this.plugin.saveSettings();
+        //             })
+        //     );
 
         new Setting(this.containerEl)
             .setName("Add menu item for marking a task")
             .setDesc(
-                "Add an item to the right-click menu in edit mode to mark the task on the current line (or within the current selection). This menu item will trigger a quick pop-up modal to select the desired mark value. The selected value will determine follow-on actions: complete, cancel, or reset."
+                "Add an item to the right-click menu in edit mode to mark the task on the current line (or within the current selection). The selected value will mark the task in a way as specified in the section **Marking tasks**."
             )
             .addToggle((toggle) =>
                 toggle
@@ -358,7 +358,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for completing a task")
             .setDesc(
-                "Add an item to the right-click menu in edit mode to mark the task on the current line (or within the current selection) complete. If canceled items are supported, an additional menu item will be added to mark selected tasks as canceled."
+                "Add an item to the right-click menu in edit mode to complete the task on the current line (or within the current selection). It will complete the task in a way as specified in the section **Completing tasks**."
             )
             .addToggle((toggle) =>
                 toggle
