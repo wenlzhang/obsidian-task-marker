@@ -3,7 +3,7 @@
 	"name": "Task Marker",
 	"version": "0.1.0",
 	"minAppVersion": "1.0.0",
-	"description": "Change task statuses with hotkeys and context menu. You can complete, cancel and mark tasks, as well as cycle among selected task statuses.",
+	"description": "Change task statuses with hotkeys and context menu. Complete, cancel and mark tasks, as well as cycle among selected task statuses.",
 	"author": "wenlzhang",
 	"authorUrl": "https://github.com/wenlzhang",
 	"fundingUrl": {
