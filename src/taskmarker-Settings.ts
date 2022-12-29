@@ -1,4 +1,4 @@
-export interface TaskCollectorSettings {
+export interface TaskMarkerSettings {
     // completedAreaHeader: string;
     removeExpression: string;
     appendDateFormat: string;
@@ -21,7 +21,7 @@ export interface TaskCollectorSettings {
     onlyLowercaseX: boolean;
 }
 
-export const DEFAULT_SETTINGS: TaskCollectorSettings = {
+export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     // completedAreaHeader: "## Log",
     removeExpression: "",
     appendDateFormat: "",

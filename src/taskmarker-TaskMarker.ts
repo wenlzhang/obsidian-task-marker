@@ -1,11 +1,11 @@
 import { App, moment } from "obsidian";
 import {
-    TaskCollectorSettings,
+    TaskMarkerSettings,
     CompiledTasksSettings,
-} from "./taskcollector-Settings";
+} from "./taskmarker-Settings";
 
-export class TaskCollector {
-    settings: TaskCollectorSettings;
+export class TaskMarker {
+    settings: TaskMarkerSettings;
     initSettings: CompiledTasksSettings;
     anyListItem: RegExp;
     taskMark: RegExp;
@@ -25,7 +25,7 @@ export class TaskCollector {
         this.stripTask = new RegExp(/^([\s>]*-) \[.\] (.*)$/);
     }
 
-    updateSettings(settings: TaskCollectorSettings): void {
+    updateSettings(settings: TaskMarkerSettings): void {
         this.settings = settings;
         let momentMatchString = null;
 

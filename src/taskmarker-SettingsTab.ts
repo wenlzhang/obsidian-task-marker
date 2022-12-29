@@ -1,23 +1,23 @@
 import { App, moment, PluginSettingTab, Setting } from "obsidian";
 import {
-    TaskCollectorSettings,
+    TaskMarkerSettings,
     DEFAULT_SETTINGS,
-} from "./taskcollector-Settings";
-import { TaskCollector } from "./taskcollector-TaskCollector";
-import TaskCollectorPlugin from "./main";
+} from "./taskmarker-Settings";
+import { TaskMarker } from "./taskmarker-TaskMarker";
+import TaskMarkerPlugin from "./main";
 
-export class TaskCollectorSettingsTab extends PluginSettingTab {
-    plugin: TaskCollectorPlugin;
-    taskCollector: TaskCollector;
+export class TaskMarkerSettingsTab extends PluginSettingTab {
+    plugin: TaskMarkerPlugin;
+    taskMarker: TaskMarker;
 
     constructor(
         app: App,
-        plugin: TaskCollectorPlugin,
-        taskCollector: TaskCollector
+        plugin: TaskMarkerPlugin,
+        taskMarker: TaskMarker
     ) {
         super(app, plugin);
         this.plugin = plugin;
-        this.taskCollector = taskCollector;
+        this.taskMarker = taskMarker;
     }
 
     display(): void {
@@ -25,8 +25,8 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
 
         this.containerEl.createEl("h1", { text: "Task Marker" });
 
-        const tempSettings: TaskCollectorSettings = Object.assign(
-            this.taskCollector.settings
+        const tempSettings: TaskMarkerSettings = Object.assign(
+            this.taskMarker.settings
         );
         
         this.containerEl.createEl("p", {
@@ -49,7 +49,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     .setValue(tempSettings.onlyLowercaseX)
                     .onChange(async (value) => {
                         tempSettings.onlyLowercaseX = value;
-                        this.taskCollector.updateSettings(tempSettings);
+                        this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
             );
@@ -64,7 +64,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     .setValue(tempSettings.supportCanceledTasks)
                     .onChange(async (value) => {
                         tempSettings.supportCanceledTasks = value;
-                        this.taskCollector.updateSettings(tempSettings);
+                        this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
             );
@@ -83,7 +83,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                             // Try formatting "now" with the specified format string
                             moment().format(value);
                             tempSettings.appendDateFormat = value;
-                            this.taskCollector.updateSettings(tempSettings);
+                            this.taskMarker.updateSettings(tempSettings);
                             await this.plugin.saveSettings();
                         } catch (e) {
                             console.log(
@@ -105,10 +105,10 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .onChange(async (value) => {
         //                 try {
         //                     // try compiling the regular expression
-        //                     this.taskCollector.tryCreateRemoveRegex(value);
+        //                     this.taskMarker.tryCreateRemoveRegex(value);
 
         //                     tempSettings.removeExpression = value;
-        //                     this.taskCollector.updateSettings(tempSettings);
+        //                     this.taskMarker.updateSettings(tempSettings);
         //                     await this.plugin.saveSettings();
         //                 } catch (e) {
         //                     console.log(
@@ -128,7 +128,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .setValue(tempSettings.appendRemoveAllTasks)
         //             .onChange(async (value) => {
         //                 tempSettings.appendRemoveAllTasks = value;
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );
@@ -173,7 +173,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                                 value = " " + value;
                             }
                             tempSettings.incompleteTaskValues = value;
-                            this.taskCollector.updateSettings(tempSettings);
+                            this.taskMarker.updateSettings(tempSettings);
                             await this.plugin.saveSettings();
                         }
                     })
@@ -193,7 +193,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                             // Try formatting "now" with the specified format string
                             moment().format(value);
                             tempSettings.appendTextFormatMark = value;
-                            this.taskCollector.updateSettings(tempSettings);
+                            this.taskMarker.updateSettings(tempSettings);
                             await this.plugin.saveSettings();
                         } catch (e) {
                             console.log(
@@ -236,7 +236,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                             value = value;
                         }
                         tempSettings.incompleteTaskValuesRow2 = value;
-                        this.taskCollector.updateSettings(tempSettings);
+                        this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     }
                 })
@@ -256,7 +256,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                             // Try formatting "now" with the specified format string
                             moment().format(value);
                             tempSettings.appendTextFormatMarkRow2 = value;
-                            this.taskCollector.updateSettings(tempSettings);
+                            this.taskMarker.updateSettings(tempSettings);
                             await this.plugin.saveSettings();
                         } catch (e) {
                             console.log(
@@ -283,7 +283,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.cycleTaskValues)
                 .onChange(async (value) => {
                     tempSettings.cycleTaskValues = value;
-                    this.taskCollector.updateSettings(tempSettings);
+                    this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
         );
@@ -301,7 +301,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .setValue(tempSettings.completedAreaHeader)
         //             .onChange(async (value) => {
         //                 tempSettings.completedAreaHeader = value.trim();
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );
@@ -309,14 +309,14 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         // new Setting(this.containerEl)
         //     .setName("Remove the checkbox from moved items")
         //     .setDesc(
-        //         `Remove the checkbox from completed (or canceled) tasks during the move to the completed area. This transforms tasks into normal list items. Task Collector will not be able to reset these items. They also will not appear in task searches or queries. The default value is: '${DEFAULT_SETTINGS.completedAreaRemoveCheckbox}'.`
+        //         `Remove the checkbox from completed (or canceled) tasks during the move to the completed area. This transforms tasks into normal list items. Task Marker will not be able to reset these items. They also will not appear in task searches or queries. The default value is: '${DEFAULT_SETTINGS.completedAreaRemoveCheckbox}'.`
         //     )
         //     .addToggle((toggle) =>
         //         toggle
         //             .setValue(tempSettings.completedAreaRemoveCheckbox)
         //             .onChange(async (value) => {
         //                 tempSettings.completedAreaRemoveCheckbox = value;
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );
@@ -341,7 +341,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .setValue(tempSettings.previewOnClick)
         //             .onChange(async (value) => {
         //                 tempSettings.previewOnClick = value;
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );
@@ -356,7 +356,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     .setValue(tempSettings.rightClickComplete)
                     .onChange(async (value) => {
                         tempSettings.rightClickComplete = value;
-                        this.taskCollector.updateSettings(tempSettings);
+                        this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
             );
@@ -371,7 +371,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     .setValue(tempSettings.rightClickMark)
                     .onChange(async (value) => {
                         tempSettings.rightClickMark = value;
-                        this.taskCollector.updateSettings(tempSettings);
+                        this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
             );
@@ -386,7 +386,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.rightClickCycle)
                 .onChange(async (value) => {
                     tempSettings.rightClickCycle = value;
-                    this.taskCollector.updateSettings(tempSettings);
+                    this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
         );
@@ -401,7 +401,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     .setValue(tempSettings.rightClickResetTask)
                     .onChange(async (value) => {
                         tempSettings.rightClickResetTask = value;
-                        this.taskCollector.updateSettings(tempSettings);
+                        this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
             );
@@ -416,7 +416,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .setValue(tempSettings.rightClickToggleAll)
         //             .onChange(async (value) => {
         //                 tempSettings.rightClickToggleAll = value;
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );
@@ -431,7 +431,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .setValue(tempSettings.rightClickResetAll)
         //             .onChange(async (value) => {
         //                 tempSettings.rightClickResetAll = value;
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );
@@ -446,7 +446,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //             .setValue(tempSettings.rightClickMove)
         //             .onChange(async (value) => {
         //                 tempSettings.rightClickMove = value;
-        //                 this.taskCollector.updateSettings(tempSettings);
+        //                 this.taskMarker.updateSettings(tempSettings);
         //                 await this.plugin.saveSettings();
         //             })
         //     );

@@ -9,12 +9,12 @@ import {
     MarkdownPostProcessor,
     MarkdownPreviewRenderer,
 } from "obsidian";
-import { TaskCollector } from "./taskcollector-TaskCollector";
-import { DEFAULT_SETTINGS } from "./taskcollector-Settings";
-import { TaskCollectorSettingsTab } from "./taskcollector-SettingsTab";
-import { promptForMark } from "./taskcollector-TaskMarkModal";
+import { TaskMarker } from "./taskmarker-TaskMarker";
+import { DEFAULT_SETTINGS } from "./taskmarker-Settings";
+import { TaskMarkerSettingsTab } from "./taskmarker-SettingsTab";
+import { promptForMark } from "./taskmarker-TaskMarkModal";
 import { API } from "./@types/api";
-import { TaskCollectorApi } from "./taskcollector-Api";
+import { TaskMarkerApi } from "./taskmarker-Api";
 
 enum Icons {
     COMPLETE = "tm-complete-item",
@@ -26,17 +26,17 @@ enum Icons {
     MOVE = "tm-move-all-checked-items",
 }
 
-export class TaskCollectorPlugin extends Plugin {
-    taskCollector: TaskCollector;
+export class TaskMarkerPlugin extends Plugin {
+    taskMarker: TaskMarker;
 
     /** External-facing plugin API. */
     public api: API;
 
     async onload(): Promise<void> {
         console.log("loading Task Marker (TM)");
-        this.taskCollector = new TaskCollector(this.app);
+        this.taskMarker = new TaskMarker(this.app);
         this.addSettingTab(
-            new TaskCollectorSettingsTab(this.app, this, this.taskCollector)
+            new TaskMarkerSettingsTab(this.app, this, this.taskMarker)
         );
         await this.loadSettings();
 
@@ -70,7 +70,7 @@ export class TaskCollectorPlugin extends Plugin {
         // );
 
         const completeTaskCommand: Command = {
-            id: "task-collector-mark-done",
+            id: "task-marker-mark-done",
             name: "Complete item",
             icon: Icons.COMPLETE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
@@ -82,7 +82,7 @@ export class TaskCollectorPlugin extends Plugin {
         };
 
         const cancelTaskCommand: Command = {
-            id: "task-collector-mark-canceled",
+            id: "task-marker-mark-canceled",
             name: "Cancel item",
             icon: Icons.CANCEL,
             editorCallback: (editor: Editor, view: MarkdownView) => {
@@ -94,7 +94,7 @@ export class TaskCollectorPlugin extends Plugin {
         };
 
         const resetTaskCommand: Command = {
-            id: "task-collector-mark-reset",
+            id: "task-marker-mark-reset",
             name: "Reset item",
             icon: Icons.RESET,
             editorCallback: (editor: Editor, view: MarkdownView) => {
@@ -106,11 +106,11 @@ export class TaskCollectorPlugin extends Plugin {
         };
 
         const markTaskCommand: Command = {
-            id: "task-collector-mark",
+            id: "task-marker-mark",
             name: "Mark item",
             icon: Icons.MARK,
             editorCallback: async (editor: Editor, view: MarkdownView) => {
-                const mark = await promptForMark(this.app, this.taskCollector);
+                const mark = await promptForMark(this.app, this.taskMarker);
                 if (mark) {
                     this.markTaskOnLines(
                         mark,
@@ -121,7 +121,7 @@ export class TaskCollectorPlugin extends Plugin {
         };
 
         const completeAllTasksCommand: Command = {
-            id: "task-collector-mark-all-done",
+            id: "task-marker-mark-all-done",
             name: "Complete all tasks",
             icon: Icons.COMPLETE_ALL,
             callback: async () => {
@@ -130,7 +130,7 @@ export class TaskCollectorPlugin extends Plugin {
         };
 
         const clearAllTasksCommand: Command = {
-            id: "task-collector-clear-all-items",
+            id: "task-marker-clear-all-items",
             name: "Reset all completed tasks",
             icon: Icons.CLEAR,
             callback: async () => {
@@ -139,7 +139,7 @@ export class TaskCollectorPlugin extends Plugin {
         };
 
         // Set hotkeys for additional task statuses (row 1)
-        const incompleteTaskValuesLength = this.taskCollector.settings.incompleteTaskValues.length
+        const incompleteTaskValuesLength = this.taskMarker.settings.incompleteTaskValues.length
 
         if (incompleteTaskValuesLength >= 2) {
             const markItemStatus1Command: Command = {
@@ -148,7 +148,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValues[1],
+                        this.taskMarker.settings.incompleteTaskValues[1],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -163,7 +163,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValues[2],
+                        this.taskMarker.settings.incompleteTaskValues[2],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -178,7 +178,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValues[3],
+                        this.taskMarker.settings.incompleteTaskValues[3],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -193,7 +193,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValues[4],
+                        this.taskMarker.settings.incompleteTaskValues[4],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -208,7 +208,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValues[5],
+                        this.taskMarker.settings.incompleteTaskValues[5],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -217,7 +217,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // Set hotkeys for additional task statuses (row 2)
-        const incompleteTaskValuesRow2Length = this.taskCollector.settings.incompleteTaskValuesRow2.length
+        const incompleteTaskValuesRow2Length = this.taskMarker.settings.incompleteTaskValuesRow2.length
 
         if (incompleteTaskValuesRow2Length >= 1) {
             const markItemStatus1Command: Command = {
@@ -226,7 +226,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValuesRow2[0],
+                        this.taskMarker.settings.incompleteTaskValuesRow2[0],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -241,7 +241,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValuesRow2[1],
+                        this.taskMarker.settings.incompleteTaskValuesRow2[1],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -256,7 +256,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValuesRow2[2],
+                        this.taskMarker.settings.incompleteTaskValuesRow2[2],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -271,7 +271,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValuesRow2[3],
+                        this.taskMarker.settings.incompleteTaskValuesRow2[3],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -286,7 +286,7 @@ export class TaskCollectorPlugin extends Plugin {
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
-                        this.taskCollector.settings.incompleteTaskValuesRow2[4],
+                        this.taskMarker.settings.incompleteTaskValuesRow2[4],
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
@@ -309,7 +309,7 @@ export class TaskCollectorPlugin extends Plugin {
         this.addCommand(cycleItemStatusCommand);
 
         // const moveTaskCommand: Command = {
-        //     id: "task-collector-move-completed-tasks",
+        //     id: "task-marker-move-completed-tasks",
         //     name: "Move all completed tasks to configured heading",
         //     icon: Icons.MOVE,
         //     callback: async () => {
@@ -318,7 +318,7 @@ export class TaskCollectorPlugin extends Plugin {
         // };
 
         this.addCommand(completeTaskCommand);
-        if (this.taskCollector.settings.supportCanceledTasks) {
+        if (this.taskMarker.settings.supportCanceledTasks) {
             this.addCommand(cancelTaskCommand);
         }
         this.addCommand(markTaskCommand);
@@ -328,7 +328,7 @@ export class TaskCollectorPlugin extends Plugin {
         this.addCommand(clearAllTasksCommand);
         this.registerHandlers();
 
-        this.api = new TaskCollectorApi(this.app, this.taskCollector);
+        this.api = new TaskMarkerApi(this.app, this.taskMarker);
     }
 
     getCurrentLinesFromEditor(editor: Editor): number[] {
@@ -348,7 +348,7 @@ export class TaskCollectorPlugin extends Plugin {
 
     buildMenu(menu: Menu, lines?: number[]): void {
         // if right-click complete menu items is enabled
-        if (this.taskCollector.settings.rightClickComplete) {
+        if (this.taskMarker.settings.rightClickComplete) {
             menu.addItem((item) =>
                 item
                     .setTitle("(TM) Complete Task")
@@ -359,7 +359,7 @@ export class TaskCollectorPlugin extends Plugin {
             );
 
             // if canceling items is supported, add the menu item for that.
-            if (this.taskCollector.settings.supportCanceledTasks) {
+            if (this.taskMarker.settings.supportCanceledTasks) {
                 menu.addItem((item) =>
                     item
                         .setTitle("(TM) Cancel Task")
@@ -372,7 +372,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // if right-click mark menu items is enabled
-        if (this.taskCollector.settings.rightClickMark) {
+        if (this.taskMarker.settings.rightClickMark) {
             menu.addItem((item) =>
                 item
                     .setTitle("(TM) Mark Task")
@@ -380,7 +380,7 @@ export class TaskCollectorPlugin extends Plugin {
                     .onClick(async () => {
                         const mark = await promptForMark(
                             this.app,
-                            this.taskCollector
+                            this.taskMarker
                         );
                         if (mark) {
                             this.markTaskOnLines(mark, lines);
@@ -390,7 +390,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // if right-click cycle menu items is enabled
-        if (this.taskCollector.settings.rightClickCycle) {
+        if (this.taskMarker.settings.rightClickCycle) {
             menu.addItem((item) =>
                 item
                     .setTitle("(TM) Cycle Task")
@@ -402,7 +402,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // add an item for resetting selected tasks if enabled
-        if (this.taskCollector.settings.rightClickResetTask) {
+        if (this.taskMarker.settings.rightClickResetTask) {
             menu.addItem((item) =>
                 item
                     .setTitle("(TM) Reset Task")
@@ -414,7 +414,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // If right-click move completed items is enabled:
-        // if (this.taskCollector.settings.rightClickMove) {
+        // if (this.taskMarker.settings.rightClickMove) {
         //     menu.addItem((item) =>
         //         item
         //             .setTitle("(TM) Move completed tasks")
@@ -426,7 +426,7 @@ export class TaskCollectorPlugin extends Plugin {
         // }
 
         // If right-click toggle-all menu items are enabled:
-        if (this.taskCollector.settings.rightClickToggleAll) {
+        if (this.taskMarker.settings.rightClickToggleAll) {
             menu.addItem((item) =>
                 item
                     .setTitle("(TM) Complete All Tasks")
@@ -438,7 +438,7 @@ export class TaskCollectorPlugin extends Plugin {
         }
 
         // add an item for resetting selected tasks if enabled
-        if (this.taskCollector.settings.rightClickResetAll) {
+        if (this.taskMarker.settings.rightClickResetAll) {
             menu.addItem((item) =>
                 item
                     .setTitle("(TM) Reset All Tasks")
@@ -453,35 +453,35 @@ export class TaskCollectorPlugin extends Plugin {
     async markTaskOnLines(mark: string, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-        const result = this.taskCollector.markTaskInSource(source, mark, lines);
+        const result = this.taskMarker.markTaskInSource(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 
     async markTaskOnLinesCycle(mark: string, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-        const result = this.taskCollector.markTaskInSourceCycle(source, mark, lines);
+        const result = this.taskMarker.markTaskInSourceCycle(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 
     // async moveAllTasks(): Promise<void> {
     //     const activeFile = this.app.workspace.getActiveFile();
     //     const source = await this.app.vault.read(activeFile);
-    //     const result = this.taskCollector.moveCompletedTasksInFile(source);
+    //     const result = this.taskMarker.moveCompletedTasksInFile(source);
     //     this.app.vault.modify(activeFile, result);
     // }
 
     async completeAllTasks(): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-        const result = this.taskCollector.markAllTasksComplete(source, "x");
+        const result = this.taskMarker.markAllTasksComplete(source, "x");
         this.app.vault.modify(activeFile, result);
     }
 
     async resetAllTasks(): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-        const result = this.taskCollector.resetAllTasks(source);
+        const result = this.taskMarker.resetAllTasks(source);
         this.app.vault.modify(activeFile, result);
     }
 
@@ -490,13 +490,13 @@ export class TaskCollectorPlugin extends Plugin {
     postProcessor: MarkdownPostProcessor;
     registerHandlers(): void {
         if (
-            this.taskCollector.initSettings.registerHandlers &&
+            this.taskMarker.initSettings.registerHandlers &&
             !this.handlersRegistered
         ) {
             this.handlersRegistered = true;
 
             // Source / Edit mode
-            if (this.taskCollector.initSettings.rightClickTaskMenu) {
+            if (this.taskMarker.initSettings.rightClickTaskMenu) {
                 this.registerEvent(
                     (this.eventRef = this.app.workspace.on(
                         "editor-menu",
@@ -528,7 +528,7 @@ export class TaskCollectorPlugin extends Plugin {
                         const line = Number(checkbox.dataset.line);
 
                         if (
-                            this.taskCollector.initSettings.rightClickTaskMenu
+                            this.taskMarker.initSettings.rightClickTaskMenu
                         ) {
                             this.registerDomEvent(
                                 checkbox.parentElement,
@@ -550,7 +550,7 @@ export class TaskCollectorPlugin extends Plugin {
                             );
                         }
 
-                        if (this.taskCollector.settings.previewOnClick) {
+                        if (this.taskMarker.settings.previewOnClick) {
                             this.registerDomEvent(
                                 checkbox,
                                 "click",
@@ -559,7 +559,7 @@ export class TaskCollectorPlugin extends Plugin {
                                     ev.preventDefault();
                                     const mark = await promptForMark(
                                         this.app,
-                                        this.taskCollector
+                                        this.taskMarker
                                     );
                                     if (mark) {
                                         this.markTaskOnLines(mark, [
@@ -604,19 +604,19 @@ export class TaskCollectorPlugin extends Plugin {
             delete settings.rightClickReset;
             await this.saveData(settings);
         }
-        this.taskCollector.updateSettings(settings);
+        this.taskMarker.updateSettings(settings);
     }
 
     async saveSettings(): Promise<void> {
-        await this.saveData(this.taskCollector.settings);
+        await this.saveData(this.taskMarker.settings);
         if (
-            this.taskCollector.initSettings.rightClickTaskMenu &&
+            this.taskMarker.initSettings.rightClickTaskMenu &&
             !this.handlersRegistered
         ) {
             this.registerHandlers();
         }
         if (
-            !this.taskCollector.initSettings.rightClickTaskMenu &&
+            !this.taskMarker.initSettings.rightClickTaskMenu &&
             this.handlersRegistered
         ) {
             this.unregisterHandlers();

@@ -1,3 +1,3 @@
-import { TaskCollectorPlugin } from "./taskcollector-Plugin";
+import { TaskMarkerPlugin } from "./taskmarker-Plugin";
 
-export default TaskCollectorPlugin;
+export default TaskMarkerPlugin;

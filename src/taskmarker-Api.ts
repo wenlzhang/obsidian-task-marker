@@ -1,27 +1,27 @@
 import { App } from "obsidian";
 import { API } from "./@types/api";
-import { TaskCollector } from "./taskcollector-TaskCollector";
-import { promptForMark } from "./taskcollector-TaskMarkModal";
+import { TaskMarker } from "./taskmarker-TaskMarker";
+import { promptForMark } from "./taskmarker-TaskMarkModal";
 
-export class TaskCollectorApi implements API {
+export class TaskMarkerApi implements API {
     app: App;
-    taskCollector: TaskCollector;
+    taskMarker: TaskMarker;
 
-    constructor(app: App, taskCollector: TaskCollector) {
+    constructor(app: App, taskMarker: TaskMarker) {
         this.app = app;
-        this.taskCollector = taskCollector;
+        this.taskMarker = taskMarker;
     }
 
     getCompletedTaskValues(): string {
-        return this.taskCollector.initSettings.completedTasks;
+        return this.taskMarker.initSettings.completedTasks;
     }
 
     getIncompleteTaskValues(): string {
-        return this.taskCollector.settings.incompleteTaskValues;
+        return this.taskMarker.settings.incompleteTaskValues;
     }
 
     getMark(): Promise<string> {
-        return promptForMark(this.app, this.taskCollector);
+        return promptForMark(this.app, this.taskMarker);
     }
 
     isComplete(value: string): boolean {

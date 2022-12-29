@@ -1,12 +1,12 @@
 import { App, Modal } from "obsidian";
-import { TaskCollector } from "./taskcollector-TaskCollector";
+import { TaskMarker } from "./taskmarker-TaskMarker";
 
 export function promptForMark(
     app: App,
-    taskCollector: TaskCollector
+    taskMarker: TaskMarker
 ): Promise<string> {
     return new Promise((resolve) => {
-        const modal = new TaskMarkModal(app, taskCollector);
+        const modal = new TaskMarkModal(app, taskMarker);
 
         modal.onClose = () => {
             resolve(modal.chosenMark);
@@ -17,24 +17,24 @@ export function promptForMark(
 }
 
 export class TaskMarkModal extends Modal {
-    taskCollector: TaskCollector;
+    taskMarker: TaskMarker;
     chosenMark: string;
-    constructor(app: App, taskCollector: TaskCollector) {
+    constructor(app: App, taskMarker: TaskMarker) {
         super(app);
-        this.taskCollector = taskCollector;
-        this.containerEl.id = "taskcollector-modal";
+        this.taskMarker = taskMarker;
+        this.containerEl.id = "taskmarker-modal";
     }
 
     onOpen(): void {
         const selector = this.contentEl.createDiv(
-            "taskcollector-selector markdown-preview-view"
+            "taskmarker-selector markdown-preview-view"
         );
 
         const completedList = selector.createEl("ul");
         completedList.addClass("contains-task-list");
         this.addTaskValues(
             completedList,
-            this.taskCollector.initSettings.completedTasks,
+            this.taskMarker.initSettings.completedTasks,
             true
         );
 
@@ -42,7 +42,7 @@ export class TaskMarkModal extends Modal {
         list.addClass("contains-task-list");
         this.addTaskValues(
             list,
-            this.taskCollector.settings.incompleteTaskValues,
+            this.taskMarker.settings.incompleteTaskValues,
             false
         );
 
@@ -50,7 +50,7 @@ export class TaskMarkModal extends Modal {
         listRow2.addClass("contains-task-list");
         this.addTaskValues(
             listRow2,
-            this.taskCollector.settings.incompleteTaskValuesRow2,
+            this.taskMarker.settings.incompleteTaskValuesRow2,
             false
         );
 
