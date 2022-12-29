@@ -4,11 +4,21 @@
 
 A plugin to change task statuses with hotkeys and right-click context menu.
 
-- **Completed tasks** are marked with `[x]`.
-    - **Canceled tasks**, marked with `[-]`, can also be added to this group in settings.
-- Any other task status, e.g. `[>]`, are considered **incomplete** (or in-progress).
-- When a task is *completed* (assigned `[x]` or optionally `[-]`), it can be annotated with additional text, e.g. `✅ 2023-01-01`.
-- When an item is _marked with additional task statuses_, text can also be appended at the end, e.g. `❎ 2023-01-01`.
+---
+
+## Features
+
+- Complete tasks
+    - Mark tasks with `[x]`
+    - Optionally append text such as `✅ 2023-01-01`
+- Cancel tasks
+    - Mark tasks with `[-]`
+    - Optionally append text such as `✅ 2023-01-01`
+- Mark tasks
+    - Mark tasks with statuses such as `[>]` and [/]
+    - Optionally append text such as `❎ 2023-01-01`
+- Cycle task statuses
+    - Cycle among statuses such as `[x]`, `[-]`, `[>]` and `[/]`
 
 ---
 
