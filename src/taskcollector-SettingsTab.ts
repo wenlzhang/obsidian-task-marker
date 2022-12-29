@@ -36,7 +36,7 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Completing tasks" });
 
         this.containerEl.createEl("p", {
-            text: "Completed tasks (and optionally '-' for canceled items) gain treatment based on the settings below.",
+            text: "Completed tasks gain treatment based on the settings below.",
         });
 
         new Setting(this.containerEl)
@@ -203,44 +203,44 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
         
-            new Setting(this.containerEl)
-            .setName("Additional task statuses (row 2)")
-            .setDesc(
-                "Specify the set of single characters that indicate task status, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
-            )
-            .addText((text) =>
-                text
-                    .setPlaceholder("Rip")
-                    .setValue(tempSettings.incompleteTaskValuesRow2)
-                    .onChange(async (value) => {
-                        if (value.contains("x")) {
-                            console.log(
-                                `Set of characters should not contain the marker for completed tasks (x): ${value}`
-                            );
-                        } else if (
-                            !tempSettings.onlyLowercaseX &&
-                            value.contains("X")
-                        ) {
-                            console.log(
-                                `Set of characters should not contain the marker for completed tasks (X): ${value}`
-                            );
-                        } else if (
-                            tempSettings.supportCanceledTasks &&
-                            value.contains("-")
-                        ) {
-                            console.log(
-                                `Set of characters should not contain the marker for canceled tasks (-): ${value}`
-                            );
-                        } else {
-                            if (!value.contains(" ")) {
-                                value = value;
-                            }
-                            tempSettings.incompleteTaskValuesRow2 = value;
-                            this.taskCollector.updateSettings(tempSettings);
-                            await this.plugin.saveSettings();
+        new Setting(this.containerEl)
+        .setName("Additional task statuses (row 2)")
+        .setDesc(
+            "Specify the set of single characters that indicate task status, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
+        )
+        .addText((text) =>
+            text
+                .setPlaceholder("Rip")
+                .setValue(tempSettings.incompleteTaskValuesRow2)
+                .onChange(async (value) => {
+                    if (value.contains("x")) {
+                        console.log(
+                            `Set of characters should not contain the marker for completed tasks (x): ${value}`
+                        );
+                    } else if (
+                        !tempSettings.onlyLowercaseX &&
+                        value.contains("X")
+                    ) {
+                        console.log(
+                            `Set of characters should not contain the marker for completed tasks (X): ${value}`
+                        );
+                    } else if (
+                        tempSettings.supportCanceledTasks &&
+                        value.contains("-")
+                    ) {
+                        console.log(
+                            `Set of characters should not contain the marker for canceled tasks (-): ${value}`
+                        );
+                    } else {
+                        if (!value.contains(" ")) {
+                            value = value;
                         }
-                    })
-            );
+                        tempSettings.incompleteTaskValuesRow2 = value;
+                        this.taskCollector.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    }
+                })
+        );
         
         new Setting(this.containerEl)
             .setName("Append text to marked task (row 2)")
@@ -266,21 +266,27 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
                     })
             );
         
-            new Setting(this.containerEl)
-            .setName("Cycle task statuses")
-            .setDesc(
-                "Specify the set of single characters that indicate any task statuses, e.g. 'x- Rip>'. Hotkeys can be used to cycle among these statuses."
-            )
-            .addText((text) =>
-                text
-                    .setPlaceholder("x- Rip")
-                    .setValue(tempSettings.cycleTaskValues)
-                    .onChange(async (value) => {
-                        tempSettings.cycleTaskValues = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
+        this.containerEl.createEl("h2", { text: "Cycling tasks" });
+
+        this.containerEl.createEl("p", {
+            text: "Cycled tasks gain treatment based on the settings below.",
+        });
+
+        new Setting(this.containerEl)
+        .setName("Cycled task statuses")
+        .setDesc(
+            "Specify the set of single characters that indicate any task statuses, e.g. 'x- Rip>'. Hotkeys can be used to cycle among these statuses."
+        )
+        .addText((text) =>
+            text
+                .setPlaceholder("x- Rip")
+                .setValue(tempSettings.cycleTaskValues)
+                .onChange(async (value) => {
+                    tempSettings.cycleTaskValues = value;
+                    this.taskCollector.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
         
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
@@ -341,6 +347,21 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
         //     );
 
         new Setting(this.containerEl)
+            .setName("Add menu item for completing a task")
+            .setDesc(
+                "The menu item will complete the task, on the current line (or within the current selection), in a way as specified in the section **Completing tasks**."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickComplete)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickComplete = value;
+                        this.taskCollector.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
+        
+        new Setting(this.containerEl)
             .setName("Add menu item for marking a task")
             .setDesc(
                 "The selected value will mark the task, on the current line (or within the current selection), in a way as specified in the section **Marking tasks**."
@@ -356,20 +377,20 @@ export class TaskCollectorSettingsTab extends PluginSettingTab {
             );
 
         new Setting(this.containerEl)
-            .setName("Add menu item for completing a task")
-            .setDesc(
-                "The menu item will complete the task, on the current line (or within the current selection), in a way as specified in the section **Completing tasks**."
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.rightClickComplete)
-                    .onChange(async (value) => {
-                        tempSettings.rightClickComplete = value;
-                        this.taskCollector.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
-            );
-
+        .setName("Add menu item for cycling a a task")
+        .setDesc(
+            "The menu item will cycle the statuses of the task, on the current line (or within the current selection), in a way as specified in the section **Cycling tasks**."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCycle)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCycle = value;
+                    this.taskCollector.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        
         new Setting(this.containerEl)
             .setName("Add menu item for resetting a task")
             .setDesc(

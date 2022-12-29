@@ -12,6 +12,7 @@ export interface TaskCollectorSettings {
     previewOnClick: boolean;
     rightClickComplete: boolean;
     rightClickMark: boolean;
+    rightClickCycle: boolean;
     // rightClickMove: boolean;
     rightClickResetTask: boolean;
     rightClickResetAll: boolean;
@@ -35,6 +36,7 @@ export const DEFAULT_SETTINGS: TaskCollectorSettings = {
     previewOnClick: false,
     rightClickComplete: false,
     rightClickMark: false,
+    rightClickCycle: false,
     // rightClickMove: false,
     rightClickResetTask: false,
     rightClickResetAll: false,

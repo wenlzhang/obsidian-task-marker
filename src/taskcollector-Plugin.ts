@@ -347,23 +347,6 @@ export class TaskCollectorPlugin extends Plugin {
     }
 
     buildMenu(menu: Menu, lines?: number[]): void {
-        if (this.taskCollector.settings.rightClickMark) {
-            menu.addItem((item) =>
-                item
-                    .setTitle("(TM) Mark Task")
-                    .setIcon(Icons.MARK)
-                    .onClick(async () => {
-                        const mark = await promptForMark(
-                            this.app,
-                            this.taskCollector
-                        );
-                        if (mark) {
-                            this.markTaskOnLines(mark, lines);
-                        }
-                    })
-            );
-        }
-
         // if right-click complete menu items is enabled
         if (this.taskCollector.settings.rightClickComplete) {
             menu.addItem((item) =>
@@ -386,6 +369,36 @@ export class TaskCollectorPlugin extends Plugin {
                         })
                 );
             }
+        }
+
+        // if right-click mark menu items is enabled
+        if (this.taskCollector.settings.rightClickMark) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Mark Task")
+                    .setIcon(Icons.MARK)
+                    .onClick(async () => {
+                        const mark = await promptForMark(
+                            this.app,
+                            this.taskCollector
+                        );
+                        if (mark) {
+                            this.markTaskOnLines(mark, lines);
+                        }
+                    })
+            );
+        }
+
+        // if right-click cycle menu items is enabled
+        if (this.taskCollector.settings.rightClickCycle) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Cycle Task")
+                    .setIcon(Icons.COMPLETE)
+                    .onClick(() => {
+                        this.markTaskOnLinesCycle("y", lines); // The mark value does not matter.
+                    })
+            );
         }
 
         // add an item for resetting selected tasks if enabled
