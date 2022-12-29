@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-task-collector",
-	"name": "Task Collector (TC)",
-	"version": "0.8.1",
-	"minAppVersion": "0.13.10",
-	"description": "Manage completed tasks within a document",
-	"author": "ebullient",
-	"authorUrl": "https://github.com/ebullient",
+	"id": "obsidian-task-marker",
+	"name": "Task Marker",
+	"version": "0.0.1",
+	"minAppVersion": "1.0.0",
+	"description": "Change task statuses with hotkeys and right-click context menu.",
+	"author": "wenlzhang",
+	"authorUrl": "https://github.com/wenlzhang",
 	"isDesktopOnly": false
 }

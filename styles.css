@@ -1,19 +1,19 @@
-#taskcollector-modal .modal-close-button {
+#taskmarker-modal .modal-close-button {
     display: none;
 }
-#taskcollector-modal .modal {
+#taskmarker-modal .modal {
     padding: 10px;
     min-width: 200px;
     max-width: 300px;
 }
-#taskcollector-modal .modal-content {
+#taskmarker-modal .modal-content {
     background-color: var(--background-secondary);
     margin-top: 0px;
 }
-#taskcollector-modal .modal .markdown-preview-view {
+#taskmarker-modal .modal .markdown-preview-view {
     padding: 5px;
 }
-#taskcollector-modal .modal .markdown-preview-view ul {
+#taskmarker-modal .modal .markdown-preview-view ul {
     display: flex;
     flex-wrap: wrap;
     --gap: 3px;
@@ -23,7 +23,7 @@
     margin-block-end: 0;
     padding-inline-start: 0;
 }
-#taskcollector-modal .modal .markdown-preview-view ul > li {
+#taskmarker-modal .modal .markdown-preview-view ul > li {
     margin: var(--gap);
     display: block;
     width: var(--square);
@@ -35,22 +35,22 @@
     line-height: var(--square);
     text-align: center;
 }
-#taskcollector-modal .modal .markdown-preview-view ul > li::before {
+#taskmarker-modal .modal .markdown-preview-view ul > li::before {
     display: none;
 }
-#taskcollector-modal .modal .markdown-preview-view ul > li > span {
+#taskmarker-modal .modal .markdown-preview-view ul > li > span {
     font-family: var(--font-monospace);
 }
-#taskcollector-modal .modal .markdown-preview-view ul > li.task-list-item .task-list-item-checkbox {
+#taskmarker-modal .modal .markdown-preview-view ul > li.task-list-item .task-list-item-checkbox {
     margin-right: 4px;
     margin-left: unset;
 }
-#taskcollector-modal .modal .markdown-preview-view nav {
+#taskmarker-modal .modal .markdown-preview-view nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-#taskcollector-modal .modal .markdown-preview-view nav span {
+#taskmarker-modal .modal .markdown-preview-view nav span {
   display: block;
   font-size: .8em;
   color: var(--text-muted);
