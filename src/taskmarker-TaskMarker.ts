@@ -513,7 +513,7 @@ export class TaskMarker {
     //     let inCompletedSection = false;
     //     let inTask = false;
     //     let inCallout = false;
-    //     let completedItemsIndex = lines.length;
+    //     let completedTasksIndex = lines.length;
 
     //     for (let line of lines) {
     //         if (inCompletedSection) {
@@ -525,7 +525,7 @@ export class TaskMarker {
     //             }
     //         } else if (line.trim() === LOG_HEADING) {
     //             inCompletedSection = true;
-    //             completedItemsIndex = remaining.push(line);
+    //             completedTasksIndex = remaining.push(line);
     //             remaining.push("%%%COMPLETED_ITEMS_GO_HERE%%%");
     //         } else {
     //             if (this.isCompletedTaskLine(line)) {
@@ -550,11 +550,11 @@ export class TaskMarker {
     //     }
 
     //     let result = remaining
-    //         .slice(0, completedItemsIndex)
+    //         .slice(0, completedTasksIndex)
     //         .concat(...newTasks)
     //         .concat(...completedSection);
-    //     if (completedItemsIndex < remaining.length - 1) {
-    //         result = result.concat(remaining.slice(completedItemsIndex + 1));
+    //     if (completedTasksIndex < remaining.length - 1) {
+    //         result = result.concat(remaining.slice(completedTasksIndex + 1));
     //     }
     //     return result.join("\n");
     // }
