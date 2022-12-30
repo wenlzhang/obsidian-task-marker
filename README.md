@@ -50,6 +50,14 @@ The plugin has been submitted to the Obsidian **Community Plugins** for review b
 
 ---
 
+## Development process
+
+You can see how this plugin is developed starting from scratch as follows:
+
+- [Project actions - Develop an Obsidian plugin for changing task status - 202212262317 - PTKM Experiment](https://exp.ptkm.net/220-Development/Project+action/Project+actions+-+Develop+an+Obsidian+plugin+for+changing+task+status+-+202212262317)
+
+---
+
 ## Credits
 
 - [Obsidian: Task Collector](https://github.com/ebullient/obsidian-task-collector)
