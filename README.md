@@ -20,6 +20,8 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
 - Cycle task statuses
     - Cycle among statuses such as `[x]`, `[-]`, `[>]` and `[/]`
 
+![demo](/docs/attachment/demo.gif)
+
 ---
 
 ## How to use
