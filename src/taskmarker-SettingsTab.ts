@@ -142,7 +142,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Additional task statuses (row 1)")
             .setDesc(
-                "Specify the set of single characters that indicate in-progress or incomplete tasks, e.g. 'i>!?D'. **The first five (excluding the first open status) of them can be assigned with hotkeys.**"
+                "Specify the set of characters that indicate in-progress or incomplete tasks, e.g. 'i>!?D'. **The first five (excluding the first open status) of them can be assigned with hotkeys.**"
             )
             .addText((text) =>
                 text
@@ -206,7 +206,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Additional task statuses (row 2)")
         .setDesc(
-            "Specify the set of single characters that indicate task status, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
+            "Specify the set of characters that indicate task statuses, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
         )
         .addText((text) =>
             text
@@ -272,7 +272,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Cycled task statuses")
         .setDesc(
-            "Specify the set of single characters that indicate any task statuses, e.g. 'x- Rip>'. Hotkeys can be used to cycle among these statuses."
+            "Specify the set of characters that indicate any task statuses, e.g. 'x- Rip>'."
         )
         .addText((text) =>
             text
@@ -290,7 +290,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         // new Setting(this.containerEl)
         //     .setName("Completed area header")
         //     .setDesc(
-        //         `Completed (or canceled) items will be inserted under the specified header (most recent at the top). When scanning the document for completed/canceled tasks, the contents from this configured header to the next heading or separator (---) will be ignored. This heading will be created if the command is invoked and the heading does not exist. The default heading is '${DEFAULT_SETTINGS.completedAreaHeader}'.`
+        //         `Completed (or canceled) tasks will be inserted under the specified header (most recent at the top). When scanning the document for completed/canceled tasks, the contents from this configured header to the next heading or separator (---) will be ignored. This heading will be created if the command is invoked and the heading does not exist. The default heading is '${DEFAULT_SETTINGS.completedAreaHeader}'.`
         //     )
         //     .addText((text) =>
         //         text
@@ -304,7 +304,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         //     );
 
         // new Setting(this.containerEl)
-        //     .setName("Remove the checkbox from moved items")
+        //     .setName("Remove the checkbox from moved tasks")
         //     .setDesc(
         //         `Remove the checkbox from completed (or canceled) tasks during the move to the completed area. This transforms tasks into normal list items. Task Marker will not be able to reset these items. They also will not appear in task searches or queries. The default value is: '${DEFAULT_SETTINGS.completedAreaRemoveCheckbox}'.`
         //     )
@@ -319,7 +319,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         //     );
 
         this.containerEl.createEl("h2", {
-            text: "Marking items using menus",
+            text: "Marking tasks using menus",
         });
 
         this.containerEl.createEl("p", {
@@ -376,7 +376,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for cycling a a task")
         .setDesc(
-            "The menu item will cycle the statuses of the task, on the current line (or within the current selection), in a way as specified in the section **Cycling tasks**."
+            "The menu item will cycle the status of the task, on the current line (or within the current selection), in a way as specified in the section **Cycling tasks**."
         )
         .addToggle((toggle) =>
             toggle

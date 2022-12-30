@@ -25,7 +25,7 @@ export class TaskMarkerApi implements API {
     }
 
     isComplete(value: string): boolean {
-        // This may include cancelled items (those are still "complete")
+        // This may include cancelled tasks (those are still "complete")
         return this.getCompletedTaskValues().contains(value);
     }
     isCanceled(value: string): boolean {

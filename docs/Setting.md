@@ -18,14 +18,14 @@
         - `>?!`
         - Minimally a space (`[ ]`)
     - Notes:
-        - Specify the set of single characters that indicate incomplete tasks (see [Alternate Checkboxes](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md) for more statuses.).
+        - Specify the set of characters that indicate incomplete tasks (see [Alternate Checkboxes](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md) for more statuses.).
             - In **row 1**, a space would be automatically included at the beginning of the set values.
         - Different sets of additional task statuses can be set in rows 1 and 2.
             - **A task mark cannot exist in rows 1 and 2; otherwise, it would task effect as specified for row 1.**
 - **Append text to marked task**
     - See "**Append text to completed task**".
     - Notes:
-        - In one row, one can choose to append text when marking an item; in another row, nothing would be appended.
+        - In one row, one can choose to append text when marking a task; in another row, nothing would be appended.
 
 ## Cycling tasks
 

@@ -246,7 +246,7 @@ export class TaskMarker {
         return lineText.replace(this.stripTask, "$1 $2");
     }
 
-    /** _Complete_ an item: append completion text, remove configured strings */
+    /** _Complete_ a task: append completion text, remove configured strings */
     private completeTaskLine(lineText: string, mark = "x"): string {
         console.debug("Task Marker: complete task with %s: %s", mark, lineText);
         let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);

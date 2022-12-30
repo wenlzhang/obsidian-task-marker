@@ -12,12 +12,12 @@ export interface API {
     getIncompleteTaskValues(): string;
 
     /**
-     * Return true if the provided value marks a completed (or canceled) item.
+     * Return true if the provided value marks a completed (or canceled) task.
      */
     isComplete(value: string): boolean;
 
     /**
-     * Return true if the provided value marks a canceled item (-).
+     * Return true if the provided value marks a canceled task (-).
      */
     isCanceled(value: string): boolean;
 

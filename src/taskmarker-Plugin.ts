@@ -17,13 +17,13 @@ import { API } from "./@types/api";
 import { TaskMarkerApi } from "./taskmarker-Api";
 
 enum Icons {
-    COMPLETE = "tm-complete-item",
-    CANCEL = "tm-cancel-item",
-    RESET = "tm-reset-item",
-    MARK = "tm-mark-item",
-    COMPLETE_ALL = "tm-complete-all-items",
-    CLEAR = "tm-clear-all-items",
-    MOVE = "tm-move-all-checked-items",
+    COMPLETE = "tm-complete-task",
+    CANCEL = "tm-cancel-task",
+    RESET = "tm-reset-task",
+    MARK = "tm-mark-task",
+    COMPLETE_ALL = "tm-complete-all-tasks",
+    CLEAR = "tm-clear-all-tasks",
+    MOVE = "tm-move-all-checked-tasks",
 }
 
 export class TaskMarkerPlugin extends Plugin {
@@ -71,7 +71,7 @@ export class TaskMarkerPlugin extends Plugin {
 
         const completeTaskCommand: Command = {
             id: "task-marker-mark-done",
-            name: "Complete item",
+            name: "Complete task",
             icon: Icons.COMPLETE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLines(
@@ -83,7 +83,7 @@ export class TaskMarkerPlugin extends Plugin {
 
         const cancelTaskCommand: Command = {
             id: "task-marker-mark-canceled",
-            name: "Cancel item",
+            name: "Cancel task",
             icon: Icons.CANCEL,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLines(
@@ -95,7 +95,7 @@ export class TaskMarkerPlugin extends Plugin {
 
         const resetTaskCommand: Command = {
             id: "task-marker-mark-reset",
-            name: "Reset item",
+            name: "Reset task",
             icon: Icons.RESET,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLines(
@@ -107,7 +107,7 @@ export class TaskMarkerPlugin extends Plugin {
 
         const markTaskCommand: Command = {
             id: "task-marker-mark",
-            name: "Mark item",
+            name: "Mark task",
             icon: Icons.MARK,
             editorCallback: async (editor: Editor, view: MarkdownView) => {
                 const mark = await promptForMark(this.app, this.taskMarker);
@@ -130,7 +130,7 @@ export class TaskMarkerPlugin extends Plugin {
         };
 
         const clearAllTasksCommand: Command = {
-            id: "task-marker-clear-all-items",
+            id: "task-marker-clear-all-tasks",
             name: "Reset all completed tasks",
             icon: Icons.CLEAR,
             callback: async () => {
@@ -142,9 +142,9 @@ export class TaskMarkerPlugin extends Plugin {
         const incompleteTaskValuesLength = this.taskMarker.settings.incompleteTaskValues.length
 
         if (incompleteTaskValuesLength >= 2) {
-            const markItemStatus1Command: Command = {
-                id: "task-marker-mark-item-status-row1-1",
-                name: "Mark item (row 1) status 1",
+            const markTaskStatus1Command: Command = {
+                id: "task-marker-mark-task-status-row1-1",
+                name: "Mark task (row 1) status 1",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -153,13 +153,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus1Command);
+            this.addCommand(markTaskStatus1Command);
         }
 
         if (incompleteTaskValuesLength >= 3){
-            const markItemStatus2Command: Command = {
-                id: "task-marker-mark-item-status-row1-2",
-                name: "Mark item (row 1) status 2",
+            const markTaskStatus2Command: Command = {
+                id: "task-marker-mark-task-status-row1-2",
+                name: "Mark task (row 1) status 2",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -168,13 +168,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus2Command);
+            this.addCommand(markTaskStatus2Command);
         }
 
         if (incompleteTaskValuesLength >= 4){
-            const markItemStatus3Command: Command = {
-                id: "task-marker-mark-item-status-row1-3",
-                name: "Mark item (row 1) status 3",
+            const markTaskStatus3Command: Command = {
+                id: "task-marker-mark-task-status-row1-3",
+                name: "Mark task (row 1) status 3",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -183,13 +183,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus3Command);
+            this.addCommand(markTaskStatus3Command);
         }
 
         if (incompleteTaskValuesLength >= 5){
-            const markItemStatus4Command: Command = {
-                id: "task-marker-mark-item-status-row1-4",
-                name: "Mark item (row 1) status 4",
+            const markTaskStatus4Command: Command = {
+                id: "task-marker-mark-task-status-row1-4",
+                name: "Mark task (row 1) status 4",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -198,13 +198,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus4Command);
+            this.addCommand(markTaskStatus4Command);
         }
         
         if (incompleteTaskValuesLength >= 6){
-            const markItemStatus5Command: Command = {
-                id: "task-marker-mark-item-status-row1-5",
-                name: "Mark item (row 1) status 5",
+            const markTaskStatus5Command: Command = {
+                id: "task-marker-mark-task-status-row1-5",
+                name: "Mark task (row 1) status 5",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -213,16 +213,16 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus5Command);
+            this.addCommand(markTaskStatus5Command);
         }
 
         // Set hotkeys for additional task statuses (row 2)
         const incompleteTaskValuesRow2Length = this.taskMarker.settings.incompleteTaskValuesRow2.length
 
         if (incompleteTaskValuesRow2Length >= 1) {
-            const markItemStatus1Command: Command = {
-                id: "task-marker-mark-item-status-row2-1",
-                name: "Mark item (row 2) status 1",
+            const markTaskStatus1Command: Command = {
+                id: "task-marker-mark-task-status-row2-1",
+                name: "Mark task (row 2) status 1",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -231,13 +231,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus1Command);
+            this.addCommand(markTaskStatus1Command);
         }
 
         if (incompleteTaskValuesRow2Length >= 2){
-            const markItemStatus2Command: Command = {
-                id: "task-marker-mark-item-status-row2-2",
-                name: "Mark item (row 2) status 2",
+            const markTaskStatus2Command: Command = {
+                id: "task-marker-mark-task-status-row2-2",
+                name: "Mark task (row 2) status 2",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -246,13 +246,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus2Command);
+            this.addCommand(markTaskStatus2Command);
         }
 
         if (incompleteTaskValuesRow2Length >= 3){
-            const markItemStatus3Command: Command = {
-                id: "task-marker-mark-item-status-row2-3",
-                name: "Mark item (row 2) status 3",
+            const markTaskStatus3Command: Command = {
+                id: "task-marker-mark-task-status-row2-3",
+                name: "Mark task (row 2) status 3",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -261,13 +261,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus3Command);
+            this.addCommand(markTaskStatus3Command);
         }
 
         if (incompleteTaskValuesRow2Length >= 4){
-            const markItemStatus4Command: Command = {
-                id: "task-marker-mark-item-status-row2-4",
-                name: "Mark item (row 2) status 4",
+            const markTaskStatus4Command: Command = {
+                id: "task-marker-mark-task-status-row2-4",
+                name: "Mark task (row 2) status 4",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -276,13 +276,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus4Command);
+            this.addCommand(markTaskStatus4Command);
         }
         
         if (incompleteTaskValuesRow2Length >= 5){
-            const markItemStatus5Command: Command = {
-                id: "task-marker-mark-item-status-row2-5",
-                name: "Mark item (row 2) status 5",
+            const markTaskStatus5Command: Command = {
+                id: "task-marker-mark-task-status-row2-5",
+                name: "Mark task (row 2) status 5",
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -291,13 +291,13 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 },
             };
-            this.addCommand(markItemStatus5Command);
+            this.addCommand(markTaskStatus5Command);
         }
 
         // Add a hotkey for cycling task statuses
-        const cycleItemStatusCommand: Command = {
-            id: "task-marker-cycle-item-status",
-            name: "Cycle item status",
+        const cycleTaskStatusCommand: Command = {
+            id: "task-marker-cycle-task-status",
+            name: "Cycle task status",
             icon: Icons.MARK,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycle(
@@ -306,7 +306,7 @@ export class TaskMarkerPlugin extends Plugin {
                 );
             },
         };
-        this.addCommand(cycleItemStatusCommand);
+        this.addCommand(cycleTaskStatusCommand);
 
         // const moveTaskCommand: Command = {
         //     id: "task-marker-move-completed-tasks",
@@ -351,18 +351,18 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickComplete) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Complete Task")
+                    .setTitle("(TM) Complete task")
                     .setIcon(Icons.COMPLETE)
                     .onClick(() => {
                         this.markTaskOnLines("x", lines);
                     })
             );
 
-            // if canceling items is supported, add the menu item for that.
+            // if cancelling tasks is supported, add the menu item for that.
             if (this.taskMarker.settings.supportCanceledTasks) {
                 menu.addItem((item) =>
                     item
-                        .setTitle("(TM) Cancel Task")
+                        .setTitle("(TM) Cancel task")
                         .setIcon(Icons.CANCEL)
                         .onClick(() => {
                             this.markTaskOnLines("-", lines);
@@ -375,7 +375,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickMark) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Mark Task")
+                    .setTitle("(TM) Mark task")
                     .setIcon(Icons.MARK)
                     .onClick(async () => {
                         const mark = await promptForMark(
@@ -393,7 +393,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickCycle) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Cycle Task")
+                    .setTitle("(TM) Cycle task status")
                     .setIcon(Icons.COMPLETE)
                     .onClick(() => {
                         this.markTaskOnLinesCycle("y", lines); // The mark value does not matter.
@@ -405,7 +405,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickResetTask) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Reset Task")
+                    .setTitle("(TM) Reset task")
                     .setIcon(Icons.RESET)
                     .onClick(() => {
                         this.markTaskOnLines(" ", lines);
@@ -413,7 +413,7 @@ export class TaskMarkerPlugin extends Plugin {
             );
         }
 
-        // If right-click move completed items is enabled:
+        // If right-click move completed tasks is enabled:
         // if (this.taskMarker.settings.rightClickMove) {
         //     menu.addItem((item) =>
         //         item
@@ -429,7 +429,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickToggleAll) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Complete All Tasks")
+                    .setTitle("(TM) Complete all tasks")
                     .setIcon(Icons.COMPLETE_ALL)
                     .onClick(async () => {
                         this.completeAllTasks();
@@ -441,7 +441,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickResetAll) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Reset All Tasks")
+                    .setTitle("(TM) Reset all tasks")
                     .setIcon(Icons.CLEAR)
                     .onClick(async () => {
                         this.resetAllTasks();
