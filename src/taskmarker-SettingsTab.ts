@@ -33,6 +33,36 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             text: "**Restart Obsidian if the following setting changes do not take effect.**",
         });
 
+        this.containerEl.createEl("h2", { text: "Creating tasks" });
+
+        this.containerEl.createEl("p", {
+            text: "Created tasks gain treatment based on the settings below.",
+        });
+
+        new Setting(this.containerEl)
+            .setName("Append text to created task")
+            .setDesc(
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the task text."
+            )
+            .addMomentFormat((momentFormat) =>
+                momentFormat
+                    .setPlaceholder("[📝 ]YYYY-MM-DD")
+                    .setValue(tempSettings.appendTextFormatCreation)
+                    .onChange(async (value) => {
+                        try {
+                            // Try formatting "now" with the specified format string
+                            moment().format(value);
+                            tempSettings.appendTextFormatCreation = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        } catch (e) {
+                            console.log(
+                                `Error parsing specified date format: ${value}`
+                            );
+                        }
+                    })
+            );
+
         this.containerEl.createEl("h2", { text: "Completing tasks" });
 
         this.containerEl.createEl("p", {
@@ -76,7 +106,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
-                    .setPlaceholder("YYYY-MM-DD")
+                    .setPlaceholder("[✅ ]YYYY-MM-DD")
                     .setValue(tempSettings.appendDateFormat)
                     .onChange(async (value) => {
                         try {
@@ -186,7 +216,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             )
             .addMomentFormat((momentFormat) =>
                 momentFormat
-                    .setPlaceholder("YYYY-MM-DD")
+                    .setPlaceholder("[❎ ]YYYY-MM-DD")
                     .setValue(tempSettings.appendTextFormatMark)
                     .onChange(async (value) => {
                         try {
@@ -343,6 +373,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         //             })
         //     );
 
+        new Setting(this.containerEl)
+            .setName("Add menu item for creating a task")
+            .setDesc(
+                "The menu item will create the task, on the current line (or within the current selection), in a way as specified in the section **Creating tasks**."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCreate)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCreate = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
+        
         new Setting(this.containerEl)
             .setName("Add menu item for completing a task")
             .setDesc(

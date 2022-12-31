@@ -69,6 +69,18 @@ export class TaskMarkerPlugin extends Plugin {
         //     '<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 14 14">  <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/></svg>'
         // );
 
+        const createTaskCommand: Command = {
+            id: "task-marker-mark-create",
+            name: "Create task",
+            icon: Icons.RESET,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.markTaskOnLinesCreate(
+                    " ",
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        };
+
         const completeTaskCommand: Command = {
             id: "task-marker-mark-done",
             name: "Complete task",
@@ -317,6 +329,7 @@ export class TaskMarkerPlugin extends Plugin {
         //     },
         // };
 
+        this.addCommand(createTaskCommand);
         this.addCommand(completeTaskCommand);
         if (this.taskMarker.settings.supportCanceledTasks) {
             this.addCommand(cancelTaskCommand);
@@ -347,6 +360,18 @@ export class TaskMarkerPlugin extends Plugin {
     }
 
     buildMenu(menu: Menu, lines?: number[]): void {
+        // if right-click create menu items is enabled
+        if (this.taskMarker.settings.rightClickCreate) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Create task")
+                    .setIcon(Icons.RESET)
+                    .onClick(() => {
+                        this.markTaskOnLinesCreate(" ", lines);
+                    })
+            );
+        }
+
         // if right-click complete menu items is enabled
         if (this.taskMarker.settings.rightClickComplete) {
             menu.addItem((item) =>
@@ -461,6 +486,13 @@ export class TaskMarkerPlugin extends Plugin {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
         const result = this.taskMarker.markTaskInSourceCycle(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async markTaskOnLinesCreate(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskMarker.markTaskInSourceCreate(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 
