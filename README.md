@@ -8,6 +8,9 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
 
 ## Features
 
+- Create tasks
+    - Mark list items with `[ ]`
+    - Optionally append text such as `📝 2023-01-01`
 - Complete tasks
     - Mark tasks with `[x]`
     - Optionally append text such as `✅ 2023-01-01`

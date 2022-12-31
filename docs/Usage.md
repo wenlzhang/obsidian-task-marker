@@ -1,5 +1,12 @@
 # Usage
 
+## Create tasks
+
+If the current line is (or selection contains) a list item or a task with the mark `[ ]`:
+
+1. It will convert the list item to a task.
+2. If an append text format string is configured, append a formatted text string to the end of the task text.
+
 ## Complete tasks
 
 If the current line is (or selection contains) a task, and the task matches the configuration for an incomplete task:

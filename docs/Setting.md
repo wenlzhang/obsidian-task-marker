@@ -1,5 +1,15 @@
 # How to configure
 
+## Creating tasks
+
+- **Append text to created task**
+    - Examples:
+        - `[📝 ]YYYY-MM-DD` results in `📝 2023-01-01`.
+        - `[[created::]YYYY-MM-DD[]]` results in `[created::2023-01-01]`.
+    - Notes:
+        - Use [moment.js date format](https://momentjs.com/docs/#/displaying/format/) to format date and time to be appended.
+        - Use square brackets to surround content that is not part of the format string.
+
 ## Completing tasks
 
 - **Append text to completed task**
@@ -7,9 +17,6 @@
         - `[(]YYYY-MM-DD[)]` results in `(2023-01-01)`.
         - `[✅ ]YYYY-MM-DD` results in `✅ 2023-01-01`.
         - `[[completion::]YYYY-MM-DD[]]` results in `[completion::2023-01-01]`.
-    - Notes:
-        - Use [moment.js date format](https://momentjs.com/docs/#/displaying/format/) to format date and time to be appended.
-        - Use square brackets to surround content that is not part of the format string.
 
 ## Marking tasks
 
