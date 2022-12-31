@@ -494,7 +494,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
 
         // new Setting(this.containerEl)
-        //     .setName("Add menu items for completing all tasks")
+        //     .setName("Add menu item for completing all tasks")
         //     .setDesc(
         //         "Add an item to the right-click menu in edit mode to mark all incomplete tasks in the current document complete."
         //     )

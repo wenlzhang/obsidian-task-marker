@@ -35,3 +35,7 @@ If the current line is (or selection contains) a task, and the task matches the 
       - For instance, if `Rip` is configured and the current status is `R`, then the status become `i` after executing the command.
 1. If the current status of the task does not match any of the configured statuses, the status would change to the first one.
       - For instance, if `Rip` is configured and the current status is `x`, then the status would become `R` after executing the command.
+
+## Append text
+
+1. If an append text format string is configured, append a formatted text string to the end of any line text.

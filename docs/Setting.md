@@ -39,3 +39,10 @@
 - **Cycled task statuses**
     - Examples:
         - `x- Rip`
+
+## Appending text
+
+- **Append text to any line**
+    - Examples:
+        - `[📝 ]YYYY-MM-DD` results in `📝 2023-01-01`.
+        - `[[created::]YYYY-MM-DD[]]` results in `[created::2023-01-01]`.
