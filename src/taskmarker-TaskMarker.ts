@@ -237,6 +237,58 @@ export class TaskMarker {
             momentMatchString = `\\s*${momentMatchString}\\s*`;
         }
 
+        if (settings.appendTextFormatAppend) {
+            // YYYY-MM-DD or DD MM, YYYY or .. [(]YYYY-MM-DD[)] where the stuff in the brackets is literal
+            const literals = [];
+
+            const regex1 = RegExp("(\\[.*?\\]\\]?)", "g");
+            let match;
+            let i = 0;
+
+            momentMatchString = settings.appendTextFormatAppend;
+            while ((match = regex1.exec(momentMatchString)) !== null) {
+                momentMatchString = momentMatchString.replace(
+                    match[0],
+                    `%$${i}$%`
+                );
+                literals.push(
+                    match[0]
+                        .substring(1, match[0].length - 1)
+                        .replace(/\(/g, "\\(") // escape a naked (
+                        .replace(/\)/g, "\\)") // escape a naked )
+                        .replace(/\[/g, "\\[") // escape a naked [
+                        .replace(/\]/g, "\\]")
+                ); // escape a naked ]
+                i++;
+            }
+
+            // Now let's replace moment date formatting
+            momentMatchString = momentMatchString
+                .replace("YYYY", "\\d{4}") // 4-digit year
+                .replace("YY", "\\d{2}") // 2-digit year
+                .replace("DD", "\\d{2}") // day of month, padded
+                .replace("D", "\\d{1,2}") // day of month, not padded
+                .replace("MMM", "[A-Za-z]{3}") // month, abbrv
+                .replace("MM", "\\d{2}") // month, padded
+                .replace("M", "\\d{1,2}") // month, not padded
+                .replace("HH", "\\d{2}") // 24-hour, padded
+                .replace("H", "\\d{1,2}") // 24-hour, not padded
+                .replace("hh", "\\d{2}") // 12-hour, padded
+                .replace("h", "\\d{1,2}") // 12-hour, not padded
+                .replace("mm", "\\d{2}") // minute, padded
+                .replace("m", "\\d{1,2}"); // minute, not padded
+
+            if (literals.length > 0) {
+                for (let i = 0; i < literals.length; i++) {
+                    momentMatchString = momentMatchString.replace(
+                        `%$${i}$%`,
+                        literals[i]
+                    );
+                }
+            }
+            momentMatchString = `\\s*${momentMatchString}\\s*`;
+        }
+
         const completedTasks =
             (this.settings.onlyLowercaseX ? "x" : "xX") +
             (this.settings.supportCanceledTasks ? "-" : "");
@@ -251,6 +303,7 @@ export class TaskMarker {
             this.settings.rightClickMark ||
             this.settings.rightClickCycle ||
             this.settings.rightClickCreate ||
+            this.settings.rightClickAppend ||
             // this.settings.rightClickMove ||
             this.settings.rightClickResetTask ||
             this.settings.rightClickResetAll ||
@@ -374,6 +427,18 @@ export class TaskMarker {
         const split = source.split("\n");
         for (const n of lines) {
             split[n] = this.markTaskLineCreate(split[n], mark);
+        }
+        return split.join("\n");
+    }
+
+    appendTextInSource(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.appendTextLine(split[n], mark);
         }
         return split.join("\n");
     }
@@ -569,6 +634,31 @@ export class TaskMarker {
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
         }
+        return lineText;
+    }
+
+    appendTextLine(lineText: string, mark: string): string {
+        let marked = lineText;
+
+        if (this.settings.appendTextFormatAppend) {
+            const strictLineEnding = lineText.endsWith("  ");
+            let blockid = "";
+            const match = this.blockRef.exec(marked);
+            if (match && match[2]) {
+                marked = match[1];
+                blockid = match[2];
+            }
+            if (!marked.endsWith(" ")) {
+                marked += " ";
+            }
+            marked += moment().format(this.settings.appendTextFormatAppend) + blockid;
+            if (strictLineEnding) {
+                marked += "  ";
+            }
+        } else {
+            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+        }
+        lineText = marked;
         return lineText;
     }
 

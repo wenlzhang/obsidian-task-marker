@@ -314,6 +314,36 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
         );
+
+        this.containerEl.createEl("h2", { text: "Appending text" });
+
+        this.containerEl.createEl("p", {
+            text: "Appended text gains treatment based on the settings below.",
+        });
+
+        new Setting(this.containerEl)
+            .setName("Append text to any line")
+            .setDesc(
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the line text."
+            )
+            .addMomentFormat((momentFormat) =>
+                momentFormat
+                    .setPlaceholder("[📝 ]YYYY-MM-DD")
+                    .setValue(tempSettings.appendTextFormatAppend)
+                    .onChange(async (value) => {
+                        try {
+                            // Try formatting "now" with the specified format string
+                            moment().format(value);
+                            tempSettings.appendTextFormatAppend = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        } catch (e) {
+                            console.log(
+                                `Error parsing specified date format: ${value}`
+                            );
+                        }
+                    })
+            );
         
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
@@ -447,6 +477,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
+        
+        new Setting(this.containerEl)
+        .setName("Add menu item for appending text to a line")
+        .setDesc(
+            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Appending text**."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickAppend)
+                .onChange(async (value) => {
+                    tempSettings.rightClickAppend = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
 
         // new Setting(this.containerEl)
         //     .setName("Add menu items for completing all tasks")

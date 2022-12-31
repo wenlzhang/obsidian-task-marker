@@ -306,7 +306,7 @@ export class TaskMarkerPlugin extends Plugin {
             this.addCommand(markTaskStatus5Command);
         }
 
-        // Add a hotkey for cycling task statuses
+        // Add hotkeys for cycling task statuses
         const cycleTaskStatusCommand: Command = {
             id: "task-marker-cycle-task-status",
             name: "Cycle task status",
@@ -318,7 +318,19 @@ export class TaskMarkerPlugin extends Plugin {
                 );
             },
         };
-        this.addCommand(cycleTaskStatusCommand);
+
+        // Add hotkeys for appending text
+        const appendTextCommand: Command = {
+            id: "task-marker-append-text",
+            name: "Append text",
+            // icon: Icons.RESET,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.appendTextOnLines(
+                    "y", // The mark value does not matter.
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        };
 
         // const moveTaskCommand: Command = {
         //     id: "task-marker-move-completed-tasks",
@@ -335,6 +347,8 @@ export class TaskMarkerPlugin extends Plugin {
             this.addCommand(cancelTaskCommand);
         }
         this.addCommand(markTaskCommand);
+        this.addCommand(cycleTaskStatusCommand);
+        this.addCommand(appendTextCommand);
         this.addCommand(resetTaskCommand);
         // this.addCommand(moveTaskCommand);
         this.addCommand(completeAllTasksCommand);
@@ -360,7 +374,7 @@ export class TaskMarkerPlugin extends Plugin {
     }
 
     buildMenu(menu: Menu, lines?: number[]): void {
-        // if right-click create menu items is enabled
+        // if right-click create menu item is enabled
         if (this.taskMarker.settings.rightClickCreate) {
             menu.addItem((item) =>
                 item
@@ -372,7 +386,7 @@ export class TaskMarkerPlugin extends Plugin {
             );
         }
 
-        // if right-click complete menu items is enabled
+        // if right-click complete menu item is enabled
         if (this.taskMarker.settings.rightClickComplete) {
             menu.addItem((item) =>
                 item
@@ -396,7 +410,7 @@ export class TaskMarkerPlugin extends Plugin {
             }
         }
 
-        // if right-click mark menu items is enabled
+        // if right-click mark menu item is enabled
         if (this.taskMarker.settings.rightClickMark) {
             menu.addItem((item) =>
                 item
@@ -414,7 +428,7 @@ export class TaskMarkerPlugin extends Plugin {
             );
         }
 
-        // if right-click cycle menu items is enabled
+        // if right-click cycle menu item is enabled
         if (this.taskMarker.settings.rightClickCycle) {
             menu.addItem((item) =>
                 item
@@ -438,6 +452,18 @@ export class TaskMarkerPlugin extends Plugin {
             );
         }
 
+        // if right-click append menu item is enabled
+        if (this.taskMarker.settings.rightClickAppend) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Append text")
+                    // .setIcon(Icons.RESET)
+                    .onClick(() => {
+                        this.appendTextOnLines("y", lines); // The mark value does not matter.
+                    })
+            );
+        }
+
         // If right-click move completed tasks is enabled:
         // if (this.taskMarker.settings.rightClickMove) {
         //     menu.addItem((item) =>
@@ -450,7 +476,7 @@ export class TaskMarkerPlugin extends Plugin {
         //     );
         // }
 
-        // If right-click toggle-all menu items are enabled:
+        // If right-click toggle-all menu item is enabled:
         if (this.taskMarker.settings.rightClickToggleAll) {
             menu.addItem((item) =>
                 item
@@ -493,6 +519,13 @@ export class TaskMarkerPlugin extends Plugin {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
         const result = this.taskMarker.markTaskInSourceCreate(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async appendTextOnLines(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskMarker.appendTextInSource(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 

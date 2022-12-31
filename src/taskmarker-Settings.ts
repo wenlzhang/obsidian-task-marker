@@ -5,6 +5,7 @@ export interface TaskMarkerSettings {
     appendTextFormatMark: string;
     appendTextFormatMarkRow2: string;
     appendTextFormatCreation: string;
+    appendTextFormatAppend: string;
     appendRemoveAllTasks: boolean;
     incompleteTaskValues: string;
     incompleteTaskValuesRow2: string;
@@ -15,6 +16,7 @@ export interface TaskMarkerSettings {
     rightClickMark: boolean;
     rightClickCycle: boolean;
     rightClickCreate: boolean;
+    rightClickAppend: boolean;
     // rightClickMove: boolean;
     rightClickResetTask: boolean;
     rightClickResetAll: boolean;
@@ -30,6 +32,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     appendTextFormatMark: "",
     appendTextFormatMarkRow2: "",
     appendTextFormatCreation: "",
+    appendTextFormatAppend: "",
     appendRemoveAllTasks: false,
     incompleteTaskValues: " ",
     incompleteTaskValuesRow2: "", // For choosing whether to show in the second row
@@ -41,6 +44,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     rightClickMark: false,
     rightClickCycle: false,
     rightClickCreate: false,
+    rightClickAppend: false,
     // rightClickMove: false,
     rightClickResetTask: false,
     rightClickResetAll: false,
@@ -52,7 +56,7 @@ export interface CompiledTasksSettings {
     resetRegExp: RegExp;
     incompleteTaskRegExp: RegExp;
     incompleteTaskRegExpRow2: RegExp;
-    // createTaskRegExp: RegExp; // Not sure if needed
+    // createTaskRegExp: RegExp; // Maybe not needed
     rightClickTaskMenu: boolean;
     completedTasks: string;
     completedTaskRegExp: RegExp;
