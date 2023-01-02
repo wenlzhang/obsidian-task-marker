@@ -4,8 +4,6 @@
 
 An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys and right-click context menu.
 
----
-
 ## Features
 
 - Create tasks
@@ -27,19 +25,13 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
 
 ![demo](/docs/attachment/demo.gif)
 
----
-
 ## How to use
 
 See [Usage](docs/Usage.md) for details.
 
----
-
 ## How to configure
 
 See [Setting](docs/Setting.md) for details.
-
----
 
 ## How to install
 
@@ -53,22 +45,20 @@ The plugin has been submitted to the Obsidian **Community Plugins** for review b
 2. Click install
 3. "Enable" the plugin directly after installation, or use the toggle on the community plugins tab to enable the plugin after it has been installed. -->
 
----
-
 ## Development process
 
 You can see how this plugin is developed starting from scratch as follows:
 
 - [Project actions - Develop an Obsidian plugin for changing task status - 202212262317 - PTKM Experiment](https://exp.ptkm.net/220-Development/Project+action/Project+actions+-+Develop+an+Obsidian+plugin+for+changing+task+status+-+202212262317)
 
----
+## Resource
+
+See [Resource](docs/Resource.md) for details.
 
 ## Credits
 
 - [Obsidian: Task Collector](https://github.com/ebullient/obsidian-task-collector)
     - This plugin serves as a starting template.
-
----
 
 ## Support me
 
