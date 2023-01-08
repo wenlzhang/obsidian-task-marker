@@ -3,7 +3,12 @@
 ## Similar plugins
 
 - [Obsidian: Task Collector](https://github.com/ebullient/obsidian-task-collector)
+    - One can also check this plugin for features like the following:
+        - Completing/cancelling tasks and appending text
+        - Moving tasks under a header
+        - Resetting tasks
 - [Obsidian: Task Changer](https://github.com/Quorafind/Obsidian-Task-Changer)
+    - One can select the desired task status from context menu.
 
 ## Companion tools
 

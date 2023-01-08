@@ -16,8 +16,9 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
     - Mark tasks with `[-]`
     - Optionally append text such as `✅ 2023-01-01`
 - Mark tasks
-    - Mark tasks with statuses such as `[>]` and [/]
+    - Mark tasks with statuses such as `[>]` and `[/]`
     - Optionally append text such as `❎ 2023-01-01`
+    - Mark individual task statuses with hotkeys
 - Cycle task statuses
     - Cycle among statuses such as `[x]`, `[-]`, `[>]` and `[/]`
 - Append text
@@ -25,15 +26,17 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
 
 ![demo](/docs/attachment/demo.gif)
 
-## How to use
+## Usage
+
+### How to use
 
 See [Usage](docs/Usage.md) for details.
 
-## How to configure
+### How to configure
 
 See [Setting](docs/Setting.md) for details.
 
-## How to install
+### How to install
 
 The plugin has been submitted to the Obsidian **Community Plugins** for review but is not available in the community plugin store yet. For now, there are two methods to install this plugin:
 
@@ -45,15 +48,15 @@ The plugin has been submitted to the Obsidian **Community Plugins** for review b
 2. Click install
 3. "Enable" the plugin directly after installation, or use the toggle on the community plugins tab to enable the plugin after it has been installed. -->
 
+### Resource
+
+See [Resource](docs/Resource.md) for details.
+
 ## Development process
 
 You can see how this plugin is developed starting from scratch as follows:
 
 - [Project actions - Develop an Obsidian plugin for changing task status - 202212262317 - PTKM Experiment](https://exp.ptkm.net/220-Development/Project+action/Project+actions+-+Develop+an+Obsidian+plugin+for+changing+task+status+-+202212262317)
-
-## Resource
-
-See [Resource](docs/Resource.md) for details.
 
 ## Credits
 

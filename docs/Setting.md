@@ -14,7 +14,6 @@
 
 - **Append text to completed task**
     - Examples:
-        - `[(]YYYY-MM-DD[)]` results in `(2023-01-01)`.
         - `[✅ ]YYYY-MM-DD` results in `✅ 2023-01-01`.
         - `[[completion::]YYYY-MM-DD[]]` results in `[completion::2023-01-01]`.
 
@@ -32,7 +31,7 @@
 - **Append text to marked task**
     - See "**Append text to completed task**".
     - Notes:
-        - In one row, one can choose to append text when marking a task; in another row, nothing would be appended.
+        - In one row, one can choose to append text when marking a task; in another row, one can choose to append nothing.
 
 ## Cycling tasks
 
