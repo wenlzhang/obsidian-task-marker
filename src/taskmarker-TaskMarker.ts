@@ -1,4 +1,4 @@
-import { App, moment } from "obsidian";
+import { App, moment, Notice } from "obsidian";
 import {
     TaskMarkerSettings,
     CompiledTasksSettings,
@@ -445,6 +445,7 @@ export class TaskMarker {
 
     markTaskLine(lineText: string, mark: string): string {
         const taskMatch = this.anyTaskMark.exec(lineText);
+        const markString = "- [" + mark + "] ";
 
         if (mark === "Backspace") {
             lineText = this.removeCheckboxFromLine(lineText);
@@ -452,25 +453,30 @@ export class TaskMarker {
             const completeMark =
                 this.initSettings.completedTasks.indexOf(mark) >= 0;
 
-            if (this.isCompletedTaskLine(lineText)) {
-                if (completeMark) {
-                    console.log("Task Marker: task already completed: %s", lineText);
-                } else if (mark === " ") { // Reset tasks
-                    lineText = this.resetTaskLine(lineText, mark);
-                }
-            } else if (this.isIncompleteTaskLine(lineText)) { // Including marked tasks
-                if (completeMark) {
-                    lineText = this.settings.appendRemoveAllTasks
-                        ? this.resetTaskLine(lineText, mark)
-                        : this.completeTaskLine(lineText, mark);
-                } else if (mark === " ") { // Reset tasks
-                    lineText = this.resetTaskLine(lineText, mark); // Original code
+            if (mark !== " ") { // Mark tasks
+                if (lineText.startsWith(markString)) {
+                    new Notice(`Task Marker: task already marked with the same mark ${mark}!`);
                 } else { // Mark tasks
                     let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
                     if (this.initSettings.removeRegExp) {
                         marked = marked.replace(this.initSettings.removeRegExp, "");
                     }
-                    if (this.settings.appendTextFormatMark && this.settings.incompleteTaskValues.indexOf(mark) >= 0) {
+                    if (this.settings.appendDateFormat && completeMark) {
+                        const strictLineEnding = lineText.endsWith("  ");
+                        let blockid = "";
+                        const match = this.blockRef.exec(marked);
+                        if (match && match[2]) {
+                            marked = match[1];
+                            blockid = match[2];
+                        }
+                        if (!marked.endsWith(" ")) {
+                            marked += " ";
+                        }
+                        marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        if (strictLineEnding) {
+                            marked += "  ";
+                        }
+                    } else if (this.settings.appendTextFormatMark && this.settings.incompleteTaskValues.indexOf(mark) >= 0) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);
@@ -506,6 +512,7 @@ export class TaskMarker {
             } else if (mark === " ") { // Reset tasks
                 lineText = this.resetTaskLine(lineText, mark); // Original code
             } else {
+                new Notice(`Task Marker: unknown mark ${mark}!`);
                 console.log(
                     "Task Marker: unknown mark (%s), leaving unchanged: %s",
                     mark,
@@ -522,6 +529,7 @@ export class TaskMarker {
                     mark
                 );
             } else {
+                new Notice(`Task Marker: not a task or list item!`);
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
         }
@@ -582,7 +590,11 @@ export class TaskMarker {
 
         if (taskMatch) {
             if (!lineText.startsWith("- [ ] ")) {
+                new Notice(`Task Marker: task already marked!`);
                 console.log("Task Marker: task already marked, leaving unchanged: %s", lineText);
+            // } else if (lineText.startsWith("- [ ] ")) {
+            //     new Notice(`Task Marker: task already created!`);
+            //     console.log("Task Marker: task already created, leaving unchanged: %s", lineText);
             } else { // Create task and append text
                 let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
                 if (this.settings.appendTextFormatCreation) {
@@ -631,6 +643,7 @@ export class TaskMarker {
                 }
                 lineText = marked;
             } else {
+                new Notice(`Task Marker: not a task or list item!`);
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
         }
@@ -656,6 +669,7 @@ export class TaskMarker {
                 marked += "  ";
             }
         } else {
+            new Notice(`Task Marker: appending string empty!`);
             console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
         }
         lineText = marked;
