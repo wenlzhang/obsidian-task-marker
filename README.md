@@ -50,7 +50,7 @@ Install the plugin from the Obsidian Community Plugins store:
 - Manually download `main.js`, `manifest.json` and `styles.css` and put them inside `.obsidian/obsidian-task-marker` of your Obsidian vault.
 - Alternatively, you can use [obsidian42-brat](https://github.com/TfTHacker/obsidian42-brat) to install and update the plugin. -->
 
-### Resource
+### Resources
 
 See [Resource](docs/Resource.md) for details.
 
