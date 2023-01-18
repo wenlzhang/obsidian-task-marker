@@ -161,208 +161,148 @@ export class TaskMarkerPlugin extends Plugin {
         // Set hotkeys for additional task statuses (row 1)
         const incompleteTaskValuesLength = this.taskMarker.settings.incompleteTaskValues.length
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row1-1",
-            name: "Mark task (row 1) status 1",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesLength >= 2;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesLength >= 2) {
+            this.addCommand({
+                id: "task-marker-mark-task-status-row1-1",
+                name: "Mark task (row 1) status 1",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValues[1],
                         this.getCurrentLinesFromEditor(editor)
-                    )
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                    );
+                },
+            });
+        }
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row1-2",
-            name: "Mark task (row 1) status 2",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesLength >= 3;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesLength >= 3){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row1-2",
+                name: "Mark task (row 1) status 2",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValues[2],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row1-3",
-            name: "Mark task (row 1) status 3",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesLength >= 4;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesLength >= 4){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row1-3",
+                name: "Mark task (row 1) status 3",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValues[3],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row1-4",
-            name: "Mark task (row 1) status 4",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesLength >= 5;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesLength >= 5){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row1-4",
+                name: "Mark task (row 1) status 4",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValues[4],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
         
-        this.addCommand({
-            id: "task-marker-mark-task-status-row1-5",
-            name: "Mark task (row 1) status 5",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesLength >= 6;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesLength >= 6){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row1-5",
+                name: "Mark task (row 1) status 5",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValues[5],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
         // Set hotkeys for additional task statuses (row 2)
         const incompleteTaskValuesRow2Length = this.taskMarker.settings.incompleteTaskValuesRow2.length
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row2-1",
-            name: "Mark task (row 2) status 1",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesRow2Length >= 1;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesRow2Length >= 1) {
+            this.addCommand({
+                id: "task-marker-mark-task-status-row2-1",
+                name: "Mark task (row 2) status 1",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValuesRow2[0],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row2-2",
-            name: "Mark task (row 2) status 2",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesRow2Length >= 2;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesRow2Length >= 2){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row2-2",
+                name: "Mark task (row 2) status 2",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValuesRow2[1],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row2-3",
-            name: "Mark task (row 2) status 3",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesRow2Length >= 3;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesRow2Length >= 3){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row2-3",
+                name: "Mark task (row 2) status 3",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValuesRow2[2],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
-        this.addCommand({
-            id: "task-marker-mark-task-status-row2-4",
-            name: "Mark task (row 2) status 4",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesRow2Length >= 4;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesRow2Length >= 4){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row2-4",
+                name: "Mark task (row 2) status 4",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValuesRow2[3],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
         
-        this.addCommand({
-            id: "task-marker-mark-task-status-row2-5",
-            name: "Mark task (row 2) status 5",
-            icon: Icons.MARK,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = incompleteTaskValuesRow2Length >= 5;
-    
-                if (value) {
-                  if (!checking) {
+        if (incompleteTaskValuesRow2Length >= 5){
+            this.addCommand({
+                id: "task-marker-mark-task-status-row2-5",
+                name: "Mark task (row 2) status 5",
+                icon: Icons.MARK,
+                editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
                         this.taskMarker.settings.incompleteTaskValuesRow2[4],
                         this.getCurrentLinesFromEditor(editor)
                     );
-                  }
-                  return true
-                }            
-                return false;
-              },
-        });
+                },
+            });
+        }
 
         // Add hotkeys for cycling task statuses
         this.addCommand({
