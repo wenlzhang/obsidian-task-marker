@@ -69,8 +69,8 @@ export class TaskMarkerPlugin extends Plugin {
         //     '<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 14 14">  <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/></svg>'
         // );
 
-        const createTaskCommand: Command = {
-            id: "task-marker-mark-create",
+        this.addCommand({
+            id: "task-marker-create",
             name: "Create task",
             icon: Icons.RESET,
             editorCallback: (editor: Editor, view: MarkdownView) => {
@@ -79,10 +79,10 @@ export class TaskMarkerPlugin extends Plugin {
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
-        };
+        });
 
-        const completeTaskCommand: Command = {
-            id: "task-marker-mark-done",
+        this.addCommand({
+            id: "task-marker-complete",
             name: "Complete task",
             icon: Icons.COMPLETE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
@@ -91,33 +91,29 @@ export class TaskMarkerPlugin extends Plugin {
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
-        };
+        });
 
-        const cancelTaskCommand: Command = {
-            id: "task-marker-mark-canceled",
+        this.addCommand({
+            id: "task-marker-cancel",
             name: "Cancel task",
             icon: Icons.CANCEL,
-            editorCallback: (editor: Editor, view: MarkdownView) => {
-                this.markTaskOnLines(
-                    "-",
-                    this.getCurrentLinesFromEditor(editor)
-                );
-            },
-        };
+            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
+                const value = this.taskMarker.settings.supportCanceledTasks;
+    
+                if (value) {
+                  if (!checking) {
+                      this.markTaskOnLines(
+                          "-",
+                          this.getCurrentLinesFromEditor(editor)
+                      );
+                  }
+                  return true
+                }            
+                return false;
+              },
+        });
 
-        const resetTaskCommand: Command = {
-            id: "task-marker-mark-reset",
-            name: "Reset task",
-            icon: Icons.RESET,
-            editorCallback: (editor: Editor, view: MarkdownView) => {
-                this.markTaskOnLines(
-                    " ",
-                    this.getCurrentLinesFromEditor(editor)
-                );
-            },
-        };
-
-        const markTaskCommand: Command = {
+        this.addCommand({
             id: "task-marker-mark",
             name: "Mark task",
             icon: Icons.MARK,
@@ -130,31 +126,43 @@ export class TaskMarkerPlugin extends Plugin {
                     );
                 }
             },
-        };
+        });
 
-        const completeAllTasksCommand: Command = {
-            id: "task-marker-mark-all-done",
+        this.addCommand({
+            id: "task-marker-reset",
+            name: "Reset task",
+            icon: Icons.RESET,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.markTaskOnLines(
+                    " ",
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
+        this.addCommand({
+            id: "task-marker-complete-all",
             name: "Complete all tasks",
             icon: Icons.COMPLETE_ALL,
             callback: async () => {
                 this.completeAllTasks();
             },
-        };
+        });
 
-        const clearAllTasksCommand: Command = {
-            id: "task-marker-clear-all-tasks",
+        this.addCommand({
+            id: "task-marker-reset-all",
             name: "Reset all completed tasks",
             icon: Icons.CLEAR,
             callback: async () => {
                 this.resetAllTasks();
             },
-        };
+        });
 
         // Set hotkeys for additional task statuses (row 1)
         const incompleteTaskValuesLength = this.taskMarker.settings.incompleteTaskValues.length
 
         if (incompleteTaskValuesLength >= 2) {
-            const markTaskStatus1Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row1-1",
                 name: "Mark task (row 1) status 1",
                 icon: Icons.MARK,
@@ -164,12 +172,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus1Command);
+            });
         }
 
         if (incompleteTaskValuesLength >= 3){
-            const markTaskStatus2Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row1-2",
                 name: "Mark task (row 1) status 2",
                 icon: Icons.MARK,
@@ -179,12 +186,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus2Command);
+            });
         }
 
         if (incompleteTaskValuesLength >= 4){
-            const markTaskStatus3Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row1-3",
                 name: "Mark task (row 1) status 3",
                 icon: Icons.MARK,
@@ -194,12 +200,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus3Command);
+            });
         }
 
         if (incompleteTaskValuesLength >= 5){
-            const markTaskStatus4Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row1-4",
                 name: "Mark task (row 1) status 4",
                 icon: Icons.MARK,
@@ -209,12 +214,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus4Command);
+            });
         }
         
         if (incompleteTaskValuesLength >= 6){
-            const markTaskStatus5Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row1-5",
                 name: "Mark task (row 1) status 5",
                 icon: Icons.MARK,
@@ -224,15 +228,14 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus5Command);
+            });
         }
 
         // Set hotkeys for additional task statuses (row 2)
         const incompleteTaskValuesRow2Length = this.taskMarker.settings.incompleteTaskValuesRow2.length
 
         if (incompleteTaskValuesRow2Length >= 1) {
-            const markTaskStatus1Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row2-1",
                 name: "Mark task (row 2) status 1",
                 icon: Icons.MARK,
@@ -242,12 +245,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus1Command);
+            });
         }
 
         if (incompleteTaskValuesRow2Length >= 2){
-            const markTaskStatus2Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row2-2",
                 name: "Mark task (row 2) status 2",
                 icon: Icons.MARK,
@@ -257,12 +259,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus2Command);
+            });
         }
 
         if (incompleteTaskValuesRow2Length >= 3){
-            const markTaskStatus3Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row2-3",
                 name: "Mark task (row 2) status 3",
                 icon: Icons.MARK,
@@ -272,12 +273,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus3Command);
+            });
         }
 
         if (incompleteTaskValuesRow2Length >= 4){
-            const markTaskStatus4Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row2-4",
                 name: "Mark task (row 2) status 4",
                 icon: Icons.MARK,
@@ -287,12 +287,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus4Command);
+            });
         }
         
         if (incompleteTaskValuesRow2Length >= 5){
-            const markTaskStatus5Command: Command = {
+            this.addCommand({
                 id: "task-marker-mark-task-status-row2-5",
                 name: "Mark task (row 2) status 5",
                 icon: Icons.MARK,
@@ -302,12 +301,11 @@ export class TaskMarkerPlugin extends Plugin {
                         this.getCurrentLinesFromEditor(editor)
                     );
                 },
-            };
-            this.addCommand(markTaskStatus5Command);
+            });
         }
 
         // Add hotkeys for cycling task statuses
-        const cycleTaskStatusCommand: Command = {
+        this.addCommand({
             id: "task-marker-cycle-task-status",
             name: "Cycle task status",
             icon: Icons.MARK,
@@ -317,10 +315,10 @@ export class TaskMarkerPlugin extends Plugin {
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
-        };
+        });
 
         // Add hotkeys for appending text
-        const appendTextCommand: Command = {
+        this.addCommand({
             id: "task-marker-append-text",
             name: "Append text",
             // icon: Icons.RESET,
@@ -330,31 +328,9 @@ export class TaskMarkerPlugin extends Plugin {
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
-        };
+        });
 
-        // const moveTaskCommand: Command = {
-        //     id: "task-marker-move-completed-tasks",
-        //     name: "Move all completed tasks to configured heading",
-        //     icon: Icons.MOVE,
-        //     callback: async () => {
-        //         this.moveAllTasks();
-        //     },
-        // };
-
-        this.addCommand(createTaskCommand);
-        this.addCommand(completeTaskCommand);
-        if (this.taskMarker.settings.supportCanceledTasks) {
-            this.addCommand(cancelTaskCommand);
-        }
-        this.addCommand(markTaskCommand);
-        this.addCommand(cycleTaskStatusCommand);
-        this.addCommand(appendTextCommand);
-        this.addCommand(resetTaskCommand);
-        // this.addCommand(moveTaskCommand);
-        this.addCommand(completeAllTasksCommand);
-        this.addCommand(clearAllTasksCommand);
         this.registerHandlers();
-
         this.api = new TaskMarkerApi(this.app, this.taskMarker);
     }
 
