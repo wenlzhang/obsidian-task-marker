@@ -164,7 +164,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesLength >= 2) {
             this.addCommand({
                 id: "task-marker-mark-task-status-row1-1",
-                name: "Mark task (row 1) status 1",
+                name: "Mark task (row 1) as status 1 " + this.taskMarker.settings.incompleteTaskValues[1],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -178,7 +178,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesLength >= 3){
             this.addCommand({
                 id: "task-marker-mark-task-status-row1-2",
-                name: "Mark task (row 1) status 2",
+                name: "Mark task (row 1) as status 2 " + this.taskMarker.settings.incompleteTaskValues[2],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -192,7 +192,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesLength >= 4){
             this.addCommand({
                 id: "task-marker-mark-task-status-row1-3",
-                name: "Mark task (row 1) status 3",
+                name: "Mark task (row 1) as status 3 " + this.taskMarker.settings.incompleteTaskValues[3],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -206,7 +206,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesLength >= 5){
             this.addCommand({
                 id: "task-marker-mark-task-status-row1-4",
-                name: "Mark task (row 1) status 4",
+                name: "Mark task (row 1) as status 4 " + this.taskMarker.settings.incompleteTaskValues[4],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -220,7 +220,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesLength >= 6){
             this.addCommand({
                 id: "task-marker-mark-task-status-row1-5",
-                name: "Mark task (row 1) status 5",
+                name: "Mark task (row 1) as status 5 " + this.taskMarker.settings.incompleteTaskValues[5],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -237,7 +237,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesRow2Length >= 1) {
             this.addCommand({
                 id: "task-marker-mark-task-status-row2-1",
-                name: "Mark task (row 2) status 1",
+                name: "Mark task (row 2) as status 1 " + this.taskMarker.settings.incompleteTaskValuesRow2[0],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -251,7 +251,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesRow2Length >= 2){
             this.addCommand({
                 id: "task-marker-mark-task-status-row2-2",
-                name: "Mark task (row 2) status 2",
+                name: "Mark task (row 2) as status 2 " + this.taskMarker.settings.incompleteTaskValuesRow2[1],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -265,7 +265,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesRow2Length >= 3){
             this.addCommand({
                 id: "task-marker-mark-task-status-row2-3",
-                name: "Mark task (row 2) status 3",
+                name: "Mark task (row 2) as status 3 " + this.taskMarker.settings.incompleteTaskValuesRow2[2],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -279,7 +279,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesRow2Length >= 4){
             this.addCommand({
                 id: "task-marker-mark-task-status-row2-4",
-                name: "Mark task (row 2) status 4",
+                name: "Mark task (row 2) as status 4 " + this.taskMarker.settings.incompleteTaskValuesRow2[3],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
@@ -293,7 +293,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (incompleteTaskValuesRow2Length >= 5){
             this.addCommand({
                 id: "task-marker-mark-task-status-row2-5",
-                name: "Mark task (row 2) status 5",
+                name: "Mark task (row 2) as status 5 " + this.taskMarker.settings.incompleteTaskValuesRow2[4],
                 icon: Icons.MARK,
                 editorCallback: (editor: Editor, view: MarkdownView) => {
                     this.markTaskOnLines(
