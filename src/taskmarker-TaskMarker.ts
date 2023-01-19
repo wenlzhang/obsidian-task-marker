@@ -455,7 +455,7 @@ export class TaskMarker {
 
             if (mark !== " ") { // Mark tasks
                 if (lineText.startsWith(markString)) {
-                    new Notice(`Task Marker: task already marked with the same mark ${mark}!`);
+                    new Notice(`Task Marker: task already marked with the same status "${mark}"!`);
                 } else { // Mark tasks
                     let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
                     if (this.initSettings.removeRegExp) {

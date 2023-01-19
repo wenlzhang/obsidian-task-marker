@@ -162,146 +162,38 @@ export class TaskMarkerPlugin extends Plugin {
         const incompleteTaskValuesLength = this.taskMarker.settings.incompleteTaskValues.length
 
         if (incompleteTaskValuesLength >= 2) {
-            this.addCommand({
-                id: "task-marker-mark-task-status-row1-1",
-                name: "Mark task (row 1) as status 1 \"" + this.taskMarker.settings.incompleteTaskValues[1] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValues[1],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-
-        if (incompleteTaskValuesLength >= 3){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row1-2",
-                name: "Mark task (row 1) as status 2 \"" + this.taskMarker.settings.incompleteTaskValues[2] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValues[2],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-
-        if (incompleteTaskValuesLength >= 4){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row1-3",
-                name: "Mark task (row 1) as status 3 \"" + this.taskMarker.settings.incompleteTaskValues[3] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValues[3],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-
-        if (incompleteTaskValuesLength >= 5){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row1-4",
-                name: "Mark task (row 1) as status 4 \"" + this.taskMarker.settings.incompleteTaskValues[4] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValues[4],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-        
-        if (incompleteTaskValuesLength >= 6){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row1-5",
-                name: "Mark task (row 1) as status 5 \"" + this.taskMarker.settings.incompleteTaskValues[5] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValues[5],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
+            for (let i = 1; i <= incompleteTaskValuesLength - 1; i++) {
+                this.addCommand({
+                    id: "task-marker-mark-task-status-row1-" + i.toString(),
+                    name: "Mark task (row 1) as status " + i.toString() + " \"" + this.taskMarker.settings.incompleteTaskValues[i] + "\"",
+                    icon: Icons.MARK,
+                    editorCallback: (editor: Editor, view: MarkdownView) => {
+                        this.markTaskOnLines(
+                            this.taskMarker.settings.incompleteTaskValues[i],
+                            this.getCurrentLinesFromEditor(editor)
+                        );
+                    },
+                });
+            }
         }
 
         // Set hotkeys for additional task statuses (row 2)
         const incompleteTaskValuesRow2Length = this.taskMarker.settings.incompleteTaskValuesRow2.length
 
         if (incompleteTaskValuesRow2Length >= 1) {
-            this.addCommand({
-                id: "task-marker-mark-task-status-row2-1",
-                name: "Mark task (row 2) as status 1 \"" + this.taskMarker.settings.incompleteTaskValuesRow2[0] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValuesRow2[0],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-
-        if (incompleteTaskValuesRow2Length >= 2){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row2-2",
-                name: "Mark task (row 2) as status 2 \"" + this.taskMarker.settings.incompleteTaskValuesRow2[1] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValuesRow2[1],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-
-        if (incompleteTaskValuesRow2Length >= 3){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row2-3",
-                name: "Mark task (row 2) as status 3 \"" + this.taskMarker.settings.incompleteTaskValuesRow2[2] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValuesRow2[2],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-
-        if (incompleteTaskValuesRow2Length >= 4){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row2-4",
-                name: "Mark task (row 2) as status 4 \"" + this.taskMarker.settings.incompleteTaskValuesRow2[3] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValuesRow2[3],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
-        }
-        
-        if (incompleteTaskValuesRow2Length >= 5){
-            this.addCommand({
-                id: "task-marker-mark-task-status-row2-5",
-                name: "Mark task (row 2) as status 5 \"" + this.taskMarker.settings.incompleteTaskValuesRow2[4] + "\"",
-                icon: Icons.MARK,
-                editorCallback: (editor: Editor, view: MarkdownView) => {
-                    this.markTaskOnLines(
-                        this.taskMarker.settings.incompleteTaskValuesRow2[4],
-                        this.getCurrentLinesFromEditor(editor)
-                    );
-                },
-            });
+            for (let i = 0; i <= incompleteTaskValuesRow2Length - 1; i++) {
+                this.addCommand({
+                    id: "task-marker-mark-task-status-row2-" + (i + 1).toString(),
+                    name: "Mark task (row 2) as status " + (i + 1).toString() + " \"" + this.taskMarker.settings.incompleteTaskValuesRow2[i] + "\"",
+                    icon: Icons.MARK,
+                    editorCallback: (editor: Editor, view: MarkdownView) => {
+                        this.markTaskOnLines(
+                            this.taskMarker.settings.incompleteTaskValuesRow2[i],
+                            this.getCurrentLinesFromEditor(editor)
+                        );
+                    },
+                });
+            }
         }
 
         // Add hotkeys for cycling task statuses
