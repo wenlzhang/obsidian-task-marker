@@ -30,7 +30,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
         
         this.containerEl.createEl("p", {
-            text: "**Restart Obsidian if the following setting changes do not take effect.**",
+            text: "**Reopen the vault or restart Obsidian if the following setting changes do not take effect.**",
         });
 
         this.containerEl.createEl("h2", { text: "Creating tasks" });
@@ -172,7 +172,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Additional task statuses (row 1)")
             .setDesc(
-                "Specify the set of characters that indicate in-progress or incomplete tasks, e.g. 'i>!?D'. **The first five (excluding the first open status) of them can be assigned with hotkeys.**"
+                "Specify the set of characters that indicate in-progress or incomplete tasks, e.g. 'i>!?D'. **All of them (excluding the first open status) can be assigned with hotkeys.**"
             )
             .addText((text) =>
                 text
@@ -236,7 +236,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Additional task statuses (row 2)")
         .setDesc(
-            "Specify the set of characters that indicate task statuses, e.g. 'Rip'. **The first five of them can be assigned with hotkeys.**"
+            "Specify the set of characters that indicate task statuses, e.g. 'Rip'. **All of them can be assigned with hotkeys.**"
         )
         .addText((text) =>
             text
