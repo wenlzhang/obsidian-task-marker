@@ -1,5 +1,12 @@
 # How to configure
 
+For most of the commands, one can use hotkeys to trigger them:
+
+- Go to `Settings > Hotkeys` and search for "task marker"
+    - Assign hotkeys for the desired commands
+- Go to note editor, use `Command/Ctrl + P` and search for "task marker"
+    - Select the desired commands and see the corresponding hotkeys
+
 ## Creating tasks
 
 - **Append text to created task**
