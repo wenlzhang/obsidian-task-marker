@@ -454,7 +454,7 @@ export class TaskMarker {
                 this.initSettings.completedTasks.indexOf(mark) >= 0;
 
             if (mark !== " ") { // Mark tasks
-                if (lineText.startsWith(markString)) {
+                if (lineText.trim().startsWith(markString)) {
                     new Notice(`Task Marker: task already marked with the same status "${mark}"!`);
                 } else { // Mark tasks
                     let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
@@ -550,7 +550,7 @@ export class TaskMarker {
         // Find the next index
         let markIndex = 0;
         for (let i = 0; i < markValueLength; i++) {
-            if (lineText.startsWith(markStringArray[i])) {
+            if (lineText.trim().startsWith(markStringArray[i])) {
                 if (i + 2 <= markValueLength) {
                     markIndex = i + 1;
                 } else {
@@ -589,10 +589,10 @@ export class TaskMarker {
         const taskMatch = this.anyTaskMark.exec(lineText);
 
         if (taskMatch) {
-            if (!lineText.startsWith("- [ ] ")) {
+            if (!lineText.trim().startsWith("- [ ] ")) {
                 new Notice(`Task Marker: task already marked!`);
                 console.log("Task Marker: task already marked, leaving unchanged: %s", lineText);
-            // } else if (lineText.startsWith("- [ ] ")) {
+            // } else if (lineText.trim().startsWith("- [ ] ")) {
             //     new Notice(`Task Marker: task already created!`);
             //     console.log("Task Marker: task already created, leaving unchanged: %s", lineText);
             } else { // Create task and append text
