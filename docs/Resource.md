@@ -21,6 +21,6 @@
 
 ## Miscellaneous
 
-- [Obsidian Tasks: State of obsidian plugins](https://observablehq.com/@mauforonda/state-of-obsidian-plugins)
-    - This page describes how to style the display of different task statuses.
-    - More task status related descriptions can be found on this site if you search for "status" on the site.
+- [Obsidian Tasks - State of obsidian plugins](https://observablehq.com/@mauforonda/state-of-obsidian-plugins) and [Obsidian Tasks - Status Collections](https://obsidian-tasks-group.github.io/obsidian-tasks/reference/status-collections/)
+    - These pages describe how to style the display of different task statuses.
+    - More task status related descriptions can be found on this site if you search for "status".
