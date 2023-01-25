@@ -18,3 +18,9 @@
     - This plugin can be used to fine tune the styles of task statuses, as well as other plugin and theme settings.
 - [Obsidian: Snippetor](https://github.com/ebullient/obsidian-snippetor)
     - This plugin can be used to design your own display styles of task statuses.
+
+## Miscellaneous
+
+- [Obsidian Tasks: State of obsidian plugins](https://observablehq.com/@mauforonda/state-of-obsidian-plugins)
+    - This page describes how to style the display of different task statuses.
+    - More task status related descriptions can be found on this site if you search for "status" on the site.
