@@ -212,10 +212,34 @@ export class TaskMarkerPlugin extends Plugin {
         // Add hotkeys for appending text
         this.addCommand({
             id: "task-marker-append-text",
-            name: "Append text",
+            name: "Append text 1",
             // icon: Icons.RESET,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.appendTextOnLines(
+                    "y", // The mark value does not matter.
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
+        this.addCommand({
+            id: "task-marker-append-text-2",
+            name: "Append text 2",
+            // icon: Icons.RESET,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.appendTextOnLinesText2(
+                    "y", // The mark value does not matter.
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
+        this.addCommand({
+            id: "task-marker-append-text-3",
+            name: "Append text 3",
+            // icon: Icons.RESET,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.appendTextOnLinesText3(
                     "y", // The mark value does not matter.
                     this.getCurrentLinesFromEditor(editor)
                 );
@@ -324,10 +348,32 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickAppend) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Append text")
+                    .setTitle("(TM) Append text 1")
                     // .setIcon(Icons.RESET)
                     .onClick(() => {
                         this.appendTextOnLines("y", lines); // The mark value does not matter.
+                    })
+            );
+        }
+
+        if (this.taskMarker.settings.rightClickAppendText2) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Append text 2")
+                    // .setIcon(Icons.RESET)
+                    .onClick(() => {
+                        this.appendTextOnLinesText2("y", lines); // The mark value does not matter.
+                    })
+            );
+        }
+
+        if (this.taskMarker.settings.rightClickAppendText3) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Append text 3")
+                    // .setIcon(Icons.RESET)
+                    .onClick(() => {
+                        this.appendTextOnLinesText3("y", lines); // The mark value does not matter.
                     })
             );
         }
@@ -394,6 +440,20 @@ export class TaskMarkerPlugin extends Plugin {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
         const result = this.taskMarker.appendTextInSource(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async appendTextOnLinesText2(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskMarker.appendTextInSourceText2(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async appendTextOnLinesText3(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskMarker.appendTextInSourceText3(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 

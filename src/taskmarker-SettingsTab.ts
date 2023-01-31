@@ -322,7 +322,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         });
 
         new Setting(this.containerEl)
-            .setName("Append text to any line")
+            .setName("Append text to any line (text 1)")
             .setDesc(
                 "Default empty. If set non-empty, append the string of moment.js format to the end of the line text."
             )
@@ -343,7 +343,55 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                             );
                         }
                     })
-            );
+        );
+        
+        new Setting(this.containerEl)
+        .setName("Append text to any line (text 2)")
+        .setDesc(
+            "Default empty. If set non-empty, append the string of moment.js format to the end of the line text."
+        )
+        .addMomentFormat((momentFormat) =>
+            momentFormat
+                .setPlaceholder("[✅ ]YYYY-MM-DD")
+                .setValue(tempSettings.appendTextFormatAppendText2)
+                .onChange(async (value) => {
+                    try {
+                        // Try formatting "now" with the specified format string
+                        moment().format(value);
+                        tempSettings.appendTextFormatAppendText2 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    } catch (e) {
+                        console.log(
+                            `Error parsing specified date format: ${value}`
+                        );
+                    }
+                })
+        );
+
+        new Setting(this.containerEl)
+            .setName("Append text to any line (text 3)")
+            .setDesc(
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the line text."
+            )
+            .addMomentFormat((momentFormat) =>
+                momentFormat
+                    .setPlaceholder("[❎ ]YYYY-MM-DD")
+                    .setValue(tempSettings.appendTextFormatAppendText3)
+                    .onChange(async (value) => {
+                        try {
+                            // Try formatting "now" with the specified format string
+                            moment().format(value);
+                            tempSettings.appendTextFormatAppendText3 = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        } catch (e) {
+                            console.log(
+                                `Error parsing specified date format: ${value}`
+                            );
+                        }
+                    })
+        );
         
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
@@ -479,7 +527,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             );
         
         new Setting(this.containerEl)
-        .setName("Add menu item for appending text to a line")
+        .setName("Add menu item for appending text to a line (text 1)")
         .setDesc(
             "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Appending text**."
         )
@@ -488,6 +536,36 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.rightClickAppend)
                 .onChange(async (value) => {
                     tempSettings.rightClickAppend = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+
+        new Setting(this.containerEl)
+        .setName("Add menu item for appending text to a line (text 2)")
+        .setDesc(
+            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Appending text**."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickAppendText2)
+                .onChange(async (value) => {
+                    tempSettings.rightClickAppendText2 = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+
+        new Setting(this.containerEl)
+        .setName("Add menu item for appending text to a line (text 3)")
+        .setDesc(
+            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Appending text**."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickAppendText3)
+                .onChange(async (value) => {
+                    tempSettings.rightClickAppendText3 = value;
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
