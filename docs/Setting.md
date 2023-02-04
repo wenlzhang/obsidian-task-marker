@@ -48,7 +48,13 @@ For most of the commands, one can use hotkeys to trigger them:
 
 ## Appending text
 
-- **Append text to any line**
+- **Append text to any line (text 1)**
     - Examples:
         - `[📝 ]YYYY-MM-DD` results in `📝 2023-01-01`.
         - `[[created::]YYYY-MM-DD[]]` results in `[created::2023-01-01]`.
+- **Append text to any line (text 2)**
+    - Examples:
+        - `[✅ ]YYYY-MM-DD` results in `✅ 2023-01-01`.
+- **Append text to any line (text 3)**
+    - Examples:
+        - `[❎ ]YYYY-MM-DD` results in `❎ 2023-01-01`.

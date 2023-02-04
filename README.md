@@ -22,7 +22,9 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
 - Cycle task statuses
     - Cycle among statuses such as `[x]`, `[-]`, `[>]` and `[/]`
 - Append text
-    - Optionally append text such as `📝 2023-01-01` to any line
+    - Command to append text such as `📝 2023-01-01` to any line
+    - Command to append text such as `✅ 2023-01-01` to any line
+    - Command to append text such as `❎ 2023-01-01` to any line
 
 ![demo](/docs/attachment/demo.gif)
 
