@@ -406,6 +406,7 @@ export class TaskMarker {
             this.settings.rightClickComplete ||
             this.settings.rightClickMark ||
             this.settings.rightClickCycle ||
+            this.settings.rightClickCycleReversely ||
             this.settings.rightClickCreate ||
             this.settings.rightClickAppend ||
             this.settings.rightClickAppendText2 ||
@@ -521,6 +522,18 @@ export class TaskMarker {
         const split = source.split("\n");
         for (const n of lines) {
             split[n] = this.markTaskLineCycle(split[n], mark);
+        }
+        return split.join("\n");
+    }
+
+    markTaskInSourceCycleReversely(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.markTaskLineCycleReversely(split[n], mark);
         }
         return split.join("\n");
     }
@@ -670,6 +683,61 @@ export class TaskMarker {
 
         const markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
+
+        // Regroup mark as string array
+        let markStringArray = new Array<string>(markValueLength);
+        for (let i = 0; i < markValueLength; i++) {
+            markStringArray[i] = "- [" + markValue[i] + "] ";
+        }
+
+        // Find the next index
+        let markIndex = 0;
+        for (let i = 0; i < markValueLength; i++) {
+            if (lineText.trim().startsWith(markStringArray[i])) {
+                if (i + 2 <= markValueLength) {
+                    markIndex = i + 1;
+                } else {
+                    markIndex = 0;
+                }
+            }
+        }
+        
+        let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+
+        if (this.initSettings.removeRegExp) {
+            marked = marked.replace(this.initSettings.removeRegExp, "");
+        }
+
+        const strictLineEnding = lineText.endsWith("  ");
+        let blockid = "";
+        const match = this.blockRef.exec(marked);
+        if (match && match[2]) {
+            marked = match[1];
+            blockid = match[2];
+        }
+        // if (!marked.endsWith(" ")) { // Not sure why?
+        //     marked += " ";
+        // }
+        marked += blockid;
+        if (strictLineEnding) {
+            marked += "  ";
+        }
+
+        lineText = marked;
+
+        return lineText;
+    }
+
+    markTaskLineCycleReversely(lineText: string, mark: string): string {
+
+        var markValue = this.settings.cycleTaskValues;
+        const markValueLength = markValue.length;
+
+        let reverseString = "";
+        for (let char of markValue) {
+            reverseString = char + reverseString;
+        }
+        markValue = reverseString;
 
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);

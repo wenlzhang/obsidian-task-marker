@@ -209,6 +209,27 @@ export class TaskMarkerPlugin extends Plugin {
             },
         });
 
+        // Add hotkeys for cycling task statuses reversely
+        this.addCommand({
+            id: "task-marker-cycle-task-status-reversely",
+            name: "Cycle task status reversely",
+            icon: Icons.MARK,
+            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
+                const value = this.taskMarker.settings.supportCyclingTasksReversely;
+    
+                if (value) {
+                    if (!checking) {
+                        this.markTaskOnLinesCycleReversely(
+                            'y', // This value does not matter.
+                            this.getCurrentLinesFromEditor(editor)
+                        );
+                    }
+                    return true
+                }            
+                return false;
+              },
+        });
+
         // Add hotkeys for appending text
         this.addCommand({
             id: "task-marker-append-text",
@@ -332,6 +353,18 @@ export class TaskMarkerPlugin extends Plugin {
             );
         }
 
+        // if right-click cycle reversely menu item is enabled
+        if (this.taskMarker.settings.rightClickCycleReversely) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Cycle task status reversely")
+                    .setIcon(Icons.COMPLETE)
+                    .onClick(() => {
+                        this.markTaskOnLinesCycleReversely("y", lines); // The mark value does not matter.
+                    })
+            );
+        }
+
         // add an item for resetting selected tasks if enabled
         if (this.taskMarker.settings.rightClickResetTask) {
             menu.addItem((item) =>
@@ -426,6 +459,13 @@ export class TaskMarkerPlugin extends Plugin {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
         const result = this.taskMarker.markTaskInSourceCycle(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async markTaskOnLinesCycleReversely(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskMarker.markTaskInSourceCycleReversely(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 

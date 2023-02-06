@@ -300,9 +300,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         });
 
         new Setting(this.containerEl)
-        .setName("Cycled task statuses")
-        .setDesc(
-            "Specify the set of characters that indicate any task statuses, e.g. 'x- Rip>'."
+            .setName("Cycled task statuses")
+            .setDesc(
+                "Specify the set of characters that indicate any task statuses, e.g. 'x- Rip>'."
         )
         .addText((text) =>
             text
@@ -313,6 +313,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
+        );
+
+        new Setting(this.containerEl)
+            .setName("Support cycling task status reversely")
+            .setDesc(
+                "Default disabled. If enabled, a command would be added to cycle reversely among the statuses as specified above."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.supportCyclingTasksReversely)
+                    .onChange(async (value) => {
+                        tempSettings.supportCyclingTasksReversely = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
         );
 
         this.containerEl.createEl("h2", { text: "Appending text" });
@@ -497,7 +512,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a a task")
+        .setName("Add menu item for cycling a task")
         .setDesc(
             "The menu item will cycle the status of the task, on the current line (or within the current selection), in a way as specified in the section **Cycling tasks**."
         )
@@ -506,6 +521,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.rightClickCycle)
                 .onChange(async (value) => {
                     tempSettings.rightClickCycle = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+
+        new Setting(this.containerEl)
+        .setName("Add menu item for cycling a task reversely")
+        .setDesc(
+            "The menu item will cycle the status of the task reversely, on the current line (or within the current selection), in a way as specified in the section **Cycling tasks**."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCycleReversely)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCycleReversely = value;
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
