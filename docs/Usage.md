@@ -23,11 +23,12 @@ If the current line is (or selection contains) a task, and the task matches the 
 
 ## Mark tasks
 
-1. A dialog will pop up showing set task statuses in three groups: 
+1. A dialog will pop up showing set task statuses in three groups:
     - Group 1 contains marks for "completed" tasks.
-    - Group 2 contains marks for "additional task statuses".
-    - Group 3 also contains marks for "additional task statuses".
-2. Use the mouse to select an icon, or type the associated character.
+    - Group 2 contains marks for "Additional task statuses (row 1)".
+    - Group 3 contains marks for "Additional task statuses (row 2)".
+2. Use the **mouse** to select an icon, or **type** the associated character.
+    - For instance, one can type `x` to complete the task.
 
 ## Cycle task statuses
 
