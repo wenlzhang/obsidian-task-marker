@@ -17,10 +17,11 @@ An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys 
     - Optionally append text such as `✅ 2023-01-01`
 - Mark tasks
     - Mark tasks with statuses such as `[>]` and `[/]`
-    - Optionally append text such as `❎ 2023-01-01`
     - Mark individual task statuses with hotkeys
+    - Optionally append text such as `❎ 2023-01-01`
 - Cycle task statuses
-    - Cycle among statuses such as `[x]`, `[-]`, `[>]` and `[/]`
+    - Cycle among configured statuses such as `[x]`, `[-]`, `[>]` and `[/]`
+    - Reversely cycle among configured statuses
 - Append text
     - Command to append text such as `📝 2023-01-01` to any line
     - Command to append text such as `✅ 2023-01-01` to any line
