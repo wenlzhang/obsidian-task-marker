@@ -36,7 +36,11 @@ See [Usage](docs/Usage.md) for details.
 
 ### How to configure
 
-See [Setting](docs/Setting.md) for details.
+Task Marker uses [moment.js](https://momentjs.com/docs/#/displaying/format/) to format the date and time to be appended. In addition, **square brackets** are needed to surround the content that is not part of the format string.
+
+- For example, if `[completion::2023-01-01]` is the desired text to be appended, then `[[completion::]YYYY-MM-DD[]]` needs to be configured in settings.
+
+See [Setting](docs/Setting.md) for more detailed settings.
 
 ### How to install
 
