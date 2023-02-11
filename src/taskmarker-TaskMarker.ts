@@ -681,6 +681,7 @@ export class TaskMarker {
 
     markTaskLineCycle(lineText: string, mark: string): string {
 
+        const taskMatch = this.anyTaskMark.exec(lineText);
         const markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
 
@@ -702,34 +703,56 @@ export class TaskMarker {
             }
         }
         
-        let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+        // Cycle task statuses
+        if (taskMatch) {
+            let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
 
-        if (this.initSettings.removeRegExp) {
-            marked = marked.replace(this.initSettings.removeRegExp, "");
-        }
+            const strictLineEnding = lineText.endsWith("  ");
+            let blockid = "";
+            const match = this.blockRef.exec(marked);
+            if (match && match[2]) {
+                marked = match[1];
+                blockid = match[2];
+            }
+            marked += blockid;
+            if (strictLineEnding) {
+                marked += "  ";
+            }
 
-        const strictLineEnding = lineText.endsWith("  ");
-        let blockid = "";
-        const match = this.blockRef.exec(marked);
-        if (match && match[2]) {
-            marked = match[1];
-            blockid = match[2];
-        }
-        // if (!marked.endsWith(" ")) { // Not sure why?
-        //     marked += " ";
-        // }
-        marked += blockid;
-        if (strictLineEnding) {
-            marked += "  ";
-        }
+            lineText = marked;
+        } else {
+            const listMatch = this.anyListItem.exec(lineText);
 
-        lineText = marked;
+            if (listMatch && listMatch[2]) {
+                console.debug("Task Marker: list item, convert to a task %s", lineText);
+                // convert to a task, and then mark
+                let marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                marked += blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+                
+                lineText = marked;
+            } else {
+                new Notice(`Task Marker: not a task or list item!`);
+                console.debug("Task Marker: not a task or list item %s", lineText);
+            }
+        }
 
         return lineText;
     }
 
     markTaskLineCycleReversely(lineText: string, mark: string): string {
 
+        const taskMatch = this.anyTaskMark.exec(lineText);
         var markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
 
@@ -757,28 +780,49 @@ export class TaskMarker {
             }
         }
         
-        let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+        // Cycle task statuses
+        if (taskMatch) {
+            let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
 
-        if (this.initSettings.removeRegExp) {
-            marked = marked.replace(this.initSettings.removeRegExp, "");
-        }
+            const strictLineEnding = lineText.endsWith("  ");
+            let blockid = "";
+            const match = this.blockRef.exec(marked);
+            if (match && match[2]) {
+                marked = match[1];
+                blockid = match[2];
+            }
+            marked += blockid;
+            if (strictLineEnding) {
+                marked += "  ";
+            }
 
-        const strictLineEnding = lineText.endsWith("  ");
-        let blockid = "";
-        const match = this.blockRef.exec(marked);
-        if (match && match[2]) {
-            marked = match[1];
-            blockid = match[2];
-        }
-        // if (!marked.endsWith(" ")) { // Not sure why?
-        //     marked += " ";
-        // }
-        marked += blockid;
-        if (strictLineEnding) {
-            marked += "  ";
-        }
+            lineText = marked;
+        } else {
+            const listMatch = this.anyListItem.exec(lineText);
 
-        lineText = marked;
+            if (listMatch && listMatch[2]) {
+                console.debug("Task Marker: list item, convert to a task %s", lineText);
+                // convert to a task, and then mark
+                let marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                marked += blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+                
+                lineText = marked;
+            } else {
+                new Notice(`Task Marker: not a task or list item!`);
+                console.debug("Task Marker: not a task or list item %s", lineText);
+            }
+        }
 
         return lineText;
     }
