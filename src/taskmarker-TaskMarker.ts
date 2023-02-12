@@ -820,10 +820,10 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
-                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                    var marked = `${listMatch[1]}[${markValue[markIndex]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith("- [")) {
                     let listIndex = lineText.indexOf("- [");
-                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                    var marked = lineText.slice(0, listIndex+1) + ` [${markValue[markIndex]}] ` + lineText.slice(listIndex+2);
                 }
 
                 const strictLineEnding = lineText.endsWith("  ");
