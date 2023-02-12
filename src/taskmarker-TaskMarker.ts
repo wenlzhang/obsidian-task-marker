@@ -663,12 +663,21 @@ export class TaskMarker {
                 );
             }
         } else if (mark !== "Backspace") {
-            const match = this.anyListItem.exec(lineText);
-            if (match && match[2]) {
+            const listMatch = this.anyListItem.exec(lineText);
+
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
+
                 // convert to a task, and then mark
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith("- [")) {
+                    let listIndex = lineText.indexOf("- [");
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
+
                 lineText = this.markTaskLine(
-                    `${match[1]}[ ] ${match[2]}`,
+                    marked,
                     mark
                 );
             } else {
@@ -723,10 +732,16 @@ export class TaskMarker {
         } else {
             const listMatch = this.anyListItem.exec(lineText);
 
-            if (listMatch && listMatch[2]) {
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
+
                 // convert to a task, and then mark
-                let marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith("- [")) {
+                    let listIndex = lineText.indexOf("- [");
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
 
                 const strictLineEnding = lineText.endsWith("  ");
                 let blockid = "";
@@ -800,10 +815,16 @@ export class TaskMarker {
         } else {
             const listMatch = this.anyListItem.exec(lineText);
 
-            if (listMatch && listMatch[2]) {
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
+
                 // convert to a task, and then mark
-                let marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith("- [")) {
+                    let listIndex = lineText.indexOf("- [");
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
 
                 const strictLineEnding = lineText.endsWith("  ");
                 let blockid = "";
@@ -860,11 +881,19 @@ export class TaskMarker {
                 lineText = marked;
             }
         } else {
-            const match = this.anyListItem.exec(lineText);
-            if (match && match[2]) {
+            const listMatch = this.anyListItem.exec(lineText);
+
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
+
                 // convert to a task, and then mark
-                let marked = `${match[1]}[ ] ${match[2]}`;
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith("- [")) {
+                    let listIndex = lineText.indexOf("- [");
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
+
                 if (this.settings.appendTextFormatCreation) {
                     const strictLineEnding = lineText.endsWith("  ");
                     let blockid = "";
