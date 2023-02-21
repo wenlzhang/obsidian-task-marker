@@ -14,6 +14,7 @@ export interface TaskMarkerSettings {
     cycleTaskValues: string;
     supportCanceledTasks: boolean;
     supportCyclingTasksReversely: boolean;
+    supportAppendingTextAutomatically: boolean;
     previewOnClick: boolean;
     rightClickComplete: boolean;
     rightClickMark: boolean;
@@ -23,6 +24,7 @@ export interface TaskMarkerSettings {
     rightClickAppend: boolean;
     rightClickAppendText2: boolean;
     rightClickAppendText3: boolean;
+    rightClickAppendTextAuto: boolean;
     // rightClickMove: boolean;
     rightClickResetTask: boolean;
     rightClickResetAll: boolean;
@@ -48,6 +50,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     onlyLowercaseX: false,
     supportCanceledTasks: true,
     supportCyclingTasksReversely: false,
+    supportAppendingTextAutomatically: false,
     previewOnClick: false,
     rightClickComplete: false,
     rightClickMark: false,
@@ -57,6 +60,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     rightClickAppend: false,
     rightClickAppendText2: false,
     rightClickAppendText3: false,
+    rightClickAppendTextAuto: false,
     // rightClickMove: false,
     rightClickResetTask: false,
     rightClickResetAll: false,

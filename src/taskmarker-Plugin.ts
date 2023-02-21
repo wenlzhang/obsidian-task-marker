@@ -267,6 +267,18 @@ export class TaskMarkerPlugin extends Plugin {
             },
         });
 
+        this.addCommand({
+            id: "task-marker-append-text-auto",
+            name: "Append text automatically",
+            // icon: Icons.RESET,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.appendTextOnLinesAuto(
+                    "y", // The mark value does not matter.
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
         this.registerHandlers();
         this.api = new TaskMarkerApi(this.app, this.taskMarker);
     }
@@ -411,6 +423,17 @@ export class TaskMarkerPlugin extends Plugin {
             );
         }
 
+        if (this.taskMarker.settings.rightClickAppendTextAuto) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Append text automatically")
+                    // .setIcon(Icons.RESET)
+                    .onClick(() => {
+                        this.appendTextOnLinesAuto("y", lines); // The mark value does not matter.
+                    })
+            );
+        }
+
         // If right-click move completed tasks is enabled:
         // if (this.taskMarker.settings.rightClickMove) {
         //     menu.addItem((item) =>
@@ -494,6 +517,13 @@ export class TaskMarkerPlugin extends Plugin {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
         const result = this.taskMarker.appendTextInSourceText3(source, mark, lines);
+        this.app.vault.modify(activeFile, result);
+    }
+
+    async appendTextOnLinesAuto(mark: string, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+        const result = this.taskMarker.appendTextInSourceAuto(source, mark, lines);
         this.app.vault.modify(activeFile, result);
     }
 

@@ -407,6 +407,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         }
                     })
         );
+
+        new Setting(this.containerEl)
+            .setName("Append text to a task automatically")
+            .setDesc(
+                "Default false. If set true, automatically append text to tasks according to task status. See \"Usage.md\" for details."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.supportAppendingTextAutomatically)
+                    .onChange(async (value) => {
+                        tempSettings.supportAppendingTextAutomatically = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
         
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
@@ -596,6 +611,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.rightClickAppendText3)
                 .onChange(async (value) => {
                     tempSettings.rightClickAppendText3 = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+
+        new Setting(this.containerEl)
+        .setName("Add menu item for appending text to a task automatically")
+        .setDesc(
+            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Appending text**."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickAppendTextAuto)
+                .onChange(async (value) => {
+                    tempSettings.rightClickAppendTextAuto = value;
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })

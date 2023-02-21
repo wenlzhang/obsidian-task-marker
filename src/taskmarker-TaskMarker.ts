@@ -411,6 +411,7 @@ export class TaskMarker {
             this.settings.rightClickAppend ||
             this.settings.rightClickAppendText2 ||
             this.settings.rightClickAppendText3 ||
+            this.settings.rightClickAppendTextAuto ||
             // this.settings.rightClickMove ||
             this.settings.rightClickResetTask ||
             this.settings.rightClickResetAll ||
@@ -582,6 +583,18 @@ export class TaskMarker {
         const split = source.split("\n");
         for (const n of lines) {
             split[n] = this.appendTextLineText3(split[n], mark);
+        }
+        return split.join("\n");
+    }
+
+    appendTextInSourceAuto(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.appendTextLineAuto(split[n], mark);
         }
         return split.join("\n");
     }
@@ -994,6 +1007,121 @@ export class TaskMarker {
         } else {
             new Notice(`Task Marker: appending string empty!`);
             console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+        }
+        lineText = marked;
+        return lineText;
+    }
+
+    appendTextLineAuto(lineText: string, mark: string): string {
+        let marked = lineText;
+        const taskMatch = this.anyTaskMark.exec(lineText);
+
+        if (taskMatch) {
+            // Determine task mark
+            const taskMark = lineText.trim()[3];
+
+            const createMark = taskMark === " ";            
+            const completeMark = this.initSettings.completedTasks.indexOf(taskMark) >= 0;
+            const markRow1Mark = this.settings.incompleteTaskValues.indexOf(taskMark) >= 0;
+            const markRow2Mark = this.settings.incompleteTaskValuesRow2.indexOf(taskMark) >= 0;
+
+            if (createMark && this.settings.appendTextFormatCreation) {
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                if (!marked.endsWith(" ")) {
+                    marked += " ";
+                }
+                marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+            } else if (completeMark && this.settings.appendDateFormat) {
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                if (!marked.endsWith(" ")) {
+                    marked += " ";
+                }
+                marked += moment().format(this.settings.appendDateFormat) + blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+            } else if (markRow1Mark && this.settings.appendTextFormatMark) {
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                if (!marked.endsWith(" ")) {
+                    marked += " ";
+                }
+                marked += moment().format(this.settings.appendTextFormatMark) + blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+            } else if (markRow1Mark && !this.settings.appendTextFormatMark && this.settings.appendTextFormatMarkRow2) {
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                if (!marked.endsWith(" ")) {
+                    marked += " ";
+                }
+                marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+            } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                if (!marked.endsWith(" ")) {
+                    marked += " ";
+                }
+                marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+            } else if (markRow2Mark && !this.settings.appendTextFormatMarkRow2 && this.settings.appendTextFormatMark) {
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                if (!marked.endsWith(" ")) {
+                    marked += " ";
+                }
+                marked += moment().format(this.settings.appendTextFormatMark) + blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+            } else {
+                new Notice(`Task Marker: undefined mark or empty appending string!`);
+                console.debug("Task Marker: undefined mark or empty appending string!");
+            }
+        } else {
+            new Notice(`Task Marker: not a task!`);
+            console.debug("Task Marker: not a task %s", lineText);
         }
         lineText = marked;
         return lineText;
