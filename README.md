@@ -1,8 +1,8 @@
-# Obsidian: Task Marker
+# Task Marker
 
 [![GitHub release (Latest by date)](https://img.shields.io/github/v/release/wenlzhang/obsidian-task-marker)](https://github.com/wenlzhang/obsidian-task-marker/releases) ![GitHub all releases](https://img.shields.io/github/downloads/wenlzhang/obsidian-task-marker/total?color=success)
 
-An [Obsidian](https://obsidian.md/) plugin to change task statuses with hotkeys and right-click context menu.
+An [Obsidian](https://obsidian.md/) plugin to change task status and append text with hotkeys and right-click context menu.
 
 ## Features
 
