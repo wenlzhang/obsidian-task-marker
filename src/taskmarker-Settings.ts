@@ -15,6 +15,7 @@ export interface TaskMarkerSettings {
     supportCanceledTasks: boolean;
     supportCyclingTasksReversely: boolean;
     supportAppendingTextAutomatically: boolean;
+    appendTextAutomaticallyDefault: string;
     previewOnClick: boolean;
     rightClickComplete: boolean;
     rightClickMark: boolean;
@@ -51,6 +52,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     supportCanceledTasks: true,
     supportCyclingTasksReversely: false,
     supportAppendingTextAutomatically: false,
+    appendTextAutomaticallyDefault: "",
     previewOnClick: false,
     rightClickComplete: false,
     rightClickMark: false,

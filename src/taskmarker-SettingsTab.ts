@@ -408,10 +408,14 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     })
         );
 
+        this.containerEl.createEl("p", {
+            text: "The settings below correspond with the command \"Append text automatically\"."
+        });
+
         new Setting(this.containerEl)
             .setName("Append text to a task automatically")
             .setDesc(
-                "Default false. If set true, automatically append text to tasks according to task status. See \"Usage.md\" for details."
+                "Default false. If set true, automatically append text to tasks according to the current task status. See \"Usage.md\" for details."
             )
             .addToggle((toggle) =>
                 toggle
@@ -421,7 +425,25 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
-            );
+        );
+
+        new Setting(this.containerEl)
+            .setName("Default text to append automatically to a non-task line")
+            .setDesc(
+                "Default empty. If selected, automatically append text to a non-task line according to the setting. Note that this requires \"Append text to a task automatically\" be enabled. See \"Usage.md\" for details."
+            )
+            .addDropdown((dropdown) =>
+                dropdown
+                    .addOption("text-1", "Append text to any line (text 1)")
+                    .addOption("text-2", "Append text to any line (text 2)")
+                    .addOption("text-3", "Append text to any line (text 3)")
+                    .setValue(tempSettings.appendTextAutomaticallyDefault)
+                    .onChange(async (value: "text-1" | "text-2" | "text-3") => {
+                        tempSettings.appendTextAutomaticallyDefault = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    }),
+        );
         
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 

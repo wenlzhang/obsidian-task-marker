@@ -1120,8 +1120,20 @@ export class TaskMarker {
                 console.debug("Task Marker: undefined mark or empty appending string!");
             }
         } else {
-            new Notice(`Task Marker: not a task!`);
-            console.debug("Task Marker: not a task %s", lineText);
+            const defaultText1 = this.settings.appendTextAutomaticallyDefault === "text-1";
+            const defaultText2 = this.settings.appendTextAutomaticallyDefault === "text-2";
+            const defaultText3 = this.settings.appendTextAutomaticallyDefault === "text-3";
+
+            if (defaultText1) {
+                marked = this.appendTextLine(marked, "y");                
+            } else if (defaultText2) {
+                marked = this.appendTextLineText2(marked, "y");
+            } else if (defaultText3) {
+                marked = this.appendTextLineText3(marked, "y");
+            } else {
+                new Notice(`Task Marker: not a task, and nothing to append!`);
+                console.log("Task Marker: not a task, and nothing to append!");
+            }
         }
         lineText = marked;
         return lineText;

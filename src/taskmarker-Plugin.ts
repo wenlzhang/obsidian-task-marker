@@ -271,12 +271,20 @@ export class TaskMarkerPlugin extends Plugin {
             id: "task-marker-append-text-auto",
             name: "Append text automatically",
             // icon: Icons.RESET,
-            editorCallback: (editor: Editor, view: MarkdownView) => {
-                this.appendTextOnLinesAuto(
-                    "y", // The mark value does not matter.
-                    this.getCurrentLinesFromEditor(editor)
-                );
-            },
+            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
+                const value = this.taskMarker.settings.supportAppendingTextAutomatically;
+    
+                if (value) {
+                    if (!checking) {
+                        this.appendTextOnLinesAuto(
+                            "y", // The mark value does not matter.
+                            this.getCurrentLinesFromEditor(editor)
+                        );
+                    }
+                    return true
+                }            
+                return false;
+              },
         });
 
         this.registerHandlers();
