@@ -934,84 +934,6 @@ export class TaskMarker {
         return lineText;
     }
 
-    appendTextLine(lineText: string, mark: string): string {
-        let marked = lineText;
-
-        if (this.settings.appendTextFormatAppend) {
-            const strictLineEnding = lineText.endsWith("  ");
-            let blockid = "";
-            const match = this.blockRef.exec(marked);
-            if (match && match[2]) {
-                marked = match[1];
-                blockid = match[2];
-            }
-            if (!marked.endsWith(" ")) {
-                marked += " ";
-            }
-            marked += moment().format(this.settings.appendTextFormatAppend) + blockid;
-            if (strictLineEnding) {
-                marked += "  ";
-            }
-        } else {
-            new Notice(`Task Marker: appending string empty!`);
-            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
-        }
-        lineText = marked;
-        return lineText;
-    }
-
-    appendTextLineText2(lineText: string, mark: string): string {
-        let marked = lineText;
-
-        if (this.settings.appendTextFormatAppendText2) {
-            const strictLineEnding = lineText.endsWith("  ");
-            let blockid = "";
-            const match = this.blockRef.exec(marked);
-            if (match && match[2]) {
-                marked = match[1];
-                blockid = match[2];
-            }
-            if (!marked.endsWith(" ")) {
-                marked += " ";
-            }
-            marked += moment().format(this.settings.appendTextFormatAppendText2) + blockid;
-            if (strictLineEnding) {
-                marked += "  ";
-            }
-        } else {
-            new Notice(`Task Marker: appending string empty!`);
-            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
-        }
-        lineText = marked;
-        return lineText;
-    }
-
-    appendTextLineText3(lineText: string, mark: string): string {
-        let marked = lineText;
-
-        if (this.settings.appendTextFormatAppendText3) {
-            const strictLineEnding = lineText.endsWith("  ");
-            let blockid = "";
-            const match = this.blockRef.exec(marked);
-            if (match && match[2]) {
-                marked = match[1];
-                blockid = match[2];
-            }
-            if (!marked.endsWith(" ")) {
-                marked += " ";
-            }
-            marked += moment().format(this.settings.appendTextFormatAppendText3) + blockid;
-            if (strictLineEnding) {
-                marked += "  ";
-            }
-        } else {
-            new Notice(`Task Marker: appending string empty!`);
-            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
-        }
-        lineText = marked;
-        return lineText;
-    }
-
     appendTextLineFunction(lineText: string, appendTextFormat: string): string {
         let marked = lineText;
 
@@ -1030,6 +952,45 @@ export class TaskMarker {
             marked += "  ";
         }
         return marked;
+    }
+
+    appendTextLine(lineText: string, mark: string): string {
+        let marked = lineText;
+
+        if (this.settings.appendTextFormatAppend) {
+            marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatAppend);
+        } else {
+            new Notice(`Task Marker: appending string empty!`);
+            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+        }
+        lineText = marked;
+        return lineText;
+    }
+
+    appendTextLineText2(lineText: string, mark: string): string {
+        let marked = lineText;
+
+        if (this.settings.appendTextFormatAppendText2) {
+            marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatAppendText2);
+        } else {
+            new Notice(`Task Marker: appending string empty!`);
+            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+        }
+        lineText = marked;
+        return lineText;
+    }
+
+    appendTextLineText3(lineText: string, mark: string): string {
+        let marked = lineText;
+
+        if (this.settings.appendTextFormatAppendText3) {
+            marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatAppendText3);
+        } else {
+            new Notice(`Task Marker: appending string empty!`);
+            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+        }
+        lineText = marked;
+        return lineText;
     }
 
     appendTextLineAuto(lineText: string, mark: string): string {
