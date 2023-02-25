@@ -428,6 +428,26 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
 
         new Setting(this.containerEl)
+            .setName("Default text to append automatically to a marked task")
+            .setDesc(
+                "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a marked task according to the setting. See \"Usage.md\" for details."
+            )
+            .addDropdown((dropdown) =>
+                dropdown
+                    .addOption("none", "None")
+                    .addOption("text-rows-1-2", "Append text according to individual rows")
+                    .addOption("text-row-string", "Append text according to the row with string")
+                    .addOption("text-row-1", "Append text always according to row 1")
+                    .addOption("text-row-2", "Append text always according to row 2")
+                    .setValue(tempSettings.appendTextAutoTaskDefault)
+                    .onChange(async (value: "none" | "text-rows-1-2" | "text-row-string" | "text-row-1" | "text-row-2") => {
+                        tempSettings.appendTextAutoTaskDefault = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    }),
+        );
+
+        new Setting(this.containerEl)
             .setName("Default text to append automatically to a non-task line")
             .setDesc(
                 "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a non-task line according to the setting. See \"Usage.md\" for details."
@@ -438,9 +458,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     .addOption("text-1", "Append text to any line (text 1)")
                     .addOption("text-2", "Append text to any line (text 2)")
                     .addOption("text-3", "Append text to any line (text 3)")
-                    .setValue(tempSettings.appendTextAutomaticallyDefault)
+                    .setValue(tempSettings.appendTextAutoLineDefault)
                     .onChange(async (value: "none" | "text-1" | "text-2" | "text-3") => {
-                        tempSettings.appendTextAutomaticallyDefault = value;
+                        tempSettings.appendTextAutoLineDefault = value;
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     }),

@@ -1012,6 +1012,26 @@ export class TaskMarker {
         return lineText;
     }
 
+    appendTextLineFunction(lineText: string, appendTextFormat: string): string {
+        let marked = lineText;
+
+        const strictLineEnding = lineText.endsWith("  ");
+        let blockid = "";
+        const match = this.blockRef.exec(marked);
+        if (match && match[2]) {
+            marked = match[1];
+            blockid = match[2];
+        }
+        if (!marked.endsWith(" ")) {
+            marked += " ";
+        }
+        marked += moment().format(appendTextFormat) + blockid;
+        if (strictLineEnding) {
+            marked += "  ";
+        }
+        return marked;
+    }
+
     appendTextLineAuto(lineText: string, mark: string): string {
         let marked = lineText;
         const taskMatch = this.anyTaskMark.exec(lineText);
@@ -1025,113 +1045,81 @@ export class TaskMarker {
             const markRow1Mark = this.settings.incompleteTaskValues.indexOf(taskMark) >= 0;
             const markRow2Mark = this.settings.incompleteTaskValuesRow2.indexOf(taskMark) >= 0;
 
+            const defaultTaskTextRows12 = this.settings.appendTextAutoTaskDefault === "text-rows-1-2";
+            const defaultTaskTextRowString = this.settings.appendTextAutoTaskDefault === "text-row-string";
+            const defaultTaskTextRow1 = this.settings.appendTextAutoTaskDefault === "text-row-1";
+            const defaultTaskTextRow2 = this.settings.appendTextAutoTaskDefault === "text-row-2";
+            const defaultTaskNone = this.settings.appendTextAutoTaskDefault === "none";
+
             if (createMark && this.settings.appendTextFormatCreation) {
-                const strictLineEnding = lineText.endsWith("  ");
-                let blockid = "";
-                const match = this.blockRef.exec(marked);
-                if (match && match[2]) {
-                    marked = match[1];
-                    blockid = match[2];
-                }
-                if (!marked.endsWith(" ")) {
-                    marked += " ";
-                }
-                marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
-                if (strictLineEnding) {
-                    marked += "  ";
-                }
+                marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatCreation);
             } else if (completeMark && this.settings.appendDateFormat) {
-                const strictLineEnding = lineText.endsWith("  ");
-                let blockid = "";
-                const match = this.blockRef.exec(marked);
-                if (match && match[2]) {
-                    marked = match[1];
-                    blockid = match[2];
-                }
-                if (!marked.endsWith(" ")) {
-                    marked += " ";
-                }
-                marked += moment().format(this.settings.appendDateFormat) + blockid;
-                if (strictLineEnding) {
-                    marked += "  ";
-                }
-            } else if (markRow1Mark && this.settings.appendTextFormatMark) {
-                const strictLineEnding = lineText.endsWith("  ");
-                let blockid = "";
-                const match = this.blockRef.exec(marked);
-                if (match && match[2]) {
-                    marked = match[1];
-                    blockid = match[2];
-                }
-                if (!marked.endsWith(" ")) {
-                    marked += " ";
-                }
-                marked += moment().format(this.settings.appendTextFormatMark) + blockid;
-                if (strictLineEnding) {
-                    marked += "  ";
-                }
-            } else if (markRow1Mark && !this.settings.appendTextFormatMark && this.settings.appendTextFormatMarkRow2) {
-                const strictLineEnding = lineText.endsWith("  ");
-                let blockid = "";
-                const match = this.blockRef.exec(marked);
-                if (match && match[2]) {
-                    marked = match[1];
-                    blockid = match[2];
-                }
-                if (!marked.endsWith(" ")) {
-                    marked += " ";
-                }
-                marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
-                if (strictLineEnding) {
-                    marked += "  ";
-                }
-            } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
-                const strictLineEnding = lineText.endsWith("  ");
-                let blockid = "";
-                const match = this.blockRef.exec(marked);
-                if (match && match[2]) {
-                    marked = match[1];
-                    blockid = match[2];
-                }
-                if (!marked.endsWith(" ")) {
-                    marked += " ";
-                }
-                marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
-                if (strictLineEnding) {
-                    marked += "  ";
-                }
-            } else if (markRow2Mark && !this.settings.appendTextFormatMarkRow2 && this.settings.appendTextFormatMark) {
-                const strictLineEnding = lineText.endsWith("  ");
-                let blockid = "";
-                const match = this.blockRef.exec(marked);
-                if (match && match[2]) {
-                    marked = match[1];
-                    blockid = match[2];
-                }
-                if (!marked.endsWith(" ")) {
-                    marked += " ";
-                }
-                marked += moment().format(this.settings.appendTextFormatMark) + blockid;
-                if (strictLineEnding) {
-                    marked += "  ";
+                marked = this.appendTextLineFunction(lineText, this.settings.appendDateFormat);
+            } else if (markRow1Mark || markRow2Mark) {
+                if (defaultTaskTextRows12) {
+                    if (markRow1Mark && this.settings.appendTextFormatMark) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                    } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                    } else {
+                        new Notice(`Task Marker: empty appending string!`);
+                        console.debug("Task Marker: empty appending string!");
+                    }
+                } else if (defaultTaskTextRowString) {
+                    if (markRow1Mark && this.settings.appendTextFormatMark) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                    } else if (markRow1Mark && !this.settings.appendTextFormatMark && this.settings.appendTextFormatMarkRow2) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                    } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                    } else if (markRow2Mark && !this.settings.appendTextFormatMarkRow2 && this.settings.appendTextFormatMark) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                    } else {
+                        new Notice(`Task Marker: empty appending string!`);
+                        console.debug("Task Marker: empty appending string!");
+                    }
+                } else if (defaultTaskTextRow1) {
+                    if (markRow1Mark && this.settings.appendTextFormatMark) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                    } else if (markRow2Mark && this.settings.appendTextFormatMark) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                    } else {
+                        new Notice(`Task Marker: empty appending string in row 1!`);
+                        console.debug("Task Marker: empty appending string in row 1!");
+                    }
+                } else if (defaultTaskTextRow2) {
+                    if (markRow1Mark && this.settings.appendTextFormatMarkRow2) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                    } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
+                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                    } else {
+                        new Notice(`Task Marker: empty appending string in row 2!`);
+                        console.debug("Task Marker: empty appending string in row 2!");
+                    }
+                } else if (defaultTaskNone) {
+                    new Notice(`Task Marker: set to append nothing!`);
+                    console.log("Task Marker: set to append nothing!");
+                } else {
+                    new Notice(`Task Marker: nothing to append!`);
+                    console.log("Task Marker: nothing to append!");
                 }
             } else {
                 new Notice(`Task Marker: undefined mark or empty appending string!`);
                 console.debug("Task Marker: undefined mark or empty appending string!");
             }
         } else {
-            const defaultText1 = this.settings.appendTextAutomaticallyDefault === "text-1";
-            const defaultText2 = this.settings.appendTextAutomaticallyDefault === "text-2";
-            const defaultText3 = this.settings.appendTextAutomaticallyDefault === "text-3";
-            const defaultNone = this.settings.appendTextAutomaticallyDefault === "none";
+            const defaultLineText1 = this.settings.appendTextAutoLineDefault === "text-1";
+            const defaultLineText2 = this.settings.appendTextAutoLineDefault === "text-2";
+            const defaultLineText3 = this.settings.appendTextAutoLineDefault === "text-3";
+            const defaultLineNone = this.settings.appendTextAutoLineDefault === "none";
 
-            if (defaultText1) {
+            if (defaultLineText1) {
                 marked = this.appendTextLine(marked, "y");                
-            } else if (defaultText2) {
+            } else if (defaultLineText2) {
                 marked = this.appendTextLineText2(marked, "y");
-            } else if (defaultText3) {
+            } else if (defaultLineText3) {
                 marked = this.appendTextLineText3(marked, "y");
-            } else if (defaultNone) {
+            } else if (defaultLineNone) {
                 new Notice(`Task Marker: not a task, and set to append nothing!`);
                 console.log("Task Marker: not a task, and set to append nothing!");
             } else {
