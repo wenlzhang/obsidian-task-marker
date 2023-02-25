@@ -30,14 +30,14 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
         
         this.containerEl.createEl("h3", {
-            text: "Reopen the vault or restart Obsidian if the following setting changes do not take effect.",
+            text: "Please try reopening the vault or restarting Obsidian if the following setting changes do not take effect.",
         });
 
         this.containerEl.createEl("h2", { text: "Create tasks" });
 
-        this.containerEl.createEl("p", {
-            text: "Created tasks gain treatment based on the settings below.",
-        });
+        // this.containerEl.createEl("p", {
+        //     text: "Created tasks gain treatment based on the settings below.",
+        // });
 
         new Setting(this.containerEl)
             .setName("Append text to created task")
@@ -65,9 +65,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
 
         this.containerEl.createEl("h2", { text: "Complete tasks" });
 
-        this.containerEl.createEl("p", {
-            text: "Completed tasks gain treatment based on the settings below.",
-        });
+        // this.containerEl.createEl("p", {
+        //     text: "Completed tasks gain treatment based on the settings below.",
+        // });
 
         new Setting(this.containerEl)
             .setName("Only support x for completed tasks")
@@ -166,13 +166,13 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Mark tasks" });
 
         this.containerEl.createEl("p", {
-            text: "Marked tasks gain treatment based on the settings below. Note that if a mark contains both in row 1 and row 2, then the mark would work as specified in row 1.",
+            text: "Note that if a mark contains both in row 1 and row 2, then the mark would work as specified in row 1.",
         });
 
         new Setting(this.containerEl)
             .setName("Additional task statuses (row 1)")
             .setDesc(
-                "Specify the set of characters that indicate in-progress or incomplete tasks, e.g. 'i>!?D'. **All of them (excluding the first open status) can be assigned with hotkeys.**"
+                "Specify the set of characters that indicate in-progress or incomplete tasks, e.g. 'i>!?D'. All of them (excluding the first open status) can be assigned with hotkeys."
             )
             .addText((text) =>
                 text
@@ -236,7 +236,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Additional task statuses (row 2)")
         .setDesc(
-            "Specify the set of characters that indicate task statuses, e.g. 'Rip'. **All of them can be assigned with hotkeys.**"
+            "Specify the set of characters that indicate task statuses, e.g. 'Rip'. All of them can be assigned with hotkeys."
         )
         .addText((text) =>
             text
@@ -295,9 +295,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         
         this.containerEl.createEl("h2", { text: "Cycle tasks" });
 
-        this.containerEl.createEl("p", {
-            text: "Cycled tasks gain treatment based on the settings below.",
-        });
+        // this.containerEl.createEl("p", {
+        //     text: "Cycled tasks gain treatment based on the settings below.",
+        // });
 
         new Setting(this.containerEl)
             .setName("Cycled task statuses")
@@ -332,9 +332,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
 
         this.containerEl.createEl("h2", { text: "Append text" });
 
-        this.containerEl.createEl("p", {
-            text: "Appended text gains treatment based on the settings below.",
-        });
+        // this.containerEl.createEl("p", {
+        //     text: "Appended text gains treatment based on the settings below.",
+        // });
 
         new Setting(this.containerEl)
             .setName("Append text to any line (text 1)")
@@ -430,7 +430,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Default text to append automatically to a non-task line")
             .setDesc(
-                "Default empty. If selected, automatically append text to a non-task line according to the setting. Note that this requires \"Append text to a task automatically\" be enabled. See \"Usage.md\" for details."
+                "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a non-task line according to the setting. See \"Usage.md\" for details."
             )
             .addDropdown((dropdown) =>
                 dropdown
@@ -483,7 +483,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         });
 
         this.containerEl.createEl("p", {
-            text: "Task Marker creates commands that can be bound to hotkeys for creating, completing, marking and cycling tasks, as well as appending text in Editing view. The following settings add right click context menu items for those commands.",
+            text: "The following settings add right click context menu items for Task Marker commands. The menu items will work on the current line or within the current selection in Editing view.",
         });
 
         // new Setting(this.containerEl)
@@ -506,7 +506,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for creating a task")
             .setDesc(
-                "The menu item will create the task, on the current line (or within the current selection), in a way as specified in the section **Create tasks**."
+                "This menu item will work in a way as specified in the section \"Create tasks\"."
             )
             .addToggle((toggle) =>
                 toggle
@@ -521,7 +521,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for completing a task")
             .setDesc(
-                "The menu item will complete the task, on the current line (or within the current selection), in a way as specified in the section **Complete tasks**."
+                "This menu item will work in a way as specified in the section \"Complete tasks\"."
             )
             .addToggle((toggle) =>
                 toggle
@@ -536,7 +536,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for marking a task")
             .setDesc(
-                "The selected value will mark the task, on the current line (or within the current selection), in a way as specified in the section **Mark tasks**."
+                "This menu item will work in a way as specified in the section \"Mark tasks\"."
             )
             .addToggle((toggle) =>
                 toggle
@@ -551,7 +551,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for cycling a task")
         .setDesc(
-            "The menu item will cycle the status of the task, on the current line (or within the current selection), in a way as specified in the section **Cycle tasks**."
+            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
         )
         .addToggle((toggle) =>
             toggle
@@ -566,7 +566,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for cycling a task reversely")
         .setDesc(
-            "The menu item will cycle the status of the task reversely, on the current line (or within the current selection), in a way as specified in the section **Cycle tasks**."
+            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
         )
         .addToggle((toggle) =>
             toggle
@@ -581,7 +581,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for resetting a task")
             .setDesc(
-                "The menu item will reset the task on the current line (or within the current selection)."
+                "The menu item will reset the task."
             )
             .addToggle((toggle) =>
                 toggle
@@ -596,7 +596,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for appending text to a line (text 1)")
         .setDesc(
-            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Append text**."
+            "This menu item will work in a way as specified in the section \"Append text\"."
         )
         .addToggle((toggle) =>
             toggle
@@ -611,7 +611,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for appending text to a line (text 2)")
         .setDesc(
-            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Append text**."
+            "This menu item will work in a way as specified in the section \"Append text\"."
         )
         .addToggle((toggle) =>
             toggle
@@ -626,7 +626,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for appending text to a line (text 3)")
         .setDesc(
-            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Append text**."
+            "This menu item will work in a way as specified in the section \"Append text\"."
         )
         .addToggle((toggle) =>
             toggle
@@ -641,7 +641,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
         .setName("Add menu item for appending text to a task automatically")
         .setDesc(
-            "The menu item will append text, on the current line (or within the current selection), in a way as specified in the section **Append text**."
+            "This menu item will work in a way as specified in the section \"Append text\"."
         )
         .addToggle((toggle) =>
             toggle
