@@ -1123,6 +1123,7 @@ export class TaskMarker {
             const defaultText1 = this.settings.appendTextAutomaticallyDefault === "text-1";
             const defaultText2 = this.settings.appendTextAutomaticallyDefault === "text-2";
             const defaultText3 = this.settings.appendTextAutomaticallyDefault === "text-3";
+            const defaultNone = this.settings.appendTextAutomaticallyDefault === "none";
 
             if (defaultText1) {
                 marked = this.appendTextLine(marked, "y");                
@@ -1130,6 +1131,9 @@ export class TaskMarker {
                 marked = this.appendTextLineText2(marked, "y");
             } else if (defaultText3) {
                 marked = this.appendTextLineText3(marked, "y");
+            } else if (defaultNone) {
+                new Notice(`Task Marker: not a task, and set to append nothing!`);
+                console.log("Task Marker: not a task, and set to append nothing!");
             } else {
                 new Notice(`Task Marker: not a task, and nothing to append!`);
                 console.log("Task Marker: not a task, and nothing to append!");
