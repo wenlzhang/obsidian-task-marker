@@ -434,11 +434,12 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             )
             .addDropdown((dropdown) =>
                 dropdown
+                    .addOption("none", "None")
                     .addOption("text-1", "Append text to any line (text 1)")
                     .addOption("text-2", "Append text to any line (text 2)")
                     .addOption("text-3", "Append text to any line (text 3)")
                     .setValue(tempSettings.appendTextAutomaticallyDefault)
-                    .onChange(async (value: "text-1" | "text-2" | "text-3") => {
+                    .onChange(async (value: "none" | "text-1" | "text-2" | "text-3") => {
                         tempSettings.appendTextAutomaticallyDefault = value;
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
