@@ -51,3 +51,8 @@ If the current line is (or selection contains) a task, and the task matches the 
 - If an append text format string is configured, append a formatted text string to the end of any line text.
 - One can configure text of different formats to append.
       - For example, the formats can correspond to the texts for creating, completing and marking tasks.
+
+## Append text automatically
+
+- Automatically append text to a task according to settings
+- Automatically append text to a non-task line according to settings

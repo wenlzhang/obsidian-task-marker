@@ -411,13 +411,13 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Append text automatically" });
 
         this.containerEl.createEl("p", {
-            text: "The settings below correspond to the command \"Append text automatically\"."
+            text: "The settings below correspond to the command \"Append text automatically\". See \"Setting.md\" for details."
         });
 
         new Setting(this.containerEl)
             .setName("Append text to a task automatically")
             .setDesc(
-                "Default false. If set true, automatically append text to tasks according to the current task status. See \"Usage.md\" for details."
+                "Default false. If set true, automatically append text to tasks according to the current task status."
             )
             .addToggle((toggle) =>
                 toggle
@@ -432,7 +432,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Set for a marked task the default text to append automatically")
             .setDesc(
-                "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a marked task according to the setting. See \"Usage.md\" for details."
+                "Note that this requires \"Append text to a task automatically\" be enabled. Default \"None\"."
             )
             .addDropdown((dropdown) =>
                 dropdown
@@ -452,7 +452,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Set for a non-task line the default text to append automatically")
             .setDesc(
-                "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a non-task line according to the setting. See \"Usage.md\" for details."
+                "Note that this requires \"Append text to a task automatically\" be enabled. Default \"None\"."
             )
             .addDropdown((dropdown) =>
                 dropdown
@@ -662,9 +662,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for appending text to a task automatically")
+        .setName("Add menu item for appending text automatically")
         .setDesc(
-            "This menu item will work in a way as specified in the section \"Append text\"."
+            "This menu item will work in a way as specified in the section \"Append text automatically\"."
         )
         .addToggle((toggle) =>
             toggle
