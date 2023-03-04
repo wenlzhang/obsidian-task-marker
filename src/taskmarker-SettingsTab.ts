@@ -408,8 +408,10 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     })
         );
 
+        this.containerEl.createEl("h2", { text: "Append text automatically" });
+
         this.containerEl.createEl("p", {
-            text: "The settings below correspond with the command \"Append text automatically\"."
+            text: "The settings below correspond to the command \"Append text automatically\"."
         });
 
         new Setting(this.containerEl)
@@ -428,7 +430,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
 
         new Setting(this.containerEl)
-            .setName("Default text to append automatically to a marked task")
+            .setName("Set for a marked task the default text to append automatically")
             .setDesc(
                 "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a marked task according to the setting. See \"Usage.md\" for details."
             )
@@ -448,7 +450,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         );
 
         new Setting(this.containerEl)
-            .setName("Default text to append automatically to a non-task line")
+            .setName("Set for a non-task line the default text to append automatically")
             .setDesc(
                 "Note that this requires \"Append text to a task automatically\" be enabled. It would append text to a non-task line according to the setting. See \"Usage.md\" for details."
             )
