@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-task-marker",
 	"name": "Task Marker",
-	"version": "0.3.5",
+	"version": "0.4.0",
 	"minAppVersion": "1.0.0",
 	"description": "Change task statuses with hotkeys and context menu. Complete, cancel and mark tasks, as well as cycle among selected task statuses.",
 	"author": "wenlzhang",
