@@ -23,7 +23,7 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
     - Command to append text such as `📝 2023-01-01` to any line
     - Command to append text such as `✅ 2023-01-01` to any line
     - Command to append text such as `❎ 2023-01-01` to any line
-- Append text automatically
+- Append text automatically 📝 2023-03-04
     - Automatically append text according to task/line status
 
 ![demo](/docs/attachment/demo.gif)
