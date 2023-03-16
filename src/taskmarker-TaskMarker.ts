@@ -1,4 +1,4 @@
-import { App, moment, Notice } from "obsidian";
+import { App, moment, Notice, Editor } from "obsidian";
 import {
     TaskMarkerSettings,
     CompiledTasksSettings,
@@ -697,7 +697,7 @@ export class TaskMarker {
                 new Notice(`Task Marker: not a task or list item!`);
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
-        }
+        }        
         return lineText;
     }
 

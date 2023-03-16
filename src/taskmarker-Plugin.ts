@@ -76,6 +76,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCreate(
                     " ",
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -88,6 +89,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLines(
                     "x",
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -104,6 +106,7 @@ export class TaskMarkerPlugin extends Plugin {
                   if (!checking) {
                       this.markTaskOnLines(
                           "-",
+                          editor,
                           this.getCurrentLinesFromEditor(editor)
                       );
                   }
@@ -122,6 +125,7 @@ export class TaskMarkerPlugin extends Plugin {
                 if (mark) {
                     this.markTaskOnLines(
                         mark,
+                        editor,
                         this.getCurrentLinesFromEditor(editor)
                     );
                 }
@@ -135,6 +139,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLines(
                     " ",
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -170,6 +175,7 @@ export class TaskMarkerPlugin extends Plugin {
                     editorCallback: (editor: Editor, view: MarkdownView) => {
                         this.markTaskOnLines(
                             this.taskMarker.settings.incompleteTaskValues[i],
+                            editor,
                             this.getCurrentLinesFromEditor(editor)
                         );
                     },
@@ -189,6 +195,7 @@ export class TaskMarkerPlugin extends Plugin {
                     editorCallback: (editor: Editor, view: MarkdownView) => {
                         this.markTaskOnLines(
                             this.taskMarker.settings.incompleteTaskValuesRow2[i],
+                            editor,
                             this.getCurrentLinesFromEditor(editor)
                         );
                     },
@@ -204,6 +211,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycle(
                     'y', // This value does not matter.
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -221,6 +229,7 @@ export class TaskMarkerPlugin extends Plugin {
                     if (!checking) {
                         this.markTaskOnLinesCycleReversely(
                             'y', // This value does not matter.
+                            editor,
                             this.getCurrentLinesFromEditor(editor)
                         );
                     }
@@ -238,6 +247,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.appendTextOnLines(
                     "y", // The mark value does not matter.
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -250,6 +260,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.appendTextOnLinesText2(
                     "y", // The mark value does not matter.
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -262,6 +273,7 @@ export class TaskMarkerPlugin extends Plugin {
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.appendTextOnLinesText3(
                     "y", // The mark value does not matter.
+                    editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
             },
@@ -278,6 +290,7 @@ export class TaskMarkerPlugin extends Plugin {
                     if (!checking) {
                         this.appendTextOnLinesAuto(
                             "y", // The mark value does not matter.
+                            editor,
                             this.getCurrentLinesFromEditor(editor)
                         );
                     }
@@ -306,7 +319,7 @@ export class TaskMarkerPlugin extends Plugin {
         return lines;
     }
 
-    buildMenu(menu: Menu, lines?: number[]): void {
+    buildMenu(menu: Menu, editor: any, lines?: number[]): void {
         // if right-click create menu item is enabled
         if (this.taskMarker.settings.rightClickCreate) {
             menu.addItem((item) =>
@@ -314,7 +327,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Create task")
                     .setIcon(Icons.RESET)
                     .onClick(() => {
-                        this.markTaskOnLinesCreate(" ", lines);
+                        this.markTaskOnLinesCreate(" ", editor, lines);
                     })
             );
         }
@@ -326,7 +339,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Complete task")
                     .setIcon(Icons.COMPLETE)
                     .onClick(() => {
-                        this.markTaskOnLines("x", lines);
+                        this.markTaskOnLines("x", editor, lines);
                     })
             );
 
@@ -337,7 +350,7 @@ export class TaskMarkerPlugin extends Plugin {
                         .setTitle("(TM) Cancel task")
                         .setIcon(Icons.CANCEL)
                         .onClick(() => {
-                            this.markTaskOnLines("-", lines);
+                            this.markTaskOnLines("-", editor, lines);
                         })
                 );
             }
@@ -355,7 +368,7 @@ export class TaskMarkerPlugin extends Plugin {
                             this.taskMarker
                         );
                         if (mark) {
-                            this.markTaskOnLines(mark, lines);
+                            this.markTaskOnLines(mark, editor, lines);
                         }
                     })
             );
@@ -368,7 +381,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Cycle task status")
                     .setIcon(Icons.COMPLETE)
                     .onClick(() => {
-                        this.markTaskOnLinesCycle("y", lines); // The mark value does not matter.
+                        this.markTaskOnLinesCycle("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -380,7 +393,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Cycle task status reversely")
                     .setIcon(Icons.COMPLETE)
                     .onClick(() => {
-                        this.markTaskOnLinesCycleReversely("y", lines); // The mark value does not matter.
+                        this.markTaskOnLinesCycleReversely("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -392,7 +405,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Reset task")
                     .setIcon(Icons.RESET)
                     .onClick(() => {
-                        this.markTaskOnLines(" ", lines);
+                        this.markTaskOnLines(" ", editor, lines);
                     })
             );
         }
@@ -404,7 +417,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Append text 1")
                     // .setIcon(Icons.RESET)
                     .onClick(() => {
-                        this.appendTextOnLines("y", lines); // The mark value does not matter.
+                        this.appendTextOnLines("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -415,7 +428,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Append text 2")
                     // .setIcon(Icons.RESET)
                     .onClick(() => {
-                        this.appendTextOnLinesText2("y", lines); // The mark value does not matter.
+                        this.appendTextOnLinesText2("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -426,7 +439,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Append text 3")
                     // .setIcon(Icons.RESET)
                     .onClick(() => {
-                        this.appendTextOnLinesText3("y", lines); // The mark value does not matter.
+                        this.appendTextOnLinesText3("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -437,7 +450,7 @@ export class TaskMarkerPlugin extends Plugin {
                     .setTitle("(TM) Append text automatically")
                     // .setIcon(Icons.RESET)
                     .onClick(() => {
-                        this.appendTextOnLinesAuto("y", lines); // The mark value does not matter.
+                        this.appendTextOnLinesAuto("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -479,60 +492,116 @@ export class TaskMarkerPlugin extends Plugin {
         }
     }
 
-    async markTaskOnLines(mark: string, lines?: number[]): Promise<void> {
+    async markTaskOnLines(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.markTaskInSource(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async markTaskOnLinesCycle(mark: string, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycle(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.markTaskInSourceCycle(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async markTaskOnLinesCycleReversely(mark: string, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycleReversely(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.markTaskInSourceCycleReversely(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async markTaskOnLinesCreate(mark: string, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCreate(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.markTaskInSourceCreate(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLines(mark: string, lines?: number[]): Promise<void> {
+    async appendTextOnLines(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.appendTextInSource(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLinesText2(mark: string, lines?: number[]): Promise<void> {
+    async appendTextOnLinesText2(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.appendTextInSourceText2(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLinesText3(mark: string, lines?: number[]): Promise<void> {
+    async appendTextOnLinesText3(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.appendTextInSourceText3(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLinesAuto(mark: string, lines?: number[]): Promise<void> {
+    async appendTextOnLinesAuto(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
         const result = this.taskMarker.appendTextInSourceAuto(source, mark, lines);
-        this.app.vault.modify(activeFile, result);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
     }
 
     // async moveAllTasks(): Promise<void> {
