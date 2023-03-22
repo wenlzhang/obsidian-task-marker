@@ -644,6 +644,7 @@ export class TaskMarkerPlugin extends Plugin {
                             //get line selections here
                             this.buildMenu(
                                 menu,
+                                editor,
                                 this.getCurrentLinesFromEditor(editor)
                             );
                         }
@@ -680,7 +681,7 @@ export class TaskMarkerPlugin extends Plugin {
                                             MarkdownView
                                         );
                                     if (view && view.editor) {
-                                        const menu = new Menu(this.app);
+                                        const menu = new Menu();
                                         this.buildMenu(menu, [
                                             lineStart + line,
                                         ]);
