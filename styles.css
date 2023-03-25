@@ -1,3 +1,4 @@
+/* Mark Tasks modal */
 #taskmarker-modal .modal-close-button {
     display: none;
 }
@@ -54,4 +55,9 @@
   display: block;
   font-size: .8em;
   color: var(--text-muted);
+}
+
+/* Miscellaneous */
+.linkInfo {
+    font-size: small;
 }

@@ -63,6 +63,10 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     })
             );
 
+        this.containerEl.appendChild(createEl("a", {
+            text: 'moment.js documentation.', href: "https://momentjs.com/docs", cls: 'linkInfo'
+        }))
+
         this.containerEl.createEl("h2", { text: "Complete tasks" });
 
         // this.containerEl.createEl("p", {
@@ -411,8 +415,12 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "Append text automatically" });
 
         this.containerEl.createEl("p", {
-            text: "The settings below correspond to the command \"Append text automatically\". See \"Setting.md\" for details."
+            text: "The settings below correspond to the command \"Append text automatically\"."
         });
+
+        this.containerEl.appendChild(createEl("a", {
+            text: 'See \"Setting.md\" for details.', href: "https://github.com/wenlzhang/obsidian-task-marker/blob/main/docs/Setting.md", cls: 'linkInfo'
+        }))
 
         new Setting(this.containerEl)
             .setName("Append text to a task automatically")
