@@ -13,3 +13,6 @@ build
 
 # obsidian
 data.json
+
+# buildt
+.buildt
