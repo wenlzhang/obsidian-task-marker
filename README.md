@@ -6,6 +6,8 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 ## Features
 
+### Main
+
 - Create tasks
     - Mark list items with `[ ]`
     - Optionally append text such as `📝 2023-01-01`
@@ -25,6 +27,10 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
     - Command to append text such as `❎ 2023-01-01` to any line
 - Append text automatically 📝 2023-03-04
     - Automatically append text according to task/line status
+
+### Miscellaneous
+
+- Support operating on items that start with `-+*` 📝 2023-07-24
 
 ![demo](/docs/attachment/demo.gif)
 
