@@ -601,7 +601,9 @@ export class TaskMarker {
 
     markTaskLine(lineText: string, mark: string): string {
         const taskMatch = this.anyTaskMark.exec(lineText);
-        const markString = "- [" + mark + "] ";
+        const taskPrefix = `${lineText.trim().charAt(0)} [`;
+
+        const markString = taskPrefix + mark + "] ";
 
         if (mark === "Backspace") {
             lineText = this.removeCheckboxFromLine(lineText);
@@ -677,15 +679,16 @@ export class TaskMarker {
             }
         } else if (mark !== "Backspace") {
             const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
-                } else if (lineText.trim().startsWith("- [")) {
-                    let listIndex = lineText.indexOf("- [");
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
@@ -710,7 +713,7 @@ export class TaskMarker {
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = "- [" + markValue[i] + "] ";
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
 
         // Find the next index
@@ -744,15 +747,16 @@ export class TaskMarker {
             lineText = marked;
         } else {
             const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
-                } else if (lineText.trim().startsWith("- [")) {
-                    let listIndex = lineText.indexOf("- [");
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
@@ -793,7 +797,7 @@ export class TaskMarker {
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = "- [" + markValue[i] + "] ";
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
 
         // Find the next index
@@ -827,15 +831,16 @@ export class TaskMarker {
             lineText = marked;
         } else {
             const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[markIndex]}] ${listMatch[2]}`;
-                } else if (lineText.trim().startsWith("- [")) {
-                    let listIndex = lineText.indexOf("- [");
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ` [${markValue[markIndex]}] ` + lineText.slice(listIndex+2);
                 }
 
@@ -863,9 +868,10 @@ export class TaskMarker {
 
     markTaskLineCreate(lineText: string, mark: string): string {
         const taskMatch = this.anyTaskMark.exec(lineText);
+        const taskPrefix = `${lineText.trim().charAt(0)} [ ] `;
 
         if (taskMatch) {
-            if (!lineText.trim().startsWith("- [ ] ")) {
+            if (!lineText.trim().startsWith(taskPrefix)) {
                 new Notice(`Task Marker: task already marked!`);
                 console.log("Task Marker: task already marked, leaving unchanged: %s", lineText);
             // } else if (lineText.trim().startsWith("- [ ] ")) {
@@ -895,15 +901,16 @@ export class TaskMarker {
             }
         } else {
             const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith("- [")) {
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
-                } else if (lineText.trim().startsWith("- [")) {
-                    let listIndex = lineText.indexOf("- [");
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
