@@ -28,11 +28,11 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 - Append text automatically 📝 2023-03-04
     - Automatically append text according to task/line status
 
+![demo](/docs/attachment/demo.gif)
+
 ### Miscellaneous
 
 - Support operating on items that start with `-+*` 📝 2023-07-24
-
-![demo](/docs/attachment/demo.gif)
 
 ## Usage
 
