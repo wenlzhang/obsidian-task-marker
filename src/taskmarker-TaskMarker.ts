@@ -17,12 +17,12 @@ export class TaskMarker {
 
     constructor(private app: App) {
         this.app = app;
-        this.anyListItem = new RegExp(/^([\s>]*- )([^\\[].*)$/);
-        this.anyTaskMark = new RegExp(/^([\s>]*- \[)(.)(\] .*)$/);
+        this.anyListItem = new RegExp(/^([\s>]*[-+*] )([^\\[].*)$/);
+        this.anyTaskMark = new RegExp(/^([\s>]*[-+*] \[)(.)(\] .*)$/);
         this.blockQuote = new RegExp(/^(\s*>[\s>]*)(.*)$/);
         this.blockRef = new RegExp(/^(.*?)( \^[A-Za-z0-9-]+)?$/);
         this.continuation = new RegExp(/^( {2,}|\t)/);
-        this.stripTask = new RegExp(/^([\s>]*-) \[.\] (.*)$/);
+        this.stripTask = new RegExp(/^([\s>]*[-+*]) \[.\] (.*)$/);
     }
 
     updateSettings(settings: TaskMarkerSettings): void {
