@@ -304,9 +304,9 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         // });
 
         new Setting(this.containerEl)
-            .setName("Cycled task statuses")
+            .setName("Cycled task (main)")
             .setDesc(
-                "Specify the set of characters that indicate any task statuses, e.g. 'x- Rip>'."
+                "Specify a set of characters that indicate any task statuses, e.g. 'x- Rip>'."
         )
         .addText((text) =>
             text
@@ -314,6 +314,51 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.cycleTaskValues)
                 .onChange(async (value) => {
                     tempSettings.cycleTaskValues = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        new Setting(this.containerEl)
+            .setName("Cycled task (list 1)")
+            .setDesc(
+                "Specify an additional list of characters that indicate any task statuses."
+        )
+        .addText((text) =>
+            text
+                .setPlaceholder("ab")
+                .setValue(tempSettings.cycleTaskValuesList1)
+                .onChange(async (value) => {
+                    tempSettings.cycleTaskValuesList1 = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        new Setting(this.containerEl)
+            .setName("Cycled task (list 2)")
+            .setDesc(
+                "Specify an additional list of characters that indicate any task statuses."
+        )
+        .addText((text) =>
+            text
+                .setPlaceholder("cd")
+                .setValue(tempSettings.cycleTaskValuesList2)
+                .onChange(async (value) => {
+                    tempSettings.cycleTaskValuesList2 = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        new Setting(this.containerEl)
+            .setName("Cycled task (list 3)")
+            .setDesc(
+                "Specify an additional list of characters that indicate any task statuses."
+        )
+        .addText((text) =>
+            text
+                .setPlaceholder("ef")
+                .setValue(tempSettings.cycleTaskValuesList3)
+                .onChange(async (value) => {
+                    tempSettings.cycleTaskValuesList3 = value;
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
@@ -580,7 +625,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task")
+        .setName("Add menu item for cycling a task (main)")
         .setDesc(
             "This menu item will work in a way as specified in the section \"Cycle tasks\"."
         )
@@ -589,6 +634,48 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.rightClickCycle)
                 .onChange(async (value) => {
                     tempSettings.rightClickCycle = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        new Setting(this.containerEl)
+        .setName("Add menu item for cycling a task (list 1)")
+        .setDesc(
+            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCycleList1)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCycleList1 = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        new Setting(this.containerEl)
+        .setName("Add menu item for cycling a task (list 2)")
+        .setDesc(
+            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCycleList2)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCycleList2 = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+        new Setting(this.containerEl)
+        .setName("Add menu item for cycling a task (list 3)")
+        .setDesc(
+            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCycleList3)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCycleList3 = value;
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })

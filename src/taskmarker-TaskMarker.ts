@@ -406,6 +406,9 @@ export class TaskMarker {
             this.settings.rightClickComplete ||
             this.settings.rightClickMark ||
             this.settings.rightClickCycle ||
+            this.settings.rightClickCycleList1 ||
+            this.settings.rightClickCycleList2 ||
+            this.settings.rightClickCycleList3 ||
             this.settings.rightClickCycleReversely ||
             this.settings.rightClickCreate ||
             this.settings.rightClickAppend ||
@@ -523,6 +526,39 @@ export class TaskMarker {
         const split = source.split("\n");
         for (const n of lines) {
             split[n] = this.markTaskLineCycle(split[n], mark);
+        }
+        return split.join("\n");
+    }
+    markTaskInSourceCycleList1(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.markTaskLineCycleList1(split[n], mark);
+        }
+        return split.join("\n");
+    }
+    markTaskInSourceCycleList2(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.markTaskLineCycleList2(split[n], mark);
+        }
+        return split.join("\n");
+    }
+    markTaskInSourceCycleList3(
+        source: string,
+        mark: string,
+        lines: number[] = []
+    ): string {
+        const split = source.split("\n");
+        for (const n of lines) {
+            split[n] = this.markTaskLineCycleList3(split[n], mark);
         }
         return split.join("\n");
     }
@@ -708,6 +744,237 @@ export class TaskMarker {
 
         const taskMatch = this.anyTaskMark.exec(lineText);
         const markValue = this.settings.cycleTaskValues;
+        const markValueLength = markValue.length;
+
+        // Regroup mark as string array
+        let markStringArray = new Array<string>(markValueLength);
+        for (let i = 0; i < markValueLength; i++) {
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+        }
+
+        // Find the next index
+        let markIndex = 0;
+        for (let i = 0; i < markValueLength; i++) {
+            if (lineText.trim().startsWith(markStringArray[i])) {
+                if (i + 2 <= markValueLength) {
+                    markIndex = i + 1;
+                } else {
+                    markIndex = 0;
+                }
+            }
+        }
+        
+        // Cycle task statuses
+        if (taskMatch) {
+            let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+
+            const strictLineEnding = lineText.endsWith("  ");
+            let blockid = "";
+            const match = this.blockRef.exec(marked);
+            if (match && match[2]) {
+                marked = match[1];
+                blockid = match[2];
+            }
+            marked += blockid;
+            if (strictLineEnding) {
+                marked += "  ";
+            }
+
+            lineText = marked;
+        } else {
+            const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
+
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
+                console.debug("Task Marker: list item, convert to a task %s", lineText);
+
+                // convert to a task, and then mark
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
+
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                marked += blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+                
+                lineText = marked;
+            } else {
+                new Notice(`Task Marker: not a task or list item!`);
+                console.debug("Task Marker: not a task or list item %s", lineText);
+            }
+        }
+
+        return lineText;
+    }
+    markTaskLineCycleList1(lineText: string, mark: string): string {
+
+        const taskMatch = this.anyTaskMark.exec(lineText);
+        const markValue = this.settings.cycleTaskValuesList1;
+        const markValueLength = markValue.length;
+
+        // Regroup mark as string array
+        let markStringArray = new Array<string>(markValueLength);
+        for (let i = 0; i < markValueLength; i++) {
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+        }
+
+        // Find the next index
+        let markIndex = 0;
+        for (let i = 0; i < markValueLength; i++) {
+            if (lineText.trim().startsWith(markStringArray[i])) {
+                if (i + 2 <= markValueLength) {
+                    markIndex = i + 1;
+                } else {
+                    markIndex = 0;
+                }
+            }
+        }
+        
+        // Cycle task statuses
+        if (taskMatch) {
+            let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+
+            const strictLineEnding = lineText.endsWith("  ");
+            let blockid = "";
+            const match = this.blockRef.exec(marked);
+            if (match && match[2]) {
+                marked = match[1];
+                blockid = match[2];
+            }
+            marked += blockid;
+            if (strictLineEnding) {
+                marked += "  ";
+            }
+
+            lineText = marked;
+        } else {
+            const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
+
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
+                console.debug("Task Marker: list item, convert to a task %s", lineText);
+
+                // convert to a task, and then mark
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
+
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                marked += blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+                
+                lineText = marked;
+            } else {
+                new Notice(`Task Marker: not a task or list item!`);
+                console.debug("Task Marker: not a task or list item %s", lineText);
+            }
+        }
+
+        return lineText;
+    }
+    markTaskLineCycleList2(lineText: string, mark: string): string {
+
+        const taskMatch = this.anyTaskMark.exec(lineText);
+        const markValue = this.settings.cycleTaskValuesList2;
+        const markValueLength = markValue.length;
+
+        // Regroup mark as string array
+        let markStringArray = new Array<string>(markValueLength);
+        for (let i = 0; i < markValueLength; i++) {
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+        }
+
+        // Find the next index
+        let markIndex = 0;
+        for (let i = 0; i < markValueLength; i++) {
+            if (lineText.trim().startsWith(markStringArray[i])) {
+                if (i + 2 <= markValueLength) {
+                    markIndex = i + 1;
+                } else {
+                    markIndex = 0;
+                }
+            }
+        }
+        
+        // Cycle task statuses
+        if (taskMatch) {
+            let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+
+            const strictLineEnding = lineText.endsWith("  ");
+            let blockid = "";
+            const match = this.blockRef.exec(marked);
+            if (match && match[2]) {
+                marked = match[1];
+                blockid = match[2];
+            }
+            marked += blockid;
+            if (strictLineEnding) {
+                marked += "  ";
+            }
+
+            lineText = marked;
+        } else {
+            const listMatch = this.anyListItem.exec(lineText);
+            const taskPrefix = `${lineText.trim().charAt(0)} [`;
+
+            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
+                console.debug("Task Marker: list item, convert to a task %s", lineText);
+
+                // convert to a task, and then mark
+                if ((listMatch && listMatch[2])) {
+                    var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
+                } else if (lineText.trim().startsWith(taskPrefix)) {
+                    let listIndex = lineText.indexOf(taskPrefix);
+                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                }
+
+                const strictLineEnding = lineText.endsWith("  ");
+                let blockid = "";
+                const match = this.blockRef.exec(marked);
+                if (match && match[2]) {
+                    marked = match[1];
+                    blockid = match[2];
+                }
+                marked += blockid;
+                if (strictLineEnding) {
+                    marked += "  ";
+                }
+                
+                lineText = marked;
+            } else {
+                new Notice(`Task Marker: not a task or list item!`);
+                console.debug("Task Marker: not a task or list item %s", lineText);
+            }
+        }
+
+        return lineText;
+    }
+    markTaskLineCycleList3(lineText: string, mark: string): string {
+
+        const taskMatch = this.anyTaskMark.exec(lineText);
+        const markValue = this.settings.cycleTaskValuesList3;
         const markValueLength = markValue.length;
 
         // Regroup mark as string array

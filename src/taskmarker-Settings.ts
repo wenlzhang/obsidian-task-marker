@@ -12,6 +12,9 @@ export interface TaskMarkerSettings {
     incompleteTaskValues: string;
     incompleteTaskValuesRow2: string;
     cycleTaskValues: string;
+    cycleTaskValuesList1: string;
+    cycleTaskValuesList2: string;
+    cycleTaskValuesList3: string;
     supportCanceledTasks: boolean;
     supportCyclingTasksReversely: boolean;
     supportAppendingTextAutomatically: boolean;
@@ -21,6 +24,9 @@ export interface TaskMarkerSettings {
     rightClickComplete: boolean;
     rightClickMark: boolean;
     rightClickCycle: boolean;
+    rightClickCycleList1: boolean;
+    rightClickCycleList2: boolean;
+    rightClickCycleList3: boolean;
     rightClickCycleReversely: boolean;
     rightClickCreate: boolean;
     rightClickAppend: boolean;
@@ -49,6 +55,9 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     incompleteTaskValues: " ",
     incompleteTaskValuesRow2: "", // For choosing whether to show in the second row
     cycleTaskValues: "",
+    cycleTaskValuesList1: "",
+    cycleTaskValuesList2: "",
+    cycleTaskValuesList3: "",
     onlyLowercaseX: false,
     supportCanceledTasks: true,
     supportCyclingTasksReversely: false,
@@ -59,6 +68,9 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     rightClickComplete: false,
     rightClickMark: false,
     rightClickCycle: false,
+    rightClickCycleList1: false,
+    rightClickCycleList2: false,
+    rightClickCycleList3: false,
     rightClickCycleReversely: false,
     rightClickCreate: false,
     rightClickAppend: false,

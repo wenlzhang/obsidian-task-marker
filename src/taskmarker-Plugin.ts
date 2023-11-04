@@ -220,8 +220,8 @@ export class TaskMarkerPlugin extends Plugin {
 
         // Add hotkeys for cycling task statuses
         this.addCommand({
-            id: "task-marker-cycle-task-status",
-            name: "Cycle task status",
+            id: "task-marker-cycle-task",
+            name: "Cycle task (main)",
             icon: Icons.CYCLE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycle(
@@ -232,10 +232,49 @@ export class TaskMarkerPlugin extends Plugin {
             },
         });
 
+        this.addCommand({
+            id: "task-marker-cycle-task-1",
+            name: "Cycle task (list 1)",
+            icon: Icons.CYCLE,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.markTaskOnLinesCycleList1(
+                    'y', // This value does not matter.
+                    editor,
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
+        this.addCommand({
+            id: "task-marker-cycle-task-2",
+            name: "Cycle task (list 2)",
+            icon: Icons.CYCLE,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.markTaskOnLinesCycleList2(
+                    'y', // This value does not matter.
+                    editor,
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
+        this.addCommand({
+            id: "task-marker-cycle-task-3",
+            name: "Cycle task (list 3)",
+            icon: Icons.CYCLE,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.markTaskOnLinesCycleList3(
+                    'y', // This value does not matter.
+                    editor,
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
         // Add hotkeys for cycling task statuses reversely
         this.addCommand({
-            id: "task-marker-cycle-task-status-reversely",
-            name: "Cycle task status reversely",
+            id: "task-marker-cycle-task-reversely",
+            name: "Cycle task reversely (main)",
             icon: Icons.CYCLE_REVERSELY,
             editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
                 const value = this.taskMarker.settings.supportCyclingTasksReversely;
@@ -393,10 +432,40 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickCycle) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Cycle task status")
+                    .setTitle("(TM) Cycle task (main)")
                     .setIcon(Icons.CYCLE)
                     .onClick(() => {
                         this.markTaskOnLinesCycle("y", editor, lines); // The mark value does not matter.
+                    })
+            );
+        }
+        if (this.taskMarker.settings.rightClickCycleList1) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Cycle task (list 1)")
+                    .setIcon(Icons.CYCLE)
+                    .onClick(() => {
+                        this.markTaskOnLinesCycleList1("y", editor, lines); // The mark value does not matter.
+                    })
+            );
+        }
+        if (this.taskMarker.settings.rightClickCycleList2) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Cycle task (list 2)")
+                    .setIcon(Icons.CYCLE)
+                    .onClick(() => {
+                        this.markTaskOnLinesCycleList2("y", editor, lines); // The mark value does not matter.
+                    })
+            );
+        }
+        if (this.taskMarker.settings.rightClickCycleList3) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Cycle task (list 3)")
+                    .setIcon(Icons.CYCLE)
+                    .onClick(() => {
+                        this.markTaskOnLinesCycleList3("y", editor, lines); // The mark value does not matter.
                     })
             );
         }
@@ -405,7 +474,7 @@ export class TaskMarkerPlugin extends Plugin {
         if (this.taskMarker.settings.rightClickCycleReversely) {
             menu.addItem((item) =>
                 item
-                    .setTitle("(TM) Cycle task status reversely")
+                    .setTitle("(TM) Cycle task reversely (main)")
                     .setIcon(Icons.CYCLE_REVERSELY)
                     .onClick(() => {
                         this.markTaskOnLinesCycleReversely("y", editor, lines); // The mark value does not matter.
@@ -529,6 +598,45 @@ export class TaskMarkerPlugin extends Plugin {
         const cursorPosition = editor.getCursor();
 
         const result = this.taskMarker.markTaskInSourceCycle(source, mark, lines);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
+    }
+    async markTaskOnLinesCycleList1(mark: string, editor: any, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
+        const result = this.taskMarker.markTaskInSourceCycleList1(source, mark, lines);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
+    }
+    async markTaskOnLinesCycleList2(mark: string, editor: any, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
+        const result = this.taskMarker.markTaskInSourceCycleList2(source, mark, lines);
+        await this.app.vault.modify(activeFile, result);
+
+        // Restore the cursor position after modifying the file
+        editor.setCursor(cursorPosition);
+    }
+    async markTaskOnLinesCycleList3(mark: string, editor: any, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+
+        const result = this.taskMarker.markTaskInSourceCycleList3(source, mark, lines);
         await this.app.vault.modify(activeFile, result);
 
         // Restore the cursor position after modifying the file
