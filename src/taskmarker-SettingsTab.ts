@@ -318,6 +318,22 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
         );
+
+        new Setting(this.containerEl)
+            .setName("Support cycling task reversely (main)")
+            .setDesc(
+                "Default disabled. If enabled, a command would be added to cycle reversely among the statuses as specified above."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.supportCyclingTasksReversely)
+                    .onChange(async (value) => {
+                        tempSettings.supportCyclingTasksReversely = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+        );
+
         new Setting(this.containerEl)
             .setName("Cycled task (list 1)")
             .setDesc(
@@ -362,21 +378,6 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
-        );
-
-        new Setting(this.containerEl)
-            .setName("Support cycling task status reversely")
-            .setDesc(
-                "Default disabled. If enabled, a command would be added to cycle reversely among the statuses as specified above."
-            )
-            .addToggle((toggle) =>
-                toggle
-                    .setValue(tempSettings.supportCyclingTasksReversely)
-                    .onChange(async (value) => {
-                        tempSettings.supportCyclingTasksReversely = value;
-                        this.taskMarker.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    })
         );
 
         this.containerEl.createEl("h2", { text: "Append text" });
@@ -638,6 +639,22 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
         );
+
+        new Setting(this.containerEl)
+        .setName("Add menu item for cycling a task reversely (main)")
+        .setDesc(
+            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCycleReversely)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCycleReversely = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+
         new Setting(this.containerEl)
         .setName("Add menu item for cycling a task (list 1)")
         .setDesc(
@@ -676,21 +693,6 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 .setValue(tempSettings.rightClickCycleList3)
                 .onChange(async (value) => {
                     tempSettings.rightClickCycleList3 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
-
-        new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task reversely")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCycleReversely)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCycleReversely = value;
                     this.taskMarker.updateSettings(tempSettings);
                     await this.plugin.saveSettings();
                 })
