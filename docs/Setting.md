@@ -45,11 +45,11 @@ Task Marker uses [moment.js](https://momentjs.com/docs/#/displaying/format/) to 
 
 ## Cycle tasks
 
-- **Cycled task statuses**
+- **Cycled task (main)**
     - Examples:
         - `x- Rip`
-- **Support cycling task status reversely**
-    - If enabled, an additional command would be added to reversely cycle the statuses configured in **Cycled task statuses**.
+- **Support cycling task reversely (main)**
+    - If enabled, an additional command would be added to reversely cycle the statuses configured in **Cycled task (main)**.
     - For the example above, it means that this command would cycle among `piR -x`.
 
 ## Append text

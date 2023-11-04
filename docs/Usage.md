@@ -32,9 +32,9 @@ If the current line is (or selection contains) a task, and the task matches the 
 - Use the **mouse** to select an icon, or **type** the associated character.
     - For instance, one can type `x` to complete the task.
 
-## Cycle task status
+## Cycle task
 
-### Cycle task status
+### Cycle task (main)
 
 - If the current status of the task matches one of the configured statuses, the status would change to the next one.
       - For instance, if `Rip` is configured and the current status is `R`, then the status become `i` after executing the command.
@@ -42,9 +42,9 @@ If the current line is (or selection contains) a task, and the task matches the 
       - For instance, if `Rip` is configured and the current status is `x`, then the status would become `R` after executing the command.
 - If it is an item, e.g., `- Item`, rather than a task, then the status would start from the first status in the configuration.
 
-### Cycle task status reversely
+### Cycle task reversely (main)
 
-- If **Support cycling task status reversely** is enabled, an additional command would be added to reversely cycle the statuses configured in **Cycled task statuses**.
+- If **Support cycling task reversely (main)** is enabled, an additional command would be added to reversely cycle the statuses configured in **Cycled task (main)**.
 
 ## Append text
 
