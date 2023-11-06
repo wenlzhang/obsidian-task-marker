@@ -767,9 +767,15 @@ export class TaskMarker {
                     } else {
                         markIndex = 0;
                     }
-                }                
-            } else if (cycleWithList) {
-                markIndex = -1;  // cycle with list
+                }
+            }
+        }
+        // Update next index based on item type
+        if (markIndex === 0) {
+            if (taskMatch) {
+                if (cycleWithList) {
+                    markIndex = -1;  // cycle with list
+                }
             }
         }
         
@@ -855,9 +861,15 @@ export class TaskMarker {
                     } else {
                         markIndex = 0;
                     }
-                }                
-            } else if (cycleWithList) {
-                markIndex = -1;  // cycle with list
+                }
+            }
+        }
+        // Update next index based on item type
+        if (markIndex === 0) {
+            if (taskMatch) {
+                if (cycleWithList) {
+                    markIndex = -1;  // cycle with list
+                }
             }
         }
         
@@ -943,9 +955,15 @@ export class TaskMarker {
                     } else {
                         markIndex = 0;
                     }
-                }                
-            } else if (cycleWithList) {
-                markIndex = -1;  // cycle with list
+                }
+            }
+        }
+        // Update next index based on item type
+        if (markIndex === 0) {
+            if (taskMatch) {
+                if (cycleWithList) {
+                    markIndex = -1;  // cycle with list
+                }
             }
         }
         
@@ -1031,9 +1049,15 @@ export class TaskMarker {
                     } else {
                         markIndex = 0;
                     }
-                }                
-            } else if (cycleWithList) {
-                markIndex = -1;  // cycle with list
+                }
+            }
+        }
+        // Update next index based on item type
+        if (markIndex === 0) {
+            if (taskMatch) {
+                if (cycleWithList) {
+                    markIndex = -1;  // cycle with list
+                }
             }
         }
         
@@ -1126,9 +1150,15 @@ export class TaskMarker {
                     } else {
                         markIndex = 0;
                     }
-                }                
-            } else if (cycleWithList) {
-                markIndex = -1;  // cycle with list
+                }
+            }
+        }
+        // Update next index based on item type
+        if (markIndex === 0) {
+            if (taskMatch) {
+                if (cycleWithList) {
+                    markIndex = -1;  // cycle with list
+                }
             }
         }
         
