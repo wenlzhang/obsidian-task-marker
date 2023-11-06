@@ -380,6 +380,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                 })
         );
 
+        new Setting(this.containerEl)
+            .setName("Support cycling with list item")
+            .setDesc(
+                "Default disabled. If enabled, list item would be included as the first cycled status."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.supportCyclingWithListItem)
+                    .onChange(async (value) => {
+                        tempSettings.supportCyclingWithListItem = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+        );
+
         this.containerEl.createEl("h2", { text: "Append text" });
 
         // this.containerEl.createEl("p", {

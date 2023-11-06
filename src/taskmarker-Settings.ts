@@ -17,6 +17,7 @@ export interface TaskMarkerSettings {
     cycleTaskValuesList3: string;
     supportCanceledTasks: boolean;
     supportCyclingTasksReversely: boolean;
+    supportCyclingWithListItem: boolean;
     supportAppendingTextAutomatically: boolean;
     appendTextAutoLineDefault: string;
     appendTextAutoTaskDefault: string;
@@ -61,6 +62,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     onlyLowercaseX: false,
     supportCanceledTasks: true,
     supportCyclingTasksReversely: false,
+    supportCyclingWithListItem: false,
     supportAppendingTextAutomatically: false,
     appendTextAutoLineDefault: "none",
     appendTextAutoTaskDefault: "none",
