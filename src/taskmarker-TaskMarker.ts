@@ -763,11 +763,13 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;
+                        markIndex = -1;  // cycle with list
                     } else {
                         markIndex = 0;
                     }
                 }                
+            } else if (cycleWithList) {
+                markIndex = -1;  // cycle with list
             }
         }
         
@@ -849,11 +851,13 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;
+                        markIndex = -1;  // cycle with list
                     } else {
                         markIndex = 0;
                     }
                 }                
+            } else if (cycleWithList) {
+                markIndex = -1;  // cycle with list
             }
         }
         
@@ -935,11 +939,13 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;
+                        markIndex = -1;  // cycle with list
                     } else {
                         markIndex = 0;
                     }
                 }                
+            } else if (cycleWithList) {
+                markIndex = -1;  // cycle with list
             }
         }
         
@@ -1021,11 +1027,13 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;
+                        markIndex = -1;  // cycle with list
                     } else {
                         markIndex = 0;
                     }
                 }                
+            } else if (cycleWithList) {
+                markIndex = -1;  // cycle with list
             }
         }
         
@@ -1114,11 +1122,13 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;
+                        markIndex = -1;  // cycle with list
                     } else {
                         markIndex = 0;
                     }
                 }                
+            } else if (cycleWithList) {
+                markIndex = -1;  // cycle with list
             }
         }
         
