@@ -1088,8 +1088,11 @@ export class TaskMarker {
     markTaskLineCycleReversely(lineText: string, mark: string): string {
 
         const taskMatch = this.anyTaskMark.exec(lineText);
+        const taskPrefix = `${lineText.trim().charAt(0)} [`;
+        const listMatch = this.anyListItem.exec(lineText);
         var markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
+        const cycleWithList = this.settings.supportCyclingWithListItem
 
         let reverseString = "";
         for (let char of markValue) {
@@ -1110,14 +1113,23 @@ export class TaskMarker {
                 if (i + 2 <= markValueLength) {
                     markIndex = i + 1;
                 } else {
-                    markIndex = 0;
-                }
+                    if (cycleWithList) {
+                        markIndex = -1;
+                    } else {
+                        markIndex = 0;
+                    }
+                }                
             }
         }
         
         // Cycle task statuses
         if (taskMatch) {
-            let marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+            if (markIndex === -1) {  // convert task to list
+                let listIndex = lineText.indexOf(taskPrefix);
+                var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
+            } else {
+                var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+            }
 
             const strictLineEnding = lineText.endsWith("  ");
             let blockid = "";
@@ -1130,12 +1142,9 @@ export class TaskMarker {
             if (strictLineEnding) {
                 marked += "  ";
             }
-
+            
             lineText = marked;
         } else {
-            const listMatch = this.anyListItem.exec(lineText);
-            const taskPrefix = `${lineText.trim().charAt(0)} [`;
-
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
