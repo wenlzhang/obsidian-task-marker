@@ -510,12 +510,15 @@ export class TaskMarker {
         source: string,
         mark: string,
         lines: number[] = []
-    ): string {
+    ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
+        const cursorOffset: number[] = [];
         for (const n of lines) {
-            split[n] = this.markTaskLine(split[n], mark);
+            const result = this.markTaskLine(split[n], mark);
+            split[n] = result.updatedLineText;
+            cursorOffset.push(result.cursorOffset);
         }
-        return split.join("\n");
+        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
     }
 
     markTaskInSourceCycle(
@@ -635,11 +638,13 @@ export class TaskMarker {
         return split.join("\n");
     }
 
-    markTaskLine(lineText: string, mark: string): string {
+    markTaskLine(lineText: string, mark: string): {updatedLineText: string, cursorOffset: number} {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
 
         const markString = taskPrefix + mark + "] ";
+
+        let cursorOffset = 0;
 
         if (mark === "Backspace") {
             lineText = this.removeCheckboxFromLine(lineText);
@@ -720,6 +725,8 @@ export class TaskMarker {
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
+                cursorOffset = 4; // For retaining cursor position
+
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
@@ -728,16 +735,14 @@ export class TaskMarker {
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
-                lineText = this.markTaskLine(
-                    marked,
-                    mark
-                );
+                let result = this.markTaskLine(marked, mark);
+                lineText = result.updatedLineText;
             } else {
                 new Notice(`Task Marker: not a task or list item!`);
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
-        }        
-        return lineText;
+        }
+        return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
     markTaskLineCycle(lineText: string, mark: string): string {
