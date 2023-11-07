@@ -638,55 +638,119 @@ export class TaskMarkerPlugin extends Plugin {
     async markTaskOnLinesCycleList1(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-
+    
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
-
+        if (!cursorPosition) {
+            console.error('Failed to get cursor position');
+            return;
+        }
+    
         const result = this.taskMarker.markTaskInSourceCycleList1(source, mark, lines);
-        await this.app.vault.modify(activeFile, result);
-
+        if (!result || !result.updatedLineText || !result.cursorOffset) {
+            console.error('Failed to mark task in source');
+            return;
+        }
+    
+        await this.app.vault.modify(activeFile, result.updatedLineText);
+    
+        // Log the values of cursorPosition and result.cursorOffset    
+        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
+            console.error('Invalid cursor position or offset');
+            return;
+        }
+    
         // Restore the cursor position after modifying the file
-        editor.setCursor(cursorPosition);
+        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        editor.setCursor(newCursorPosition);
     }
     async markTaskOnLinesCycleList2(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-
+    
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
-
+        if (!cursorPosition) {
+            console.error('Failed to get cursor position');
+            return;
+        }
+    
         const result = this.taskMarker.markTaskInSourceCycleList2(source, mark, lines);
-        await this.app.vault.modify(activeFile, result);
-
+        if (!result || !result.updatedLineText || !result.cursorOffset) {
+            console.error('Failed to mark task in source');
+            return;
+        }
+    
+        await this.app.vault.modify(activeFile, result.updatedLineText);
+    
+        // Log the values of cursorPosition and result.cursorOffset    
+        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
+            console.error('Invalid cursor position or offset');
+            return;
+        }
+    
         // Restore the cursor position after modifying the file
-        editor.setCursor(cursorPosition);
+        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        editor.setCursor(newCursorPosition);
     }
     async markTaskOnLinesCycleList3(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-
+    
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
-
+        if (!cursorPosition) {
+            console.error('Failed to get cursor position');
+            return;
+        }
+    
         const result = this.taskMarker.markTaskInSourceCycleList3(source, mark, lines);
-        await this.app.vault.modify(activeFile, result);
-
+        if (!result || !result.updatedLineText || !result.cursorOffset) {
+            console.error('Failed to mark task in source');
+            return;
+        }
+    
+        await this.app.vault.modify(activeFile, result.updatedLineText);
+    
+        // Log the values of cursorPosition and result.cursorOffset    
+        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
+            console.error('Invalid cursor position or offset');
+            return;
+        }
+    
         // Restore the cursor position after modifying the file
-        editor.setCursor(cursorPosition);
+        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        editor.setCursor(newCursorPosition);
     }
 
     async markTaskOnLinesCycleReversely(mark: string, editor: any, lines?: number[]): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-
+    
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
-
+        if (!cursorPosition) {
+            console.error('Failed to get cursor position');
+            return;
+        }
+    
         const result = this.taskMarker.markTaskInSourceCycleReversely(source, mark, lines);
-        await this.app.vault.modify(activeFile, result);
-
+        if (!result || !result.updatedLineText || !result.cursorOffset) {
+            console.error('Failed to mark task in source');
+            return;
+        }
+    
+        await this.app.vault.modify(activeFile, result.updatedLineText);
+    
+        // Log the values of cursorPosition and result.cursorOffset    
+        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
+            console.error('Invalid cursor position or offset');
+            return;
+        }
+    
         // Restore the cursor position after modifying the file
-        editor.setCursor(cursorPosition);
+        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        editor.setCursor(newCursorPosition);
     }
 
     async markTaskOnLinesCreate(mark: string, editor: any, lines?: number[]): Promise<void> {

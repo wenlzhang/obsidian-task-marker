@@ -539,46 +539,58 @@ export class TaskMarker {
         source: string,
         mark: string,
         lines: number[] = []
-    ): string {
+    ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
+        const cursorOffset: number[] = [];
         for (const n of lines) {
-            split[n] = this.markTaskLineCycleList1(split[n], mark);
+            const result = this.markTaskLineCycleList1(split[n], mark);
+            split[n] = result.updatedLineText;
+            cursorOffset.push(result.cursorOffset);
         }
-        return split.join("\n");
+        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
     }
     markTaskInSourceCycleList2(
         source: string,
         mark: string,
         lines: number[] = []
-    ): string {
+    ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
+        const cursorOffset: number[] = [];
         for (const n of lines) {
-            split[n] = this.markTaskLineCycleList2(split[n], mark);
+            const result = this.markTaskLineCycleList2(split[n], mark);
+            split[n] = result.updatedLineText;
+            cursorOffset.push(result.cursorOffset);
         }
-        return split.join("\n");
+        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
     }
     markTaskInSourceCycleList3(
         source: string,
         mark: string,
         lines: number[] = []
-    ): string {
+    ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
+        const cursorOffset: number[] = [];
         for (const n of lines) {
-            split[n] = this.markTaskLineCycleList3(split[n], mark);
+            const result = this.markTaskLineCycleList3(split[n], mark);
+            split[n] = result.updatedLineText;
+            cursorOffset.push(result.cursorOffset);
         }
-        return split.join("\n");
+        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
     }
 
     markTaskInSourceCycleReversely(
         source: string,
         mark: string,
         lines: number[] = []
-    ): string {
+    ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
+        const cursorOffset: number[] = [];
         for (const n of lines) {
-            split[n] = this.markTaskLineCycleReversely(split[n], mark);
+            const result = this.markTaskLineCycleReversely(split[n], mark);
+            split[n] = result.updatedLineText;
+            cursorOffset.push(result.cursorOffset);
         }
-        return split.join("\n");
+        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
     }
 
     markTaskInSourceCreate(
@@ -849,7 +861,7 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCycleList1(lineText: string, mark: string): string {
+    markTaskLineCycleList1(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
 
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
@@ -858,6 +870,8 @@ export class TaskMarker {
         const markValueLength = markValue.length;
         const cycleWithList = this.settings.supportCyclingWithListItem
 
+        let cursorOffset = 0;
+
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
@@ -873,6 +887,7 @@ export class TaskMarker {
                 } else {
                     if (cycleWithList) {
                         markIndex = -1;  // cycle with list
+                        cursorOffset = -4;
                     } else {
                         markIndex = 0;
                     }
@@ -884,6 +899,7 @@ export class TaskMarker {
             if (taskMatch) {
                 if (cycleWithList) {
                     markIndex = -1;  // cycle with list
+                    cursorOffset = -4;
                 }
             }
         }
@@ -914,6 +930,8 @@ export class TaskMarker {
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
+                cursorOffset = 4; // For retaining cursor position
+
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
@@ -941,9 +959,9 @@ export class TaskMarker {
             }
         }
 
-        return lineText;
+        return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
-    markTaskLineCycleList2(lineText: string, mark: string): string {
+    markTaskLineCycleList2(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
 
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
@@ -952,6 +970,8 @@ export class TaskMarker {
         const markValueLength = markValue.length;
         const cycleWithList = this.settings.supportCyclingWithListItem
 
+        let cursorOffset = 0;
+
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
@@ -967,6 +987,7 @@ export class TaskMarker {
                 } else {
                     if (cycleWithList) {
                         markIndex = -1;  // cycle with list
+                        cursorOffset = -4;
                     } else {
                         markIndex = 0;
                     }
@@ -978,6 +999,7 @@ export class TaskMarker {
             if (taskMatch) {
                 if (cycleWithList) {
                     markIndex = -1;  // cycle with list
+                    cursorOffset = -4;
                 }
             }
         }
@@ -1008,6 +1030,8 @@ export class TaskMarker {
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
+                cursorOffset = 4; // For retaining cursor position
+
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
@@ -1035,9 +1059,9 @@ export class TaskMarker {
             }
         }
 
-        return lineText;
+        return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
-    markTaskLineCycleList3(lineText: string, mark: string): string {
+    markTaskLineCycleList3(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
 
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
@@ -1046,6 +1070,8 @@ export class TaskMarker {
         const markValueLength = markValue.length;
         const cycleWithList = this.settings.supportCyclingWithListItem
 
+        let cursorOffset = 0;
+
         // Regroup mark as string array
         let markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
@@ -1061,6 +1087,7 @@ export class TaskMarker {
                 } else {
                     if (cycleWithList) {
                         markIndex = -1;  // cycle with list
+                        cursorOffset = -4;
                     } else {
                         markIndex = 0;
                     }
@@ -1072,6 +1099,7 @@ export class TaskMarker {
             if (taskMatch) {
                 if (cycleWithList) {
                     markIndex = -1;  // cycle with list
+                    cursorOffset = -4;
                 }
             }
         }
@@ -1102,6 +1130,8 @@ export class TaskMarker {
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
+                cursorOffset = 4; // For retaining cursor position
+
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
@@ -1129,10 +1159,10 @@ export class TaskMarker {
             }
         }
 
-        return lineText;
+        return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCycleReversely(lineText: string, mark: string): string {
+    markTaskLineCycleReversely(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
 
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
@@ -1140,6 +1170,8 @@ export class TaskMarker {
         var markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
         const cycleWithList = this.settings.supportCyclingWithListItem
+
+        let cursorOffset = 0;
 
         let reverseString = "";
         for (let char of markValue) {
@@ -1162,6 +1194,7 @@ export class TaskMarker {
                 } else {
                     if (cycleWithList) {
                         markIndex = -1;  // cycle with list
+                        cursorOffset = -4;
                     } else {
                         markIndex = 0;
                     }
@@ -1173,6 +1206,7 @@ export class TaskMarker {
             if (taskMatch) {
                 if (cycleWithList) {
                     markIndex = -1;  // cycle with list
+                    cursorOffset = -4;
                 }
             }
         }
@@ -1202,6 +1236,8 @@ export class TaskMarker {
         } else {
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
+
+                cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
@@ -1230,7 +1266,7 @@ export class TaskMarker {
             }
         }
 
-        return lineText;
+        return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
     markTaskLineCreate(lineText: string, mark: string): string {
