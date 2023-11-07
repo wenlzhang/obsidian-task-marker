@@ -597,12 +597,15 @@ export class TaskMarker {
         source: string,
         mark: string,
         lines: number[] = []
-    ): string {
+    ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
+        const cursorOffset: number[] = [];
         for (const n of lines) {
-            split[n] = this.markTaskLineCreate(split[n], mark);
+            const result = this.markTaskLineCreate(split[n], mark);
+            split[n] = result.updatedLineText;
+            cursorOffset.push(result.cursorOffset);
         }
-        return split.join("\n");
+        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
     }
 
     appendTextInSource(
@@ -1269,9 +1272,11 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCreate(lineText: string, mark: string): string {
+    markTaskLineCreate(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [ ] `;
+
+        let cursorOffset = 0;
 
         if (taskMatch) {
             if (!lineText.trim().startsWith(taskPrefix)) {
@@ -1309,6 +1314,8 @@ export class TaskMarker {
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
 
+                cursorOffset = 4;
+
                 // convert to a task, and then mark
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
@@ -1341,7 +1348,7 @@ export class TaskMarker {
                 console.debug("Task Marker: not a task or list item %s", lineText);
             }
         }
-        return lineText;
+        return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
     appendTextLineFunction(lineText: string, appendTextFormat: string): string {
