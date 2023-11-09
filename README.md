@@ -6,8 +6,6 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 ## Features
 
-### Main
-
 - Create tasks
     - Mark list items with `[ ]`
     - Optionally append text such as `📝 2023-01-01`
@@ -22,9 +20,9 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
     - Cycle among configured statuses such as `[x]`, `[-]`, `[>]` and `[/]`
     - Reversely cycle among configured statuses
 - Cycle tasks among additional lists of statuses 📝 2023-11-04
-  - E.g., list 1 `x->/` for task execution status
-  - E.g., list 2 `?!biI` for task importance
-  - E.g., list 3 `pcud` for task pro/con/up/down
+    - E.g., list 1 `x->/` for task execution status
+    - E.g., list 2 `?!biI` for task importance
+    - E.g., list 3 `pcud` for task pro/con/up/down
 - Append text
     - Command to append text such as `📝 2023-01-01` to any line
     - Command to append text such as `✅ 2023-01-01` to any line
@@ -37,6 +35,11 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 ### Miscellaneous
 
 - Support operating on items that start with `-+*` 📝 2023-07-24
+- Include list item as the first cycled status 📝 2023-11-06
+    - A toggle is added to allow users to select whether to include the list item as the first cycled status or not.
+- Retain cursor location when operating on tasks 📝 2023-11-07
+    - The cursor location is set with respect to text, excluding item/task prefix.
+    - The behaviour is the same as the default Obsidian command `Cycle bullet/checkbox`.
 
 ## Usage
 
