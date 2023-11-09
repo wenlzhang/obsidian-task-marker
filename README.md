@@ -36,7 +36,7 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 - Support operating on items that start with `-+*` 📝 2023-07-24
 - Include list item as the first cycled status 📝 2023-11-06
-    - A toggle is added to set whether to include the list item as the first cycled status or not.
+    - A toggle is added for selecting whether to include the list item as the first cycled status or not.
 - Retain cursor location when operating on tasks 📝 2023-11-07
     - The cursor location is set with respect to text, excluding item/task prefix.
     - The behaviour is the same as the default Obsidian command `Cycle bullet/checkbox`.
