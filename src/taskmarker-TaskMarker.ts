@@ -675,6 +675,25 @@ export class TaskMarker {
                     new Notice(`Task Marker: task already marked with the same status "${mark}"!`);
                 } else { // Mark tasks
                     let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+
+                    // Determine line prefix
+                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+
+                    let ListTaskPrefix: string;
+
+                    if (defaultPrefix1) {
+                        ListTaskPrefix = "-";
+                    } else if (defaultPrefix2) {
+                        ListTaskPrefix = "*";
+                    } else if (defaultPrefix3) {
+                        ListTaskPrefix = "+";
+                    }
+
+                    let ListTaskPrefixString = ListTaskPrefix + ` [ ] `
+
+                    // Append text
                     if (this.initSettings.removeRegExp) {
                         marked = marked.replace(this.initSettings.removeRegExp, "");
                     }
@@ -689,7 +708,9 @@ export class TaskMarker {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        if (lineText.trim() !== ListTaskPrefixString.trim()) {
+                            marked += moment().format(this.settings.appendDateFormat) + blockid;
+                        }
                         if (strictLineEnding) {
                             marked += "  ";
                         }
@@ -704,7 +725,9 @@ export class TaskMarker {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        marked += moment().format(this.settings.appendTextFormatMark) + blockid;
+                        if (lineText.trim() !== ListTaskPrefixString.trim()) {
+                            marked += moment().format(this.settings.appendTextFormatMark) + blockid;
+                        }
                         if (strictLineEnding) {
                             marked += "  ";
                         }
@@ -719,7 +742,9 @@ export class TaskMarker {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
+                        if (lineText.trim() !== ListTaskPrefixString.trim()) {
+                            marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
+                        }
                         if (strictLineEnding) {
                             marked += "  ";
                         }
