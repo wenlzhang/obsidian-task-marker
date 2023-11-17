@@ -33,6 +33,41 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             text: "Please try reopening the vault or restarting Obsidian if the following setting changes do not take effect.",
         });
 
+        this.containerEl.createEl("h2", { text: "General" });
+
+        new Setting(this.containerEl)
+            .setName("Support operating on any line text")
+            .setDesc(
+                "Default disabled. If enabled, commands can operate on any line text, i.e., none-list and none-task line texts."
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.supportOperatingOnAnyLineText)
+                    .onChange(async (value) => {
+                        tempSettings.supportOperatingOnAnyLineText = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+        );
+
+        new Setting(this.containerEl)
+            .setName("Set a default prefix for list items/tasks")
+            .setDesc(
+                "Note that this requires \"Support operating on any line text\" be enabled. Default \"-\"."
+            )
+            .addDropdown((dropdown) =>
+                dropdown
+                    .addOption("prefix-1", "-")
+                    .addOption("prefix-2", "*")
+                    .addOption("prefix-3", "+")
+                    .setValue(tempSettings.defaultListTaskPrefix)
+                    .onChange(async (value: "prefix-1" | "prefix-2" | "prefix-3") => {
+                        tempSettings.defaultListTaskPrefix = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    }),
+        );
+
         this.containerEl.createEl("h2", { text: "Create tasks" });
 
         // this.containerEl.createEl("p", {

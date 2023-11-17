@@ -756,8 +756,34 @@ export class TaskMarker {
                 let result = this.markTaskLine(marked, mark);
                 lineText = result.updatedLineText;
             } else {
-                new Notice(`Task Marker: not a task or list item!`);
-                console.debug("Task Marker: not a task or list item %s", lineText);
+                if (this.settings.supportOperatingOnAnyLineText) {
+                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+
+                    cursorOffset = 6; // For retaining cursor position
+
+                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+
+                    // convert to a task, and then mark
+                    let ListTaskPrefix: string;
+
+                    if (defaultPrefix1) {
+                        ListTaskPrefix = "-";
+                    } else if (defaultPrefix2) {
+                        ListTaskPrefix = "*";
+                    } else if (defaultPrefix3) {
+                        ListTaskPrefix = "+";
+                    }
+
+                    let marked = ListTaskPrefix + ` [ ] ` + lineText;
+
+                    let result = this.markTaskLine(marked, mark);
+                    lineText = result.updatedLineText;
+                } else {
+                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
+                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                }
             }
         }
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
