@@ -53,7 +53,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Set a default prefix for list items/tasks")
             .setDesc(
-                "Note that this requires \"Support operating on any line text\" be enabled. Default \"-\"."
+                "For this to take effect, it requires \"Support operating on any line text\" be enabled. Default \"-\"."
             )
             .addDropdown((dropdown) =>
                 dropdown
