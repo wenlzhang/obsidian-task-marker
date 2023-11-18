@@ -1583,6 +1583,13 @@ export class TaskMarker {
         if (strictLineEnding) {
             lineText += "  ";
         }
+
+        // Handle empty line text
+        const taskEmptyLineText = lineText.trim().length === 5
+        if (taskEmptyLineText){
+            lineText = lineText + " "
+        }
+
         return lineText;
     }
 
