@@ -924,8 +924,6 @@ export class TaskMarker {
                 if (this.settings.supportOperatingOnAnyLineText) {
                     console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
 
-                    cursorOffset = 2; // For retaining cursor position
-
                     const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
                     const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
                     const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
@@ -942,7 +940,14 @@ export class TaskMarker {
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                    let marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+
+                    if (cycleWithList) {
+                        cursorOffset = 2; // For retaining cursor position
+                        var marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+                    } else {
+                        cursorOffset = 6; // For retaining cursor position
+                        var marked = indentation + listTaskDefaultPrefix + ' [' + `${markValue[0]}` + '] ' + lineText.trimStart();
+                    }
 
                     lineText = marked;
                 } else {
