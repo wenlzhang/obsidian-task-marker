@@ -676,22 +676,8 @@ export class TaskMarker {
                 } else { // Mark tasks
                     let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
 
-                    // Determine line prefix
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
-
-                    let ListTaskPrefix: string;
-
-                    if (defaultPrefix1) {
-                        ListTaskPrefix = "-";
-                    } else if (defaultPrefix2) {
-                        ListTaskPrefix = "*";
-                    } else if (defaultPrefix3) {
-                        ListTaskPrefix = "+";
-                    }
-
-                    let ListTaskPrefixString = ListTaskPrefix + ` [ ] `
+                    // Check empty line, empty list, empty task
+                    const taskEmptyLineText = lineText.trim().length === 5
 
                     // Append text
                     if (this.initSettings.removeRegExp) {
@@ -708,7 +694,7 @@ export class TaskMarker {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        if (lineText.trim() !== ListTaskPrefixString.trim()) {
+                        if (!taskEmptyLineText) {
                             marked += moment().format(this.settings.appendDateFormat) + blockid;
                         }
                         if (strictLineEnding) {
@@ -725,7 +711,7 @@ export class TaskMarker {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        if (lineText.trim() !== ListTaskPrefixString.trim()) {
+                        if (!taskEmptyLineText) {
                             marked += moment().format(this.settings.appendTextFormatMark) + blockid;
                         }
                         if (strictLineEnding) {
@@ -742,7 +728,7 @@ export class TaskMarker {
                         if (!marked.endsWith(" ")) {
                             marked += " ";
                         }
-                        if (lineText.trim() !== ListTaskPrefixString.trim()) {
+                        if (!taskEmptyLineText) {
                             marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
                         }
                         if (strictLineEnding) {
@@ -764,6 +750,8 @@ export class TaskMarker {
         } else if (mark !== "Backspace") {
             const listMatch = this.anyListItem.exec(lineText);
             const taskPrefix = `${lineText.trim().charAt(0)} [`;
+            const listPrefix = `${lineText.trim().charAt(0)}`;
+            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
 
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
@@ -780,6 +768,17 @@ export class TaskMarker {
 
                 let result = this.markTaskLine(marked, mark);
                 lineText = result.updatedLineText;
+            } else if (listEmptyLineText) {
+                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+
+                cursorOffset = 4; // For retaining cursor position
+
+                // convert to a task, and then mark
+                const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
+                let marked = indentation + listPrefix + ` [ ] `;
+
+                let result = this.markTaskLine(marked, mark);
+                lineText = result.updatedLineText;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
                     console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
@@ -791,17 +790,18 @@ export class TaskMarker {
                     const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a task, and then mark
-                    let ListTaskPrefix: string;
+                    let listTaskDefaultPrefix: string;
 
                     if (defaultPrefix1) {
-                        ListTaskPrefix = "-";
+                        listTaskDefaultPrefix = "-";
                     } else if (defaultPrefix2) {
-                        ListTaskPrefix = "*";
+                        listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
-                        ListTaskPrefix = "+";
+                        listTaskDefaultPrefix = "+";
                     }
 
-                    let marked = ListTaskPrefix + ` [ ] ` + lineText;
+                    const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
+                    let marked = indentation + listTaskDefaultPrefix + ` [ ] ` + lineText.trimStart();
 
                     let result = this.markTaskLine(marked, mark);
                     lineText = result.updatedLineText;
