@@ -1559,6 +1559,10 @@ export class TaskMarker {
             //     console.log("Task Marker: task already created, leaving unchanged: %s", lineText);
             } else { // Create task and append text
                 let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+
+                // Check empty line, empty list, empty task
+                const taskEmptyLineText = marked.trim().length === 5
+
                 if (this.settings.appendTextFormatCreation) {
                     const strictLineEnding = lineText.endsWith("  ");
                     let blockid = "";
@@ -1570,7 +1574,9 @@ export class TaskMarker {
                     if (!marked.endsWith(" ")) {
                         marked += " ";
                     }
-                    marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                    if (!taskEmptyLineText) {
+                        marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                    }
                     if (strictLineEnding) {
                         marked += "  ";
                     }
@@ -1582,6 +1588,8 @@ export class TaskMarker {
         } else {
             const listMatch = this.anyListItem.exec(lineText);
             const taskPrefix = `${lineText.trim().charAt(0)} [`;
+            const listPrefix = `${lineText.trim().charAt(0)}`;
+            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
 
             if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
                 console.debug("Task Marker: list item, convert to a task %s", lineText);
@@ -1596,6 +1604,9 @@ export class TaskMarker {
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
+                // Check empty line, empty list, empty task
+                const taskEmptyLineText = marked.trim().length === 5
+
                 if (this.settings.appendTextFormatCreation) {
                     const strictLineEnding = lineText.endsWith("  ");
                     let blockid = "";
@@ -1607,7 +1618,42 @@ export class TaskMarker {
                     if (!marked.endsWith(" ")) {
                         marked += " ";
                     }
-                    marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                    if (!taskEmptyLineText) {
+                        marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                    }
+                    if (strictLineEnding) {
+                        marked += "  ";
+                    }
+                } else {
+                    console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+                }
+                lineText = marked;
+            } else if (listEmptyLineText) {
+                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+
+                cursorOffset = 4;
+
+                // convert to a task, and then mark
+                const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
+                let marked = indentation + listPrefix + ` [ ] `;
+
+                // Check empty line, empty list, empty task
+                const taskEmptyLineText = marked.trim().length === 5
+
+                if (this.settings.appendTextFormatCreation) {
+                    const strictLineEnding = lineText.endsWith("  ");
+                    let blockid = "";
+                    const match = this.blockRef.exec(marked);
+                    if (match && match[2]) {
+                        marked = match[1];
+                        blockid = match[2];
+                    }
+                    if (!marked.endsWith(" ")) {
+                        marked += " ";
+                    }
+                    if (!taskEmptyLineText) {
+                        marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                    }
                     if (strictLineEnding) {
                         marked += "  ";
                     }
@@ -1616,8 +1662,63 @@ export class TaskMarker {
                 }
                 lineText = marked;
             } else {
-                new Notice(`Task Marker: not a task or list item!`);
-                console.debug("Task Marker: not a task or list item %s", lineText);
+                console.log('a' + lineText + 'a')
+                if (this.settings.supportOperatingOnAnyLineText) {
+                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+
+                    cursorOffset = 6; // For retaining cursor position
+
+                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+
+                    // convert to a task, and then mark
+                    let listTaskDefaultPrefix: string;
+
+                    if (defaultPrefix1) {
+                        listTaskDefaultPrefix = "-";
+                    } else if (defaultPrefix2) {
+                        listTaskDefaultPrefix = "*";
+                    } else if (defaultPrefix3) {
+                        listTaskDefaultPrefix = "+";
+                    }
+
+                    const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
+                    let marked = indentation + listTaskDefaultPrefix + ` [ ] ` + lineText.trimStart();
+
+                    console.log('a' + marked + 'a')
+
+                    // Check empty line, empty list, empty task
+                    const taskEmptyLineText = marked.trim().length === 5
+
+                    console.log(taskEmptyLineText)
+
+                    if (this.settings.appendTextFormatCreation) {
+                        const strictLineEnding = lineText.endsWith("  ");
+                        let blockid = "";
+                        const match = this.blockRef.exec(marked);
+                        if (match && match[2]) {
+                            marked = match[1];
+                            blockid = match[2];
+                        }
+                        if (!marked.endsWith(" ")) {
+                            marked += " ";
+                        }
+                        if (!taskEmptyLineText) {
+                            marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                        }
+                        if (strictLineEnding) {
+                            marked += "  ";
+                        }
+                    } else {
+                        console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+                    }
+                    
+                    lineText = marked;
+                } else {
+                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
+                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                }
             }
         }
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
