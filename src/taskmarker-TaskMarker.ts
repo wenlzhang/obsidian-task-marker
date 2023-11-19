@@ -798,6 +798,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -937,6 +940,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -1082,6 +1088,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -1226,6 +1235,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -1370,6 +1382,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -1521,6 +1536,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -1681,6 +1699,9 @@ export class TaskMarker {
                         listTaskDefaultPrefix = "*";
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
+                    } else {
+                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
+                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
@@ -1713,7 +1734,7 @@ export class TaskMarker {
                     } else {
                         console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
                     }
-                    
+
                     lineText = marked;
                 } else {
                     new Notice("Task Marker: not a task or list item, leaving unchanged!");

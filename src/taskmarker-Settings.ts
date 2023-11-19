@@ -47,7 +47,7 @@ export interface TaskMarkerSettings {
 export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     // completedAreaHeader: "## Log",
     supportOperatingOnAnyLineText: false,
-    defaultListTaskPrefix: "-",
+    defaultListTaskPrefix: "none",
     removeExpression: "",
     appendDateFormat: "",
     appendTextFormatMark: "",

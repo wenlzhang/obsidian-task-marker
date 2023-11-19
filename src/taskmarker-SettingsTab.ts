@@ -53,15 +53,16 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Set a default prefix for list items/tasks")
             .setDesc(
-                "For this to take effect, it requires \"Support operating on any line text\" be enabled. Default \"-\"."
+                "For this to take effect, it requires \"Support operating on any line text\" be enabled."
             )
             .addDropdown((dropdown) =>
                 dropdown
+                    .addOption("none", "None")
                     .addOption("prefix-1", "-")
                     .addOption("prefix-2", "*")
                     .addOption("prefix-3", "+")
                     .setValue(tempSettings.defaultListTaskPrefix)
-                    .onChange(async (value: "prefix-1" | "prefix-2" | "prefix-3") => {
+                    .onChange(async (value: "none" | "prefix-1" | "prefix-2" | "prefix-3") => {
                         tempSettings.defaultListTaskPrefix = value;
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
