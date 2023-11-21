@@ -611,13 +611,12 @@ export class TaskMarker {
 
     markTaskInSourceCreateNewline(
         source: string,
-        mark: string,
         lines: number[] = []
     ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
-            const result = this.markTaskLineCreateNewline(split[n], mark);
+            const result = this.markTaskLineCreateNewline(split[n]);
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
@@ -1761,17 +1760,17 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCreateNewline(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
+    markTaskLineCreateNewline(lineText: string): { updatedLineText: string, cursorOffset: number } {
         const indentation = lineText.match(/^\s*/)[0];
         const taskMatch = this.anyTaskMark.exec(lineText);
         const liistMatch = this.anyListItem.exec(lineText);
     
         let linePrefix = "";
         if (taskMatch) {
-            linePrefix = lineText.substring(0, 5); // This will capture the task prefix from the taskMatch
+            linePrefix = lineText.substring(indentation.length, indentation.length + 5); // This will capture the task prefix from the taskMatch
             var newlineText = indentation + linePrefix + ` `;
         } else if (liistMatch) {
-            linePrefix = lineText.substring(0, 1); // This will capture the task prefix from the listMatch
+            linePrefix = lineText.substring(indentation.length, indentation.length + 1); // This will capture the task prefix from the listMatch
             var newlineText = indentation + linePrefix + ` `;
         } else if (this.settings.supportOperatingOnAnyLineText) {
             var newlineText = indentation;
