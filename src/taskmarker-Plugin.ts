@@ -834,7 +834,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line + 1, ch: cursorPosition.ch + result.cursorOffset[0]};
+        let newCursorPosition = {line: cursorPosition.line + 1, ch: result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 

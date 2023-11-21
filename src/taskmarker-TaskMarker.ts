@@ -1769,11 +1769,14 @@ export class TaskMarker {
         let linePrefix = "";
         if (taskMatch) {
             linePrefix = lineText.substring(0, 5); // This will capture the task prefix from the taskMatch
+            var newlineText = indentation + linePrefix + ` `;
         } else if (liistMatch) {
-            linePrefix = lineText.substring(0, 1); // This will capture the task prefix from the taskMatch
+            linePrefix = lineText.substring(0, 1); // This will capture the task prefix from the listMatch
+            var newlineText = indentation + linePrefix + ` `;
+        } else if (this.settings.supportOperatingOnAnyLineText) {
+            var newlineText = indentation;
         }
-        const newlineText = indentation + linePrefix + ` `;
-    
+
         // Append newlineText to the existing lineText
         const updatedLineText = lineText + "\n" + newlineText;
         return { updatedLineText, cursorOffset: newlineText.length };
