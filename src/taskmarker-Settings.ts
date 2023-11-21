@@ -32,6 +32,7 @@ export interface TaskMarkerSettings {
     rightClickCycleList3: boolean;
     rightClickCycleReversely: boolean;
     rightClickCreate: boolean;
+    rightClickCreateNewline: boolean;
     rightClickAppend: boolean;
     rightClickAppendText2: boolean;
     rightClickAppendText3: boolean;
@@ -79,6 +80,7 @@ export const DEFAULT_SETTINGS: TaskMarkerSettings = {
     rightClickCycleList3: false,
     rightClickCycleReversely: false,
     rightClickCreate: false,
+    rightClickCreateNewline: false,
     rightClickAppend: false,
     rightClickAppendText2: false,
     rightClickAppendText3: false,

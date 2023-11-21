@@ -647,6 +647,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             );
         
         new Setting(this.containerEl)
+        .setName("Add menu item for creating a newline")
+        .setDesc(
+            "This menu item will work in a way as specified in the section \"Create tasks\"."
+        )
+        .addToggle((toggle) =>
+            toggle
+                .setValue(tempSettings.rightClickCreateNewline)
+                .onChange(async (value) => {
+                    tempSettings.rightClickCreateNewline = value;
+                    this.taskMarker.updateSettings(tempSettings);
+                    await this.plugin.saveSettings();
+                })
+        );
+
+        new Setting(this.containerEl)
             .setName("Add menu item for completing a task")
             .setDesc(
                 "This menu item will work in a way as specified in the section \"Complete tasks\"."

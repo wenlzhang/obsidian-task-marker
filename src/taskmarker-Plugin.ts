@@ -98,6 +98,19 @@ export class TaskMarkerPlugin extends Plugin {
         });
 
         this.addCommand({
+            id: "task-marker-create-newline",
+            name: "Create newline",
+            icon: Icons.CREATE,
+            editorCallback: (editor: Editor, view: MarkdownView) => {
+                this.markTaskOnLinesCreateNewline(
+                    " ",
+                    editor,
+                    this.getCurrentLinesFromEditor(editor)
+                );
+            },
+        });
+
+        this.addCommand({
             id: "task-marker-complete",
             name: "Complete task",
             icon: Icons.COMPLETE,
@@ -382,6 +395,18 @@ export class TaskMarkerPlugin extends Plugin {
                     .setIcon(Icons.CREATE)
                     .onClick(() => {
                         this.markTaskOnLinesCreate(" ", editor, lines);
+                    })
+            );
+        }
+
+        // if right-click create menu item is enabled
+        if (this.taskMarker.settings.rightClickCreateNewline) {
+            menu.addItem((item) =>
+                item
+                    .setTitle("(TM) Create newline")
+                    .setIcon(Icons.CREATE)
+                    .onClick(() => {
+                        this.markTaskOnLinesCreateNewline(" ", editor, lines);
                     })
             );
         }
@@ -780,6 +805,36 @@ export class TaskMarkerPlugin extends Plugin {
     
         // Restore the cursor position after modifying the file
         let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        editor.setCursor(newCursorPosition);
+    }
+
+    async markTaskOnLinesCreateNewline(mark: string, editor: any, lines?: number[]): Promise<void> {
+        const activeFile = this.app.workspace.getActiveFile();
+        const source = await this.app.vault.read(activeFile);
+    
+        // Save the cursor position before modifying the file
+        const cursorPosition = editor.getCursor();
+        if (!cursorPosition) {
+            console.error('Failed to get cursor position');
+            return;
+        }
+    
+        const result = this.taskMarker.markTaskInSourceCreateNewline(source, mark, lines);
+        if (!result || !result.updatedLineText || !result.cursorOffset) {
+            console.error('Failed to mark task in source');
+            return;
+        }
+    
+        await this.app.vault.modify(activeFile, result.updatedLineText);
+    
+        // Log the values of cursorPosition and result.cursorOffset    
+        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
+            console.error('Invalid cursor position or offset');
+            return;
+        }
+    
+        // Restore the cursor position after modifying the file
+        let newCursorPosition = {line: cursorPosition.line + 1, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 
