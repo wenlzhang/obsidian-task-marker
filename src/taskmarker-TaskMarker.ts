@@ -611,12 +611,13 @@ export class TaskMarker {
 
     markTaskInSourceCreateNewline(
         source: string,
-        lines: number[] = []
+        lines: number[] = [],
+        cursorPosition: { line: number, ch: number } // Define the type inline
     ): { updatedLineText: string, cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
-            const result = this.markTaskLineCreateNewline(split[n]);
+            const result = this.markTaskLineCreateNewline(split[n], cursorPosition);
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
@@ -1760,25 +1761,30 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCreateNewline(lineText: string): { updatedLineText: string, cursorOffset: number } {
+    markTaskLineCreateNewline(lineText: string, cursorPosition: { line: number, ch: number } ): { updatedLineText: string, cursorOffset: number } {
         const indentation = lineText.match(/^\s*/)[0];
         const taskMatch = this.anyTaskMark.exec(lineText);
         const liistMatch = this.anyListItem.exec(lineText);
+        const cursorDeviation = cursorPosition.ch
+
+        let cursorLeft = lineText.substring(0, cursorDeviation);
+        let cursorRight = lineText.substring(cursorDeviation);
     
         let linePrefix = "";
+        let newlineText = "";
         if (taskMatch) {
             linePrefix = lineText.substring(indentation.length, indentation.length + 5); // This will capture the task prefix from the taskMatch
-            var newlineText = indentation + linePrefix + ` `;
+            newlineText = indentation + linePrefix + ` ` + cursorRight;
         } else if (liistMatch) {
             linePrefix = lineText.substring(indentation.length, indentation.length + 1); // This will capture the task prefix from the listMatch
-            var newlineText = indentation + linePrefix + ` `;
+            newlineText = indentation + linePrefix + ` ` + cursorRight;
         } else if (this.settings.supportOperatingOnAnyLineText) {
-            var newlineText = indentation;
+            newlineText = indentation + cursorRight;
         }
 
         // Append newlineText to the existing lineText
-        const updatedLineText = lineText + "\n" + newlineText;
-        return { updatedLineText, cursorOffset: newlineText.length };
+        const updatedLineText = cursorLeft + "\n" + newlineText;
+        return { updatedLineText, cursorOffset: newlineText.length - cursorRight.length };
     }
 
     appendTextLineFunction(lineText: string, appendTextFormat: string): string {

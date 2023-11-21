@@ -819,7 +819,7 @@ export class TaskMarkerPlugin extends Plugin {
             return;
         }
     
-        const result = this.taskMarker.markTaskInSourceCreateNewline(source, lines);
+        const result = this.taskMarker.markTaskInSourceCreateNewline(source, lines, cursorPosition);
         if (!result || !result.updatedLineText || !result.cursorOffset) {
             console.error('Failed to mark task in source');
             return;
