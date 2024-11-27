@@ -41,6 +41,13 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
     - The cursor location is set with respect to text, excluding item/task prefix.
     - The behaviour is the same as the default Obsidian command `Cycle bullet/checkbox`.
 
+## The story behind this plugin
+
+[Obsidian Todoist Context Bridge](https://exp.ptkm.net/obsidian-todoist-context-bridge) was crafted with two essential [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles) that shape its functionality:
+
+- **Task-Centered Workflow**: Prioritizing efficient task management
+- **Focus on Priority**: Helping users concentrate on what truly matters
+
 ## Usage
 
 ### How to use
@@ -86,4 +93,6 @@ You can see how this plugin is developed starting from scratch as follows:
 
 ## Support me
 
-<a href='https://ko-fi.com/C0C66C1TB' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+If you find this plugin helpful, consider [sponsoring my work](https://github.com/sponsors/wenlzhang) or
+
+<a href='https://ko-fi.com/C0C66C1TB' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee' /></a>
