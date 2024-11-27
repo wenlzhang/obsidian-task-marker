@@ -12,8 +12,7 @@
     "prettier": "prettier -w 'src/**/*.ts'",
     "preversion": "npm run build && npm run test",
     "version": "node version-bump.mjs && node version-changelog.mjs && git add manifest.json versions.json CHANGELOG.md",
-    "postversion": "git push && git push --tags && npm run brat-notes $npm_package_version && gh release create $npm_package_version -F release-notes.md --draft",
-    "brat-notes": "run() { auto-changelog --stdout --hide-credit --hide-empty-releases --template .github/changelog.hbs -v $1 --starting-version $1  > release-notes.md; }; run"
+    "postversion": "git push && git push --tags && gh release create $npm_package_version -F CHANGELOG.md --draft"
   },
   "version-tag-prefix": "",
   "keywords": [
