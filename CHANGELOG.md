@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [0.6.2] - 2024-11-27
+
+### Changes
+
+- fix: include required files in GitHub releases
+- Update manifest.json
+- refactor: simplify release process to use CHANGELOG.md directly
+
 ## [0.6.1] - 2024-11-27
 
 ### Changes
