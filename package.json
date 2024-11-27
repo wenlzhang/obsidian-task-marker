@@ -1,6 +1,6 @@
 {
   "name": "obsidian-task-marker",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "private": true,
   "description": "Manage task status in Obsidian (https://obsidian.md)",
   "main": "main.js",
