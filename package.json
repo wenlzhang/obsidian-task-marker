@@ -8,7 +8,7 @@
     "dev": "node esbuild.config.mjs",
     "build": "npm run prettier && node esbuild.config.mjs production && cp manifest.json README.md styles.css build",
     "pretest": "eslint --ignore-path .gitignore src/",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "prettier": "prettier -w 'src/**/*.ts'",
     "preversion": "npm run build && npm run test",
     "version": "node version-bump.mjs && node version-changelog.mjs && git add manifest.json versions.json CHANGELOG.md",
