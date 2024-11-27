@@ -12,7 +12,6 @@
     "parserOptions": {
         "sourceType": "module"
     },
-    "files": ["test/**"],
     "rules": {
       "no-unused-vars": "off",
       // "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
