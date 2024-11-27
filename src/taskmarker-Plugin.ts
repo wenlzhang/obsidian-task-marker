@@ -627,7 +627,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 
@@ -657,7 +657,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
     async markTaskOnLinesCycleList1(mark: string, editor: any, lines?: number[]): Promise<void> {
@@ -686,7 +686,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
     async markTaskOnLinesCycleList2(mark: string, editor: any, lines?: number[]): Promise<void> {
@@ -715,7 +715,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
     async markTaskOnLinesCycleList3(mark: string, editor: any, lines?: number[]): Promise<void> {
@@ -744,7 +744,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 
@@ -774,7 +774,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 
@@ -804,7 +804,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 
@@ -834,7 +834,7 @@ export class TaskMarkerPlugin extends Plugin {
         }
     
         // Restore the cursor position after modifying the file
-        let newCursorPosition = {line: cursorPosition.line + 1, ch: result.cursorOffset[0]};
+        const newCursorPosition = {line: cursorPosition.line + 1, ch: result.cursorOffset[0]};
         editor.setCursor(newCursorPosition);
     }
 

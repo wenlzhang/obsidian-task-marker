@@ -778,11 +778,11 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
-                let result = this.markTaskLine(marked, mark);
+                const result = this.markTaskLine(marked, mark);
                 lineText = result.updatedLineText;
             } else if (listEmptyLineText) {
                 console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
@@ -791,9 +791,9 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                let marked = indentation + listPrefix + ` [ ] `;
+                const marked = indentation + listPrefix + ` [ ] `;
 
-                let result = this.markTaskLine(marked, mark);
+                const result = this.markTaskLine(marked, mark);
                 lineText = result.updatedLineText;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
@@ -820,9 +820,9 @@ export class TaskMarker {
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                    let marked = indentation + listTaskDefaultPrefix + ` [ ] ` + lineText.trimStart();
+                    const marked = indentation + listTaskDefaultPrefix + ` [ ] ` + lineText.trimStart();
 
-                    let result = this.markTaskLine(marked, mark);
+                    const result = this.markTaskLine(marked, mark);
                     lineText = result.updatedLineText;
                 } else {
                     new Notice("Task Marker: not a task or list item, leaving unchanged!");
@@ -846,7 +846,7 @@ export class TaskMarker {
         let cursorOffset = 0;
 
         // Regroup mark as string array
-        let markStringArray = new Array<string>(markValueLength);
+        const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
             markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
@@ -880,7 +880,7 @@ export class TaskMarker {
         // Cycle task statuses
         if (taskMatch) {
             if (markIndex === -1) {  // convert task to list
-                let listIndex = lineText.indexOf(taskPrefix);
+                const listIndex = lineText.indexOf(taskPrefix);
                 var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
             } else {
                 var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
@@ -912,7 +912,7 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
                 }
 
@@ -936,7 +936,7 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                let marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
 
                 lineText = marked;
             } else {
@@ -994,7 +994,7 @@ export class TaskMarker {
         let cursorOffset = 0;
 
         // Regroup mark as string array
-        let markStringArray = new Array<string>(markValueLength);
+        const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
             markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
@@ -1028,7 +1028,7 @@ export class TaskMarker {
         // Cycle task statuses
         if (taskMatch) {
             if (markIndex === -1) {  // convert task to list
-                let listIndex = lineText.indexOf(taskPrefix);
+                const listIndex = lineText.indexOf(taskPrefix);
                 var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
             } else {
                 var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
@@ -1060,7 +1060,7 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
                 }
 
@@ -1084,7 +1084,7 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                let marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
 
                 lineText = marked;
             } else {
@@ -1141,7 +1141,7 @@ export class TaskMarker {
         let cursorOffset = 0;
 
         // Regroup mark as string array
-        let markStringArray = new Array<string>(markValueLength);
+        const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
             markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
@@ -1175,7 +1175,7 @@ export class TaskMarker {
         // Cycle task statuses
         if (taskMatch) {
             if (markIndex === -1) {  // convert task to list
-                let listIndex = lineText.indexOf(taskPrefix);
+                const listIndex = lineText.indexOf(taskPrefix);
                 var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
             } else {
                 var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
@@ -1207,7 +1207,7 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
                 }
 
@@ -1231,7 +1231,7 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                let marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
 
                 lineText = marked;
             } else {
@@ -1288,7 +1288,7 @@ export class TaskMarker {
         let cursorOffset = 0;
 
         // Regroup mark as string array
-        let markStringArray = new Array<string>(markValueLength);
+        const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
             markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
@@ -1322,7 +1322,7 @@ export class TaskMarker {
         // Cycle task statuses
         if (taskMatch) {
             if (markIndex === -1) {  // convert task to list
-                let listIndex = lineText.indexOf(taskPrefix);
+                const listIndex = lineText.indexOf(taskPrefix);
                 var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
             } else {
                 var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
@@ -1354,7 +1354,7 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
                 }
 
@@ -1378,7 +1378,7 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                let marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
 
                 lineText = marked;
             } else {
@@ -1429,20 +1429,20 @@ export class TaskMarker {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
         const listMatch = this.anyListItem.exec(lineText);
-        var markValue = this.settings.cycleTaskValues;
+        let markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
         const cycleWithList = this.settings.supportCyclingWithListItem
 
         let cursorOffset = 0;
 
         let reverseString = "";
-        for (let char of markValue) {
+        for (const char of markValue) {
             reverseString = char + reverseString;
         }
         markValue = reverseString;
 
         // Regroup mark as string array
-        let markStringArray = new Array<string>(markValueLength);
+        const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
             markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
         }
@@ -1476,7 +1476,7 @@ export class TaskMarker {
         // Cycle task statuses
         if (taskMatch) {
             if (markIndex === -1) {  // convert task to list
-                let listIndex = lineText.indexOf(taskPrefix);
+                const listIndex = lineText.indexOf(taskPrefix);
                 var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
             } else {
                 var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
@@ -1508,7 +1508,7 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[${markValue[markIndex]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ` [${markValue[markIndex]}] ` + lineText.slice(listIndex+2);
                 }
 
@@ -1532,7 +1532,7 @@ export class TaskMarker {
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                let marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
 
                 lineText = marked;
             } else {
@@ -1634,7 +1634,7 @@ export class TaskMarker {
                 if ((listMatch && listMatch[2])) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
-                    let listIndex = lineText.indexOf(taskPrefix);
+                    const listIndex = lineText.indexOf(taskPrefix);
                     var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
                 }
 
@@ -1767,8 +1767,8 @@ export class TaskMarker {
         const liistMatch = this.anyListItem.exec(lineText);
         const cursorDeviation = cursorPosition.ch
 
-        let cursorLeft = lineText.substring(0, cursorDeviation);
-        let cursorRight = lineText.substring(cursorDeviation);
+        const cursorLeft = lineText.substring(0, cursorDeviation);
+        const cursorRight = lineText.substring(cursorDeviation);
     
         let linePrefix = "";
         let newlineText = "";
