@@ -1,6 +1,6 @@
 {
   "name": "obsidian-task-marker",
-  "version": "0.0.1",
+  "version": "0.5.1",
   "private": true,
   "description": "Manage task status in Obsidian (https://obsidian.md)",
   "main": "main.js",
@@ -11,9 +11,11 @@
     "test": "jest",
     "prettier": "prettier -w 'src/**/*.ts'",
     "preversion": "npm run build && npm run test",
-    "version": "auto-changelog -p",
+    "version": "node version-bump.mjs && node version-changelog.mjs && git add manifest.json versions.json CHANGELOG.md",
+    "postversion": "git push && git push --tags",
     "brat-notes": "run() { auto-changelog --stdout --hide-credit --hide-empty-releases --template .github/changelog.hbs -v $1 --starting-version $1  > release-notes.md; }; run"
   },
+  "version-tag-prefix": "",
   "keywords": [
     "obsidian",
     "obsidian-md",
