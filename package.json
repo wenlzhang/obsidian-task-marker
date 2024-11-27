@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
-    "build": "npm run prettier && node esbuild.config.mjs production && cp manifest.json README.md styles.css build",
+    "build": "npm run prettier && node esbuild.config.mjs production && cp manifest.json styles.css build",
     "pretest": "eslint --ignore-path .gitignore src/",
     "test": "jest --passWithNoTests",
     "prettier": "prettier -w 'src/**/*.ts'",
