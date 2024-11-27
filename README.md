@@ -43,10 +43,16 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 ## The story behind this plugin
 
-[Obsidian Todoist Context Bridge](https://exp.ptkm.net/obsidian-todoist-context-bridge) was crafted with two essential [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles) that shape its functionality:
+[Obsidian Task Marker](https://exp.ptkm.net/obsidian-task-marker) was crafted with two [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles) that shape its functionality:
 
 - **Task-Centered Workflow**: Prioritizing efficient task management
 - **Focus on Priority**: Helping users concentrate on what truly matters
+
+This plugin was developed to address a simple yet essential need: tasks can have various statuses, such as open, completed, or transferred. In lengthy notes, like meeting notes, there can be numerous list items. When organizing and reviewing these notes, it’s helpful to mark different items with various statuses to highlight their importance and difference. Later, when revisiting the meeting notes, you can easily focus on these key items—such as ideas, questions, bookmarks, information, pros, cons, and similar elements—without having to sift through all the lengthy content.
+
+Recognizing the need to mark tasks with different statuses, I developed this plugin to simplify the process. With it, you can easily assign different statuses to items and use hotkeys to cycle through them. Additionally, when marking tasks, the plugin automatically adds timestamps to indicate when tasks were created, completed, and marked. This timestamp information is crucial, which is also why I developed the [Obsidian Timestamp Link](https://exp.ptkm.net/obsidian-timestamp-link) plugin.
+
+I hope you enjoy using this plugin!
 
 ## Usage
 
