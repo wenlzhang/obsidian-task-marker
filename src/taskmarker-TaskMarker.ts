@@ -397,7 +397,8 @@ export class TaskMarker {
             (this.settings.onlyLowercaseX ? "x" : "xX") +
             (this.settings.supportCanceledTasks ? "-" : "");
 
-        if (this.settings.incompleteTaskValues.indexOf(" ") < 0) { // No need to handle Row2
+        if (this.settings.incompleteTaskValues.indexOf(" ") < 0) {
+            // No need to handle Row2
             this.settings.incompleteTaskValues =
                 " " + this.settings.incompleteTaskValues; // Not working if removing space
         }
@@ -511,7 +512,7 @@ export class TaskMarker {
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -519,14 +520,17 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
 
     markTaskInSourceCycle(
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -534,13 +538,16 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
     markTaskInSourceCycleList1(
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -548,13 +555,16 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
     markTaskInSourceCycleList2(
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -562,13 +572,16 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
     markTaskInSourceCycleList3(
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -576,14 +589,17 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
 
     markTaskInSourceCycleReversely(
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -591,14 +607,17 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
 
     markTaskInSourceCreate(
         source: string,
         mark: string,
         lines: number[] = []
-    ): { updatedLineText: string, cursorOffset: number[] } {
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
@@ -606,22 +625,31 @@ export class TaskMarker {
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
 
     markTaskInSourceCreateNewline(
         source: string,
         lines: number[] = [],
-        cursorPosition: { line: number, ch: number } // Define the type inline
-    ): { updatedLineText: string, cursorOffset: number[] } {
+        cursorPosition: { line: number; ch: number } // Define the type inline
+    ): { updatedLineText: string; cursorOffset: number[] } {
         const split = source.split("\n");
         const cursorOffset: number[] = [];
         for (const n of lines) {
-            const result = this.markTaskLineCreateNewline(split[n], cursorPosition);
+            const result = this.markTaskLineCreateNewline(
+                split[n],
+                cursorPosition
+            );
             split[n] = result.updatedLineText;
             cursorOffset.push(result.cursorOffset);
         }
-        return { updatedLineText: split.join("\n"), cursorOffset: cursorOffset };
+        return {
+            updatedLineText: split.join("\n"),
+            cursorOffset: cursorOffset,
+        };
     }
 
     appendTextInSource(
@@ -672,7 +700,10 @@ export class TaskMarker {
         return split.join("\n");
     }
 
-    markTaskLine(lineText: string, mark: string): {updatedLineText: string, cursorOffset: number} {
+    markTaskLine(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
 
@@ -686,18 +717,28 @@ export class TaskMarker {
             const completeMark =
                 this.initSettings.completedTasks.indexOf(mark) >= 0;
 
-            if (mark !== " ") { // Mark tasks
+            if (mark !== " ") {
+                // Mark tasks
                 if (lineText.trim().startsWith(markString)) {
-                    new Notice(`Task Marker: task already marked with the same status "${mark}"!`);
-                } else { // Mark tasks
-                    let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
+                    new Notice(
+                        `Task Marker: task already marked with the same status "${mark}"!`
+                    );
+                } else {
+                    // Mark tasks
+                    let marked = lineText.replace(
+                        this.anyTaskMark,
+                        `$1${mark}$3`
+                    );
 
                     // Check empty line, empty list, empty task
-                    const taskEmptyLineText = lineText.trim().length === 5
+                    const taskEmptyLineText = lineText.trim().length === 5;
 
                     // Append text
                     if (this.initSettings.removeRegExp) {
-                        marked = marked.replace(this.initSettings.removeRegExp, "");
+                        marked = marked.replace(
+                            this.initSettings.removeRegExp,
+                            ""
+                        );
                     }
                     if (this.settings.appendDateFormat && completeMark) {
                         const strictLineEnding = lineText.endsWith("  ");
@@ -711,12 +752,18 @@ export class TaskMarker {
                             marked += " ";
                         }
                         if (!taskEmptyLineText) {
-                            marked += moment().format(this.settings.appendDateFormat) + blockid;
+                            marked +=
+                                moment().format(
+                                    this.settings.appendDateFormat
+                                ) + blockid;
                         }
                         if (strictLineEnding) {
                             marked += "  ";
                         }
-                    } else if (this.settings.appendTextFormatMark && this.settings.incompleteTaskValues.indexOf(mark) >= 0) {
+                    } else if (
+                        this.settings.appendTextFormatMark &&
+                        this.settings.incompleteTaskValues.indexOf(mark) >= 0
+                    ) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);
@@ -728,12 +775,19 @@ export class TaskMarker {
                             marked += " ";
                         }
                         if (!taskEmptyLineText) {
-                            marked += moment().format(this.settings.appendTextFormatMark) + blockid;
+                            marked +=
+                                moment().format(
+                                    this.settings.appendTextFormatMark
+                                ) + blockid;
                         }
                         if (strictLineEnding) {
                             marked += "  ";
                         }
-                    } else if (this.settings.appendTextFormatMarkRow2 && this.settings.incompleteTaskValuesRow2.indexOf(mark) >= 0) {
+                    } else if (
+                        this.settings.appendTextFormatMarkRow2 &&
+                        this.settings.incompleteTaskValuesRow2.indexOf(mark) >=
+                            0
+                    ) {
                         const strictLineEnding = lineText.endsWith("  ");
                         let blockid = "";
                         const match = this.blockRef.exec(marked);
@@ -745,7 +799,10 @@ export class TaskMarker {
                             marked += " ";
                         }
                         if (!taskEmptyLineText) {
-                            marked += moment().format(this.settings.appendTextFormatMarkRow2) + blockid;
+                            marked +=
+                                moment().format(
+                                    this.settings.appendTextFormatMarkRow2
+                                ) + blockid;
                         }
                         if (strictLineEnding) {
                             marked += "  ";
@@ -753,7 +810,8 @@ export class TaskMarker {
                     }
                     lineText = marked;
                 }
-            } else if (mark === " ") { // Reset tasks
+            } else if (mark === " ") {
+                // Reset tasks
                 lineText = this.resetTaskLine(lineText, mark); // Original code
             } else {
                 new Notice(`Task Marker: unknown mark ${mark}!`);
@@ -767,25 +825,38 @@ export class TaskMarker {
             const listMatch = this.anyListItem.exec(lineText);
             const taskPrefix = `${lineText.trim().charAt(0)} [`;
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        " [ ] " +
+                        lineText.slice(listIndex + 2);
                 }
 
                 const result = this.markTaskLine(marked, mark);
                 lineText = result.updatedLineText;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
@@ -797,13 +868,19 @@ export class TaskMarker {
                 lineText = result.updatedLineText;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
                     cursorOffset = 6; // For retaining cursor position
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a task, and then mark
                     let listTaskDefaultPrefix: string;
@@ -815,32 +892,48 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                    const marked = indentation + listTaskDefaultPrefix + ` [ ] ` + lineText.trimStart();
+                    const marked =
+                        indentation +
+                        listTaskDefaultPrefix +
+                        ` [ ] ` +
+                        lineText.trimStart();
 
                     const result = this.markTaskLine(marked, mark);
                     lineText = result.updatedLineText;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCycle(lineText: string, mark: string): { updatedLineText: string; cursorOffset: number; } {
-
+    markTaskLineCycle(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
         const listMatch = this.anyListItem.exec(lineText);
         const markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
-        const cycleWithList = this.settings.supportCyclingWithListItem
+        const cycleWithList = this.settings.supportCyclingWithListItem;
         // const taskEmptyLineText = lineText.trim().length === 5
 
         let cursorOffset = 0;
@@ -848,7 +941,9 @@ export class TaskMarker {
         // Regroup mark as string array
         const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${
+                markValue[i]
+            }] `;
         }
 
         // Find the next index
@@ -859,7 +954,7 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;  // cycle with list
+                        markIndex = -1; // cycle with list
                         cursorOffset = -4;
                     } else {
                         markIndex = 0;
@@ -871,19 +966,26 @@ export class TaskMarker {
         if (markIndex === 0) {
             if (taskMatch) {
                 if (cycleWithList) {
-                    markIndex = -1;  // cycle with list
+                    markIndex = -1; // cycle with list
                     cursorOffset = -4;
                 }
             }
         }
-        
+
         // Cycle task statuses
         if (taskMatch) {
-            if (markIndex === -1) {  // convert task to list
+            if (markIndex === -1) {
+                // convert task to list
                 const listIndex = lineText.indexOf(taskPrefix);
-                var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
+                var marked =
+                    lineText.slice(0, listIndex + 1) +
+                    " " +
+                    lineText.slice(listIndex + 6);
             } else {
-                var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+                var marked = lineText.replace(
+                    this.anyTaskMark,
+                    `$1${markValue[markIndex]}$3`
+                );
             }
 
             const strictLineEnding = lineText.endsWith("  ");
@@ -901,19 +1003,31 @@ export class TaskMarker {
             lineText = marked;
         } else {
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        " [" +
+                        `${markValue[0]}` +
+                        "] " +
+                        lineText.slice(listIndex + 2);
                 }
 
                 const strictLineEnding = lineText.endsWith("  ");
@@ -927,25 +1041,35 @@ export class TaskMarker {
                 if (strictLineEnding) {
                     marked += "  ";
                 }
-                
+
                 lineText = marked;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked =
+                    indentation + listPrefix + " [" + `${markValue[0]}` + "] ";
 
                 lineText = marked;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a list
                     let listTaskDefaultPrefix: string;
@@ -957,24 +1081,44 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
 
                     if (cycleWithList) {
                         cursorOffset = 2; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " " +
+                            lineText.trimStart();
                     } else {
                         cursorOffset = 6; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' [' + `${markValue[0]}` + '] ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " [" +
+                            `${markValue[0]}` +
+                            "] " +
+                            lineText.trimStart();
                     }
 
                     lineText = marked;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
@@ -982,21 +1126,25 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCycleList1(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
-
+    markTaskLineCycleList1(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
         const listMatch = this.anyListItem.exec(lineText);
         const markValue = this.settings.cycleTaskValuesList1;
         const markValueLength = markValue.length;
-        const cycleWithList = this.settings.supportCyclingWithListItem
+        const cycleWithList = this.settings.supportCyclingWithListItem;
 
         let cursorOffset = 0;
 
         // Regroup mark as string array
         const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${
+                markValue[i]
+            }] `;
         }
 
         // Find the next index
@@ -1007,7 +1155,7 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;  // cycle with list
+                        markIndex = -1; // cycle with list
                         cursorOffset = -4;
                     } else {
                         markIndex = 0;
@@ -1019,19 +1167,26 @@ export class TaskMarker {
         if (markIndex === 0) {
             if (taskMatch) {
                 if (cycleWithList) {
-                    markIndex = -1;  // cycle with list
+                    markIndex = -1; // cycle with list
                     cursorOffset = -4;
                 }
             }
         }
-        
+
         // Cycle task statuses
         if (taskMatch) {
-            if (markIndex === -1) {  // convert task to list
+            if (markIndex === -1) {
+                // convert task to list
                 const listIndex = lineText.indexOf(taskPrefix);
-                var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
+                var marked =
+                    lineText.slice(0, listIndex + 1) +
+                    " " +
+                    lineText.slice(listIndex + 6);
             } else {
-                var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+                var marked = lineText.replace(
+                    this.anyTaskMark,
+                    `$1${markValue[markIndex]}$3`
+                );
             }
 
             const strictLineEnding = lineText.endsWith("  ");
@@ -1045,23 +1200,35 @@ export class TaskMarker {
             if (strictLineEnding) {
                 marked += "  ";
             }
-            
+
             lineText = marked;
         } else {
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        " [" +
+                        `${markValue[0]}` +
+                        "] " +
+                        lineText.slice(listIndex + 2);
                 }
 
                 const strictLineEnding = lineText.endsWith("  ");
@@ -1075,25 +1242,35 @@ export class TaskMarker {
                 if (strictLineEnding) {
                     marked += "  ";
                 }
-                
+
                 lineText = marked;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked =
+                    indentation + listPrefix + " [" + `${markValue[0]}` + "] ";
 
                 lineText = marked;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a list
                     let listTaskDefaultPrefix: string;
@@ -1105,45 +1282,69 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
 
                     if (cycleWithList) {
                         cursorOffset = 2; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " " +
+                            lineText.trimStart();
                     } else {
                         cursorOffset = 6; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' [' + `${markValue[0]}` + '] ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " [" +
+                            `${markValue[0]}` +
+                            "] " +
+                            lineText.trimStart();
                     }
 
                     lineText = marked;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
 
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
-    markTaskLineCycleList2(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
-
+    markTaskLineCycleList2(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
         const listMatch = this.anyListItem.exec(lineText);
         const markValue = this.settings.cycleTaskValuesList2;
         const markValueLength = markValue.length;
-        const cycleWithList = this.settings.supportCyclingWithListItem
+        const cycleWithList = this.settings.supportCyclingWithListItem;
 
         let cursorOffset = 0;
 
         // Regroup mark as string array
         const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${
+                markValue[i]
+            }] `;
         }
 
         // Find the next index
@@ -1154,7 +1355,7 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;  // cycle with list
+                        markIndex = -1; // cycle with list
                         cursorOffset = -4;
                     } else {
                         markIndex = 0;
@@ -1166,19 +1367,26 @@ export class TaskMarker {
         if (markIndex === 0) {
             if (taskMatch) {
                 if (cycleWithList) {
-                    markIndex = -1;  // cycle with list
+                    markIndex = -1; // cycle with list
                     cursorOffset = -4;
                 }
             }
         }
-        
+
         // Cycle task statuses
         if (taskMatch) {
-            if (markIndex === -1) {  // convert task to list
+            if (markIndex === -1) {
+                // convert task to list
                 const listIndex = lineText.indexOf(taskPrefix);
-                var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
+                var marked =
+                    lineText.slice(0, listIndex + 1) +
+                    " " +
+                    lineText.slice(listIndex + 6);
             } else {
-                var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+                var marked = lineText.replace(
+                    this.anyTaskMark,
+                    `$1${markValue[markIndex]}$3`
+                );
             }
 
             const strictLineEnding = lineText.endsWith("  ");
@@ -1192,23 +1400,35 @@ export class TaskMarker {
             if (strictLineEnding) {
                 marked += "  ";
             }
-            
+
             lineText = marked;
         } else {
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        " [" +
+                        `${markValue[0]}` +
+                        "] " +
+                        lineText.slice(listIndex + 2);
                 }
 
                 const strictLineEnding = lineText.endsWith("  ");
@@ -1222,25 +1442,35 @@ export class TaskMarker {
                 if (strictLineEnding) {
                     marked += "  ";
                 }
-                
+
                 lineText = marked;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked =
+                    indentation + listPrefix + " [" + `${markValue[0]}` + "] ";
 
                 lineText = marked;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a list
                     let listTaskDefaultPrefix: string;
@@ -1252,45 +1482,69 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
 
                     if (cycleWithList) {
                         cursorOffset = 2; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " " +
+                            lineText.trimStart();
                     } else {
                         cursorOffset = 6; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' [' + `${markValue[0]}` + '] ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " [" +
+                            `${markValue[0]}` +
+                            "] " +
+                            lineText.trimStart();
                     }
 
                     lineText = marked;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
 
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
-    markTaskLineCycleList3(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
-
+    markTaskLineCycleList3(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
         const listMatch = this.anyListItem.exec(lineText);
         const markValue = this.settings.cycleTaskValuesList3;
         const markValueLength = markValue.length;
-        const cycleWithList = this.settings.supportCyclingWithListItem
+        const cycleWithList = this.settings.supportCyclingWithListItem;
 
         let cursorOffset = 0;
 
         // Regroup mark as string array
         const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${
+                markValue[i]
+            }] `;
         }
 
         // Find the next index
@@ -1301,7 +1555,7 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;  // cycle with list
+                        markIndex = -1; // cycle with list
                         cursorOffset = -4;
                     } else {
                         markIndex = 0;
@@ -1313,19 +1567,26 @@ export class TaskMarker {
         if (markIndex === 0) {
             if (taskMatch) {
                 if (cycleWithList) {
-                    markIndex = -1;  // cycle with list
+                    markIndex = -1; // cycle with list
                     cursorOffset = -4;
                 }
             }
         }
-        
+
         // Cycle task statuses
         if (taskMatch) {
-            if (markIndex === -1) {  // convert task to list
+            if (markIndex === -1) {
+                // convert task to list
                 const listIndex = lineText.indexOf(taskPrefix);
-                var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
+                var marked =
+                    lineText.slice(0, listIndex + 1) +
+                    " " +
+                    lineText.slice(listIndex + 6);
             } else {
-                var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+                var marked = lineText.replace(
+                    this.anyTaskMark,
+                    `$1${markValue[markIndex]}$3`
+                );
             }
 
             const strictLineEnding = lineText.endsWith("  ");
@@ -1339,23 +1600,35 @@ export class TaskMarker {
             if (strictLineEnding) {
                 marked += "  ";
             }
-            
+
             lineText = marked;
         } else {
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[${markValue[0]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ' [' + `${markValue[0]}` + '] ' + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        " [" +
+                        `${markValue[0]}` +
+                        "] " +
+                        lineText.slice(listIndex + 2);
                 }
 
                 const strictLineEnding = lineText.endsWith("  ");
@@ -1369,25 +1642,35 @@ export class TaskMarker {
                 if (strictLineEnding) {
                     marked += "  ";
                 }
-                
+
                 lineText = marked;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked =
+                    indentation + listPrefix + " [" + `${markValue[0]}` + "] ";
 
                 lineText = marked;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a list
                     let listTaskDefaultPrefix: string;
@@ -1399,24 +1682,44 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
 
                     if (cycleWithList) {
                         cursorOffset = 2; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " " +
+                            lineText.trimStart();
                     } else {
                         cursorOffset = 6; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' [' + `${markValue[0]}` + '] ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " [" +
+                            `${markValue[0]}` +
+                            "] " +
+                            lineText.trimStart();
                     }
 
                     lineText = marked;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
@@ -1424,14 +1727,16 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCycleReversely(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
-
+    markTaskLineCycleReversely(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [`;
         const listMatch = this.anyListItem.exec(lineText);
         let markValue = this.settings.cycleTaskValues;
         const markValueLength = markValue.length;
-        const cycleWithList = this.settings.supportCyclingWithListItem
+        const cycleWithList = this.settings.supportCyclingWithListItem;
 
         let cursorOffset = 0;
 
@@ -1444,7 +1749,9 @@ export class TaskMarker {
         // Regroup mark as string array
         const markStringArray = new Array<string>(markValueLength);
         for (let i = 0; i < markValueLength; i++) {
-            markStringArray[i] = `${lineText.trim().charAt(0)} [${markValue[i]}] `;
+            markStringArray[i] = `${lineText.trim().charAt(0)} [${
+                markValue[i]
+            }] `;
         }
 
         // Find the next index
@@ -1455,7 +1762,7 @@ export class TaskMarker {
                     markIndex = i + 1;
                 } else {
                     if (cycleWithList) {
-                        markIndex = -1;  // cycle with list
+                        markIndex = -1; // cycle with list
                         cursorOffset = -4;
                     } else {
                         markIndex = 0;
@@ -1467,19 +1774,26 @@ export class TaskMarker {
         if (markIndex === 0) {
             if (taskMatch) {
                 if (cycleWithList) {
-                    markIndex = -1;  // cycle with list
+                    markIndex = -1; // cycle with list
                     cursorOffset = -4;
                 }
             }
         }
-        
+
         // Cycle task statuses
         if (taskMatch) {
-            if (markIndex === -1) {  // convert task to list
+            if (markIndex === -1) {
+                // convert task to list
                 const listIndex = lineText.indexOf(taskPrefix);
-                var marked = lineText.slice(0, listIndex+1) + ' ' + lineText.slice(listIndex+6);
+                var marked =
+                    lineText.slice(0, listIndex + 1) +
+                    " " +
+                    lineText.slice(listIndex + 6);
             } else {
-                var marked = lineText.replace(this.anyTaskMark, `$1${markValue[markIndex]}$3`);
+                var marked = lineText.replace(
+                    this.anyTaskMark,
+                    `$1${markValue[markIndex]}$3`
+                );
             }
 
             const strictLineEnding = lineText.endsWith("  ");
@@ -1493,23 +1807,33 @@ export class TaskMarker {
             if (strictLineEnding) {
                 marked += "  ";
             }
-            
+
             lineText = marked;
         } else {
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[${markValue[markIndex]}] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ` [${markValue[markIndex]}] ` + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        ` [${markValue[markIndex]}] ` +
+                        lineText.slice(listIndex + 2);
                 }
 
                 const strictLineEnding = lineText.endsWith("  ");
@@ -1523,25 +1847,35 @@ export class TaskMarker {
                 if (strictLineEnding) {
                     marked += "  ";
                 }
-                
+
                 lineText = marked;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4; // For retaining cursor position
 
                 // convert to a task, and then mark
                 const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                const marked = indentation + listPrefix + ' [' + `${markValue[0]}` + '] ';
+                const marked =
+                    indentation + listPrefix + " [" + `${markValue[0]}` + "] ";
 
                 lineText = marked;
             } else {
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a list
                     let listTaskDefaultPrefix: string;
@@ -1553,24 +1887,44 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
 
                     if (cycleWithList) {
                         cursorOffset = 2; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " " +
+                            lineText.trimStart();
                     } else {
                         cursorOffset = 6; // For retaining cursor position
-                        var marked = indentation + listTaskDefaultPrefix + ' [' + `${markValue[0]}` + '] ' + lineText.trimStart();
+                        var marked =
+                            indentation +
+                            listTaskDefaultPrefix +
+                            " [" +
+                            `${markValue[0]}` +
+                            "] " +
+                            lineText.trimStart();
                     }
 
                     lineText = marked;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
@@ -1578,7 +1932,10 @@ export class TaskMarker {
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCreate(lineText: string, mark: string): { updatedLineText: string, cursorOffset: number } {
+    markTaskLineCreate(
+        lineText: string,
+        mark: string
+    ): { updatedLineText: string; cursorOffset: number } {
         const taskMatch = this.anyTaskMark.exec(lineText);
         const taskPrefix = `${lineText.trim().charAt(0)} [ ] `;
 
@@ -1587,15 +1944,19 @@ export class TaskMarker {
         if (taskMatch) {
             if (!lineText.trim().startsWith(taskPrefix)) {
                 new Notice(`Task Marker: task already marked!`);
-                console.log("Task Marker: task already marked, leaving unchanged: %s", lineText);
-            // } else if (lineText.trim().startsWith("- [ ] ")) {
-            //     new Notice(`Task Marker: task already created!`);
-            //     console.log("Task Marker: task already created, leaving unchanged: %s", lineText);
-            } else { // Create task and append text
+                console.log(
+                    "Task Marker: task already marked, leaving unchanged: %s",
+                    lineText
+                );
+                // } else if (lineText.trim().startsWith("- [ ] ")) {
+                //     new Notice(`Task Marker: task already created!`);
+                //     console.log("Task Marker: task already created, leaving unchanged: %s", lineText);
+            } else {
+                // Create task and append text
                 let marked = lineText.replace(this.anyTaskMark, `$1${mark}$3`);
 
                 // Check empty line, empty list, empty task
-                const taskEmptyLineText = marked.trim().length === 5
+                const taskEmptyLineText = marked.trim().length === 5;
 
                 if (this.settings.appendTextFormatCreation) {
                     const strictLineEnding = lineText.endsWith("  ");
@@ -1609,13 +1970,19 @@ export class TaskMarker {
                         marked += " ";
                     }
                     if (!taskEmptyLineText) {
-                        marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                        marked +=
+                            moment().format(
+                                this.settings.appendTextFormatCreation
+                            ) + blockid;
                     }
                     if (strictLineEnding) {
                         marked += "  ";
                     }
                 } else {
-                    console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+                    console.log(
+                        "Task Marker: appending string empty, nothing appended: %s",
+                        lineText
+                    );
                 }
                 lineText = marked;
             }
@@ -1623,23 +1990,33 @@ export class TaskMarker {
             const listMatch = this.anyListItem.exec(lineText);
             const taskPrefix = `${lineText.trim().charAt(0)} [`;
             const listPrefix = `${lineText.trim().charAt(0)}`;
-            const listEmptyLineText = (lineText.trim() === listPrefix) && (lineText.trim().length !== 0)
+            const listEmptyLineText =
+                lineText.trim() === listPrefix && lineText.trim().length !== 0;
 
-            if ((listMatch && listMatch[2]) || lineText.trim().startsWith(taskPrefix)) {
-                console.debug("Task Marker: list item, convert to a task %s", lineText);
+            if (
+                (listMatch && listMatch[2]) ||
+                lineText.trim().startsWith(taskPrefix)
+            ) {
+                console.debug(
+                    "Task Marker: list item, convert to a task %s",
+                    lineText
+                );
 
                 cursorOffset = 4;
 
                 // convert to a task, and then mark
-                if ((listMatch && listMatch[2])) {
+                if (listMatch && listMatch[2]) {
                     var marked = `${listMatch[1]}[ ] ${listMatch[2]}`;
                 } else if (lineText.trim().startsWith(taskPrefix)) {
                     const listIndex = lineText.indexOf(taskPrefix);
-                    var marked = lineText.slice(0, listIndex+1) + ' [ ] ' + lineText.slice(listIndex+2);
+                    var marked =
+                        lineText.slice(0, listIndex + 1) +
+                        " [ ] " +
+                        lineText.slice(listIndex + 2);
                 }
 
                 // Check empty line, empty list, empty task
-                const taskEmptyLineText = marked.trim().length === 5
+                const taskEmptyLineText = marked.trim().length === 5;
 
                 if (this.settings.appendTextFormatCreation) {
                     const strictLineEnding = lineText.endsWith("  ");
@@ -1653,17 +2030,26 @@ export class TaskMarker {
                         marked += " ";
                     }
                     if (!taskEmptyLineText) {
-                        marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                        marked +=
+                            moment().format(
+                                this.settings.appendTextFormatCreation
+                            ) + blockid;
                     }
                     if (strictLineEnding) {
                         marked += "  ";
                     }
                 } else {
-                    console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+                    console.log(
+                        "Task Marker: appending string empty, nothing appended: %s",
+                        lineText
+                    );
                 }
                 lineText = marked;
             } else if (listEmptyLineText) {
-                console.debug("Task Marker: empty list item, convert to a task prefix %s", lineText);
+                console.debug(
+                    "Task Marker: empty list item, convert to a task prefix %s",
+                    lineText
+                );
 
                 cursorOffset = 4;
 
@@ -1672,7 +2058,7 @@ export class TaskMarker {
                 let marked = indentation + listPrefix + ` [ ] `;
 
                 // Check empty line, empty list, empty task
-                const taskEmptyLineText = marked.trim().length === 5
+                const taskEmptyLineText = marked.trim().length === 5;
 
                 if (this.settings.appendTextFormatCreation) {
                     const strictLineEnding = lineText.endsWith("  ");
@@ -1686,25 +2072,37 @@ export class TaskMarker {
                         marked += " ";
                     }
                     if (!taskEmptyLineText) {
-                        marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                        marked +=
+                            moment().format(
+                                this.settings.appendTextFormatCreation
+                            ) + blockid;
                     }
                     if (strictLineEnding) {
                         marked += "  ";
                     }
                 } else {
-                    console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+                    console.log(
+                        "Task Marker: appending string empty, nothing appended: %s",
+                        lineText
+                    );
                 }
                 lineText = marked;
             } else {
-                console.log('a' + lineText + 'a')
+                console.log("a" + lineText + "a");
                 if (this.settings.supportOperatingOnAnyLineText) {
-                    console.debug("Task Marker: none-task or none-list line, convert to a task %s", lineText);
+                    console.debug(
+                        "Task Marker: none-task or none-list line, convert to a task %s",
+                        lineText
+                    );
 
                     cursorOffset = 6; // For retaining cursor position
 
-                    const defaultPrefix1 = this.settings.defaultListTaskPrefix === "prefix-1";
-                    const defaultPrefix2 = this.settings.defaultListTaskPrefix === "prefix-2";
-                    const defaultPrefix3 = this.settings.defaultListTaskPrefix === "prefix-3";
+                    const defaultPrefix1 =
+                        this.settings.defaultListTaskPrefix === "prefix-1";
+                    const defaultPrefix2 =
+                        this.settings.defaultListTaskPrefix === "prefix-2";
+                    const defaultPrefix3 =
+                        this.settings.defaultListTaskPrefix === "prefix-3";
 
                     // convert to a task, and then mark
                     let listTaskDefaultPrefix: string;
@@ -1716,19 +2114,28 @@ export class TaskMarker {
                     } else if (defaultPrefix3) {
                         listTaskDefaultPrefix = "+";
                     } else {
-                        new Notice("Task Marker: not operating on a task or list item, please set a default item prfix!");
-                        console.debug("Task Marker: not operating on a task or list item, please set a default item prfix! %s", lineText);
+                        new Notice(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix!"
+                        );
+                        console.debug(
+                            "Task Marker: not operating on a task or list item, please set a default item prfix! %s",
+                            lineText
+                        );
                     }
 
                     const indentation = lineText.match(/^\s*/)[0]; // Get the leading spaces of the line
-                    let marked = indentation + listTaskDefaultPrefix + ` [ ] ` + lineText.trimStart();
+                    let marked =
+                        indentation +
+                        listTaskDefaultPrefix +
+                        ` [ ] ` +
+                        lineText.trimStart();
 
-                    console.log('a' + marked + 'a')
+                    console.log("a" + marked + "a");
 
                     // Check empty line, empty list, empty task
-                    const taskEmptyLineText = marked.trim().length === 5
+                    const taskEmptyLineText = marked.trim().length === 5;
 
-                    console.log(taskEmptyLineText)
+                    console.log(taskEmptyLineText);
 
                     if (this.settings.appendTextFormatCreation) {
                         const strictLineEnding = lineText.endsWith("  ");
@@ -1742,41 +2149,61 @@ export class TaskMarker {
                             marked += " ";
                         }
                         if (!taskEmptyLineText) {
-                            marked += moment().format(this.settings.appendTextFormatCreation) + blockid;
+                            marked +=
+                                moment().format(
+                                    this.settings.appendTextFormatCreation
+                                ) + blockid;
                         }
                         if (strictLineEnding) {
                             marked += "  ";
                         }
                     } else {
-                        console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+                        console.log(
+                            "Task Marker: appending string empty, nothing appended: %s",
+                            lineText
+                        );
                     }
 
                     lineText = marked;
                 } else {
-                    new Notice("Task Marker: not a task or list item, leaving unchanged!");
-                    console.debug("Task Marker: not a task or list item, leaving unchanged! %s", lineText);
+                    new Notice(
+                        "Task Marker: not a task or list item, leaving unchanged!"
+                    );
+                    console.debug(
+                        "Task Marker: not a task or list item, leaving unchanged! %s",
+                        lineText
+                    );
                 }
             }
         }
         return { updatedLineText: lineText, cursorOffset: cursorOffset };
     }
 
-    markTaskLineCreateNewline(lineText: string, cursorPosition: { line: number, ch: number } ): { updatedLineText: string, cursorOffset: number } {
+    markTaskLineCreateNewline(
+        lineText: string,
+        cursorPosition: { line: number; ch: number }
+    ): { updatedLineText: string; cursorOffset: number } {
         const indentation = lineText.match(/^\s*/)[0];
         const taskMatch = this.anyTaskMark.exec(lineText);
         const liistMatch = this.anyListItem.exec(lineText);
-        const cursorDeviation = cursorPosition.ch
+        const cursorDeviation = cursorPosition.ch;
 
         const cursorLeft = lineText.substring(0, cursorDeviation);
         const cursorRight = lineText.substring(cursorDeviation);
-    
+
         let linePrefix = "";
         let newlineText = "";
         if (taskMatch) {
-            linePrefix = lineText.substring(indentation.length, indentation.length + 5); // This will capture the task prefix from the taskMatch
+            linePrefix = lineText.substring(
+                indentation.length,
+                indentation.length + 5
+            ); // This will capture the task prefix from the taskMatch
             newlineText = indentation + linePrefix + ` ` + cursorRight;
         } else if (liistMatch) {
-            linePrefix = lineText.substring(indentation.length, indentation.length + 1); // This will capture the task prefix from the listMatch
+            linePrefix = lineText.substring(
+                indentation.length,
+                indentation.length + 1
+            ); // This will capture the task prefix from the listMatch
             newlineText = indentation + linePrefix + ` ` + cursorRight;
         } else if (this.settings.supportOperatingOnAnyLineText) {
             newlineText = indentation + cursorRight;
@@ -1784,7 +2211,10 @@ export class TaskMarker {
 
         // Append newlineText to the existing lineText
         const updatedLineText = cursorLeft + "\n" + newlineText;
-        return { updatedLineText, cursorOffset: newlineText.length - cursorRight.length };
+        return {
+            updatedLineText,
+            cursorOffset: newlineText.length - cursorRight.length,
+        };
     }
 
     appendTextLineFunction(lineText: string, appendTextFormat: string): string {
@@ -1811,10 +2241,16 @@ export class TaskMarker {
         let marked = lineText;
 
         if (this.settings.appendTextFormatAppend) {
-            marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatAppend);
+            marked = this.appendTextLineFunction(
+                lineText,
+                this.settings.appendTextFormatAppend
+            );
         } else {
             new Notice(`Task Marker: appending string empty!`);
-            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+            console.log(
+                "Task Marker: appending string empty, nothing appended: %s",
+                lineText
+            );
         }
         lineText = marked;
         return lineText;
@@ -1824,10 +2260,16 @@ export class TaskMarker {
         let marked = lineText;
 
         if (this.settings.appendTextFormatAppendText2) {
-            marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatAppendText2);
+            marked = this.appendTextLineFunction(
+                lineText,
+                this.settings.appendTextFormatAppendText2
+            );
         } else {
             new Notice(`Task Marker: appending string empty!`);
-            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+            console.log(
+                "Task Marker: appending string empty, nothing appended: %s",
+                lineText
+            );
         }
         lineText = marked;
         return lineText;
@@ -1837,10 +2279,16 @@ export class TaskMarker {
         let marked = lineText;
 
         if (this.settings.appendTextFormatAppendText3) {
-            marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatAppendText3);
+            marked = this.appendTextLineFunction(
+                lineText,
+                this.settings.appendTextFormatAppendText3
+            );
         } else {
             new Notice(`Task Marker: appending string empty!`);
-            console.log("Task Marker: appending string empty, nothing appended: %s", lineText);
+            console.log(
+                "Task Marker: appending string empty, nothing appended: %s",
+                lineText
+            );
         }
         lineText = marked;
         return lineText;
@@ -1854,61 +2302,136 @@ export class TaskMarker {
             // Determine task mark
             const taskMark = lineText.trim()[3];
 
-            const createMark = taskMark === " ";            
-            const completeMark = this.initSettings.completedTasks.indexOf(taskMark) >= 0;
-            const markRow1Mark = this.settings.incompleteTaskValues.indexOf(taskMark) >= 0;
-            const markRow2Mark = this.settings.incompleteTaskValuesRow2.indexOf(taskMark) >= 0;
+            const createMark = taskMark === " ";
+            const completeMark =
+                this.initSettings.completedTasks.indexOf(taskMark) >= 0;
+            const markRow1Mark =
+                this.settings.incompleteTaskValues.indexOf(taskMark) >= 0;
+            const markRow2Mark =
+                this.settings.incompleteTaskValuesRow2.indexOf(taskMark) >= 0;
 
-            const defaultTaskTextRows12 = this.settings.appendTextAutoTaskDefault === "text-rows-1-2";
-            const defaultTaskTextRowString = this.settings.appendTextAutoTaskDefault === "text-row-string";
-            const defaultTaskTextRow1 = this.settings.appendTextAutoTaskDefault === "text-row-1";
-            const defaultTaskTextRow2 = this.settings.appendTextAutoTaskDefault === "text-row-2";
-            const defaultTaskNone = this.settings.appendTextAutoTaskDefault === "none";
+            const defaultTaskTextRows12 =
+                this.settings.appendTextAutoTaskDefault === "text-rows-1-2";
+            const defaultTaskTextRowString =
+                this.settings.appendTextAutoTaskDefault === "text-row-string";
+            const defaultTaskTextRow1 =
+                this.settings.appendTextAutoTaskDefault === "text-row-1";
+            const defaultTaskTextRow2 =
+                this.settings.appendTextAutoTaskDefault === "text-row-2";
+            const defaultTaskNone =
+                this.settings.appendTextAutoTaskDefault === "none";
 
             if (createMark && this.settings.appendTextFormatCreation) {
-                marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatCreation);
+                marked = this.appendTextLineFunction(
+                    lineText,
+                    this.settings.appendTextFormatCreation
+                );
             } else if (completeMark && this.settings.appendDateFormat) {
-                marked = this.appendTextLineFunction(lineText, this.settings.appendDateFormat);
+                marked = this.appendTextLineFunction(
+                    lineText,
+                    this.settings.appendDateFormat
+                );
             } else if (markRow1Mark || markRow2Mark) {
                 if (defaultTaskTextRows12) {
                     if (markRow1Mark && this.settings.appendTextFormatMark) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
-                    } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMark
+                        );
+                    } else if (
+                        markRow2Mark &&
+                        this.settings.appendTextFormatMarkRow2
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMarkRow2
+                        );
                     } else {
                         new Notice(`Task Marker: empty appending string!`);
                         console.debug("Task Marker: empty appending string!");
                     }
                 } else if (defaultTaskTextRowString) {
                     if (markRow1Mark && this.settings.appendTextFormatMark) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
-                    } else if (markRow1Mark && !this.settings.appendTextFormatMark && this.settings.appendTextFormatMarkRow2) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
-                    } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
-                    } else if (markRow2Mark && !this.settings.appendTextFormatMarkRow2 && this.settings.appendTextFormatMark) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMark
+                        );
+                    } else if (
+                        markRow1Mark &&
+                        !this.settings.appendTextFormatMark &&
+                        this.settings.appendTextFormatMarkRow2
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMarkRow2
+                        );
+                    } else if (
+                        markRow2Mark &&
+                        this.settings.appendTextFormatMarkRow2
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMarkRow2
+                        );
+                    } else if (
+                        markRow2Mark &&
+                        !this.settings.appendTextFormatMarkRow2 &&
+                        this.settings.appendTextFormatMark
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMark
+                        );
                     } else {
                         new Notice(`Task Marker: empty appending string!`);
                         console.debug("Task Marker: empty appending string!");
                     }
                 } else if (defaultTaskTextRow1) {
                     if (markRow1Mark && this.settings.appendTextFormatMark) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
-                    } else if (markRow2Mark && this.settings.appendTextFormatMark) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMark);
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMark
+                        );
+                    } else if (
+                        markRow2Mark &&
+                        this.settings.appendTextFormatMark
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMark
+                        );
                     } else {
-                        new Notice(`Task Marker: empty appending string in row 1!`);
-                        console.debug("Task Marker: empty appending string in row 1!");
+                        new Notice(
+                            `Task Marker: empty appending string in row 1!`
+                        );
+                        console.debug(
+                            "Task Marker: empty appending string in row 1!"
+                        );
                     }
                 } else if (defaultTaskTextRow2) {
-                    if (markRow1Mark && this.settings.appendTextFormatMarkRow2) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
-                    } else if (markRow2Mark && this.settings.appendTextFormatMarkRow2) {
-                        marked = this.appendTextLineFunction(lineText, this.settings.appendTextFormatMarkRow2);
+                    if (
+                        markRow1Mark &&
+                        this.settings.appendTextFormatMarkRow2
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMarkRow2
+                        );
+                    } else if (
+                        markRow2Mark &&
+                        this.settings.appendTextFormatMarkRow2
+                    ) {
+                        marked = this.appendTextLineFunction(
+                            lineText,
+                            this.settings.appendTextFormatMarkRow2
+                        );
                     } else {
-                        new Notice(`Task Marker: empty appending string in row 2!`);
-                        console.debug("Task Marker: empty appending string in row 2!");
+                        new Notice(
+                            `Task Marker: empty appending string in row 2!`
+                        );
+                        console.debug(
+                            "Task Marker: empty appending string in row 2!"
+                        );
                     }
                 } else if (defaultTaskNone) {
                     new Notice(`Task Marker: set to append nothing!`);
@@ -1918,24 +2441,36 @@ export class TaskMarker {
                     console.log("Task Marker: nothing to append!");
                 }
             } else {
-                new Notice(`Task Marker: undefined mark or empty appending string!`);
-                console.debug("Task Marker: undefined mark or empty appending string!");
+                new Notice(
+                    `Task Marker: undefined mark or empty appending string!`
+                );
+                console.debug(
+                    "Task Marker: undefined mark or empty appending string!"
+                );
             }
         } else {
-            const defaultLineText1 = this.settings.appendTextAutoLineDefault === "text-1";
-            const defaultLineText2 = this.settings.appendTextAutoLineDefault === "text-2";
-            const defaultLineText3 = this.settings.appendTextAutoLineDefault === "text-3";
-            const defaultLineNone = this.settings.appendTextAutoLineDefault === "none";
+            const defaultLineText1 =
+                this.settings.appendTextAutoLineDefault === "text-1";
+            const defaultLineText2 =
+                this.settings.appendTextAutoLineDefault === "text-2";
+            const defaultLineText3 =
+                this.settings.appendTextAutoLineDefault === "text-3";
+            const defaultLineNone =
+                this.settings.appendTextAutoLineDefault === "none";
 
             if (defaultLineText1) {
-                marked = this.appendTextLine(marked, "y");                
+                marked = this.appendTextLine(marked, "y");
             } else if (defaultLineText2) {
                 marked = this.appendTextLineText2(marked, "y");
             } else if (defaultLineText3) {
                 marked = this.appendTextLineText3(marked, "y");
             } else if (defaultLineNone) {
-                new Notice(`Task Marker: not a task, and set to append nothing!`);
-                console.log("Task Marker: not a task, and set to append nothing!");
+                new Notice(
+                    `Task Marker: not a task, and set to append nothing!`
+                );
+                console.log(
+                    "Task Marker: not a task, and set to append nothing!"
+                );
             } else {
                 new Notice(`Task Marker: not a task, and nothing to append!`);
                 console.log("Task Marker: not a task, and nothing to append!");
@@ -1970,9 +2505,9 @@ export class TaskMarker {
         }
 
         // Handle empty line text
-        const taskEmptyLineText = lineText.trim().length === 5
-        if (taskEmptyLineText){
-            lineText = lineText + " "
+        const taskEmptyLineText = lineText.trim().length === 5;
+        if (taskEmptyLineText) {
+            lineText = lineText + " ";
         }
 
         return lineText;
@@ -1990,9 +2525,9 @@ export class TaskMarker {
                     inCompletedSection = false;
                 }
                 result.push(line);
-            // } else if (line.trim() === LOG_HEADING) {
-            //     inCompletedSection = true;
-            //     result.push(line);
+                // } else if (line.trim() === LOG_HEADING) {
+                //     inCompletedSection = true;
+                //     result.push(line);
             } else if (this.isCompletedTaskLine(line)) {
                 result.push(this.resetTaskLine(line));
             } else {
@@ -2070,7 +2605,10 @@ export class TaskMarker {
     }
 
     private isIncompleteTaskLine(lineText: string): boolean {
-        return this.initSettings.incompleteTaskRegExp.test(lineText) || this.initSettings.incompleteTaskRegExpRow2.test(lineText); // Add Row2 here or not? Yes.
+        return (
+            this.initSettings.incompleteTaskRegExp.test(lineText) ||
+            this.initSettings.incompleteTaskRegExpRow2.test(lineText)
+        ); // Add Row2 here or not? Yes.
     }
 
     private isTaskLine(lineText: string): boolean {

@@ -42,7 +42,7 @@ export class TaskMarkerPlugin extends Plugin {
             new TaskMarkerSettingsTab(this.app, this, this.taskMarker)
         );
         await this.loadSettings();
-        
+
         addIcon(
             Icons.CREATE,
             '<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" fill="white"/></svg>'
@@ -127,21 +127,25 @@ export class TaskMarkerPlugin extends Plugin {
             id: "task-marker-cancel",
             name: "Cancel task",
             icon: Icons.CANCEL,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
+            editorCheckCallback: (
+                checking: boolean,
+                editor: Editor,
+                view: MarkdownView
+            ) => {
                 const value = this.taskMarker.settings.supportCanceledTasks;
-    
+
                 if (value) {
-                  if (!checking) {
-                      this.markTaskOnLines(
-                          "-",
-                          editor,
-                          this.getCurrentLinesFromEditor(editor)
-                      );
-                  }
-                  return true
-                }            
+                    if (!checking) {
+                        this.markTaskOnLines(
+                            "-",
+                            editor,
+                            this.getCurrentLinesFromEditor(editor)
+                        );
+                    }
+                    return true;
+                }
                 return false;
-              },
+            },
         });
 
         this.addCommand({
@@ -192,13 +196,19 @@ export class TaskMarkerPlugin extends Plugin {
         });
 
         // Set hotkeys for additional task statuses (row 1)
-        const incompleteTaskValuesLength = this.taskMarker.settings.incompleteTaskValues.length
+        const incompleteTaskValuesLength =
+            this.taskMarker.settings.incompleteTaskValues.length;
 
         if (incompleteTaskValuesLength >= 2) {
             for (let i = 1; i <= incompleteTaskValuesLength - 1; i++) {
                 this.addCommand({
                     id: "task-marker-mark-task-status-row1-" + i.toString(),
-                    name: "Mark task (row 1) as status " + i.toString() + " \"" + this.taskMarker.settings.incompleteTaskValues[i] + "\"",
+                    name:
+                        "Mark task (row 1) as status " +
+                        i.toString() +
+                        ' "' +
+                        this.taskMarker.settings.incompleteTaskValues[i] +
+                        '"',
                     icon: Icons.MARK,
                     editorCallback: (editor: Editor, view: MarkdownView) => {
                         this.markTaskOnLines(
@@ -212,17 +222,27 @@ export class TaskMarkerPlugin extends Plugin {
         }
 
         // Set hotkeys for additional task statuses (row 2)
-        const incompleteTaskValuesRow2Length = this.taskMarker.settings.incompleteTaskValuesRow2.length
+        const incompleteTaskValuesRow2Length =
+            this.taskMarker.settings.incompleteTaskValuesRow2.length;
 
         if (incompleteTaskValuesRow2Length >= 1) {
             for (let i = 0; i <= incompleteTaskValuesRow2Length - 1; i++) {
                 this.addCommand({
-                    id: "task-marker-mark-task-status-row2-" + (i + 1).toString(),
-                    name: "Mark task (row 2) as status " + (i + 1).toString() + " \"" + this.taskMarker.settings.incompleteTaskValuesRow2[i] + "\"",
+                    id:
+                        "task-marker-mark-task-status-row2-" +
+                        (i + 1).toString(),
+                    name:
+                        "Mark task (row 2) as status " +
+                        (i + 1).toString() +
+                        ' "' +
+                        this.taskMarker.settings.incompleteTaskValuesRow2[i] +
+                        '"',
                     icon: Icons.MARK,
                     editorCallback: (editor: Editor, view: MarkdownView) => {
                         this.markTaskOnLines(
-                            this.taskMarker.settings.incompleteTaskValuesRow2[i],
+                            this.taskMarker.settings.incompleteTaskValuesRow2[
+                                i
+                            ],
                             editor,
                             this.getCurrentLinesFromEditor(editor)
                         );
@@ -238,7 +258,7 @@ export class TaskMarkerPlugin extends Plugin {
             icon: Icons.CYCLE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycle(
-                    'y', // This value does not matter.
+                    "y", // This value does not matter.
                     editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
@@ -251,7 +271,7 @@ export class TaskMarkerPlugin extends Plugin {
             icon: Icons.CYCLE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycleList1(
-                    'y', // This value does not matter.
+                    "y", // This value does not matter.
                     editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
@@ -264,7 +284,7 @@ export class TaskMarkerPlugin extends Plugin {
             icon: Icons.CYCLE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycleList2(
-                    'y', // This value does not matter.
+                    "y", // This value does not matter.
                     editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
@@ -277,7 +297,7 @@ export class TaskMarkerPlugin extends Plugin {
             icon: Icons.CYCLE,
             editorCallback: (editor: Editor, view: MarkdownView) => {
                 this.markTaskOnLinesCycleList3(
-                    'y', // This value does not matter.
+                    "y", // This value does not matter.
                     editor,
                     this.getCurrentLinesFromEditor(editor)
                 );
@@ -289,21 +309,26 @@ export class TaskMarkerPlugin extends Plugin {
             id: "task-marker-cycle-task-reversely",
             name: "Cycle task reversely (main)",
             icon: Icons.CYCLE_REVERSELY,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = this.taskMarker.settings.supportCyclingTasksReversely;
-    
+            editorCheckCallback: (
+                checking: boolean,
+                editor: Editor,
+                view: MarkdownView
+            ) => {
+                const value =
+                    this.taskMarker.settings.supportCyclingTasksReversely;
+
                 if (value) {
                     if (!checking) {
                         this.markTaskOnLinesCycleReversely(
-                            'y', // This value does not matter.
+                            "y", // This value does not matter.
                             editor,
                             this.getCurrentLinesFromEditor(editor)
                         );
                     }
-                    return true
-                }            
+                    return true;
+                }
                 return false;
-              },
+            },
         });
 
         // Add hotkeys for appending text
@@ -350,9 +375,14 @@ export class TaskMarkerPlugin extends Plugin {
             id: "task-marker-append-text-auto",
             name: "Append text automatically",
             // icon: Icons.RESET,
-            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
-                const value = this.taskMarker.settings.supportAppendingTextAutomatically;
-    
+            editorCheckCallback: (
+                checking: boolean,
+                editor: Editor,
+                view: MarkdownView
+            ) => {
+                const value =
+                    this.taskMarker.settings.supportAppendingTextAutomatically;
+
                 if (value) {
                     if (!checking) {
                         this.appendTextOnLinesAuto(
@@ -361,10 +391,10 @@ export class TaskMarkerPlugin extends Plugin {
                             this.getCurrentLinesFromEditor(editor)
                         );
                     }
-                    return true
-                }            
+                    return true;
+                }
                 return false;
-              },
+            },
         });
 
         this.registerHandlers();
@@ -601,244 +631,372 @@ export class TaskMarkerPlugin extends Plugin {
         }
     }
 
-    async markTaskOnLines(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLines(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
+
         const result = this.taskMarker.markTaskInSource(source, mark, lines);
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
 
-    async markTaskOnLinesCycle(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycle(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCycle(source, mark, lines);
+
+        const result = this.taskMarker.markTaskInSourceCycle(
+            source,
+            mark,
+            lines
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
-    async markTaskOnLinesCycleList1(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycleList1(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCycleList1(source, mark, lines);
+
+        const result = this.taskMarker.markTaskInSourceCycleList1(
+            source,
+            mark,
+            lines
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
-    async markTaskOnLinesCycleList2(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycleList2(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCycleList2(source, mark, lines);
+
+        const result = this.taskMarker.markTaskInSourceCycleList2(
+            source,
+            mark,
+            lines
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
-    async markTaskOnLinesCycleList3(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycleList3(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCycleList3(source, mark, lines);
+
+        const result = this.taskMarker.markTaskInSourceCycleList3(
+            source,
+            mark,
+            lines
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
 
-    async markTaskOnLinesCycleReversely(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCycleReversely(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCycleReversely(source, mark, lines);
+
+        const result = this.taskMarker.markTaskInSourceCycleReversely(
+            source,
+            mark,
+            lines
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
 
-    async markTaskOnLinesCreate(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCreate(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCreate(source, mark, lines);
+
+        const result = this.taskMarker.markTaskInSourceCreate(
+            source,
+            mark,
+            lines
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line, ch: cursorPosition.ch + result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch + result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
 
-    async markTaskOnLinesCreateNewline(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async markTaskOnLinesCreateNewline(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
-    
+
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
         if (!cursorPosition) {
-            console.error('Failed to get cursor position');
+            console.error("Failed to get cursor position");
             return;
         }
-    
-        const result = this.taskMarker.markTaskInSourceCreateNewline(source, lines, cursorPosition);
+
+        const result = this.taskMarker.markTaskInSourceCreateNewline(
+            source,
+            lines,
+            cursorPosition
+        );
         if (!result || !result.updatedLineText || !result.cursorOffset) {
-            console.error('Failed to mark task in source');
+            console.error("Failed to mark task in source");
             return;
         }
-    
+
         await this.app.vault.modify(activeFile, result.updatedLineText);
-    
-        // Log the values of cursorPosition and result.cursorOffset    
-        if (!cursorPosition || !('line' in cursorPosition && 'ch' in cursorPosition) || !Array.isArray(result.cursorOffset) || result.cursorOffset.length !== 1) {
-            console.error('Invalid cursor position or offset');
+
+        // Log the values of cursorPosition and result.cursorOffset
+        if (
+            !cursorPosition ||
+            !("line" in cursorPosition && "ch" in cursorPosition) ||
+            !Array.isArray(result.cursorOffset) ||
+            result.cursorOffset.length !== 1
+        ) {
+            console.error("Invalid cursor position or offset");
             return;
         }
-    
+
         // Restore the cursor position after modifying the file
-        const newCursorPosition = {line: cursorPosition.line + 1, ch: result.cursorOffset[0]};
+        const newCursorPosition = {
+            line: cursorPosition.line + 1,
+            ch: result.cursorOffset[0],
+        };
         editor.setCursor(newCursorPosition);
     }
 
-    async appendTextOnLines(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async appendTextOnLines(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
 
@@ -852,42 +1010,66 @@ export class TaskMarkerPlugin extends Plugin {
         editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLinesText2(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async appendTextOnLinesText2(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
 
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
 
-        const result = this.taskMarker.appendTextInSourceText2(source, mark, lines);
+        const result = this.taskMarker.appendTextInSourceText2(
+            source,
+            mark,
+            lines
+        );
         await this.app.vault.modify(activeFile, result);
 
         // Restore the cursor position after modifying the file
         editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLinesText3(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async appendTextOnLinesText3(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
 
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
 
-        const result = this.taskMarker.appendTextInSourceText3(source, mark, lines);
+        const result = this.taskMarker.appendTextInSourceText3(
+            source,
+            mark,
+            lines
+        );
         await this.app.vault.modify(activeFile, result);
 
         // Restore the cursor position after modifying the file
         editor.setCursor(cursorPosition);
     }
 
-    async appendTextOnLinesAuto(mark: string, editor: any, lines?: number[]): Promise<void> {
+    async appendTextOnLinesAuto(
+        mark: string,
+        editor: any,
+        lines?: number[]
+    ): Promise<void> {
         const activeFile = this.app.workspace.getActiveFile();
         const source = await this.app.vault.read(activeFile);
 
         // Save the cursor position before modifying the file
         const cursorPosition = editor.getCursor();
 
-        const result = this.taskMarker.appendTextInSourceAuto(source, mark, lines);
+        const result = this.taskMarker.appendTextInSourceAuto(
+            source,
+            mark,
+            lines
+        );
         await this.app.vault.modify(activeFile, result);
 
         // Restore the cursor position after modifying the file
@@ -958,9 +1140,7 @@ export class TaskMarkerPlugin extends Plugin {
                     for (const checkbox of Array.from(checkboxes)) {
                         const line = Number(checkbox.dataset.line);
 
-                        if (
-                            this.taskMarker.initSettings.rightClickTaskMenu
-                        ) {
+                        if (this.taskMarker.initSettings.rightClickTaskMenu) {
                             this.registerDomEvent(
                                 checkbox.parentElement,
                                 "contextmenu",

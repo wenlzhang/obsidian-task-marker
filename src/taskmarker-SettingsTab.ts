@@ -10,11 +10,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
     plugin: TaskMarkerPlugin;
     taskMarker: TaskMarker;
 
-    constructor(
-        app: App,
-        plugin: TaskMarkerPlugin,
-        taskMarker: TaskMarker
-    ) {
+    constructor(app: App, plugin: TaskMarkerPlugin, taskMarker: TaskMarker) {
         super(app, plugin);
         this.plugin = plugin;
         this.taskMarker = taskMarker;
@@ -28,7 +24,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         const tempSettings: TaskMarkerSettings = Object.assign(
             this.taskMarker.settings
         );
-        
+
         this.containerEl.createEl("h3", {
             text: "Please try reopening the vault or restarting Obsidian if the following setting changes do not take effect.",
         });
@@ -48,12 +44,12 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
-        );
+            );
 
         new Setting(this.containerEl)
             .setName("Set a default prefix for list items/tasks")
             .setDesc(
-                "For this to take effect, it requires \"Support operating on any line text\" be enabled."
+                'For this to take effect, it requires "Support operating on any line text" be enabled.'
             )
             .addDropdown((dropdown) =>
                 dropdown
@@ -62,12 +58,16 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     .addOption("prefix-2", "*")
                     .addOption("prefix-3", "+")
                     .setValue(tempSettings.defaultListTaskPrefix)
-                    .onChange(async (value: "none" | "prefix-1" | "prefix-2" | "prefix-3") => {
-                        tempSettings.defaultListTaskPrefix = value;
-                        this.taskMarker.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    }),
-        );
+                    .onChange(
+                        async (
+                            value: "none" | "prefix-1" | "prefix-2" | "prefix-3"
+                        ) => {
+                            tempSettings.defaultListTaskPrefix = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        }
+                    )
+            );
 
         this.containerEl.createEl("h2", { text: "Create tasks" });
 
@@ -99,9 +99,13 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     })
             );
 
-        this.containerEl.appendChild(createEl("a", {
-            text: 'moment.js documentation.', href: "https://momentjs.com/docs", cls: 'linkInfo'
-        }))
+        this.containerEl.appendChild(
+            createEl("a", {
+                text: "moment.js documentation.",
+                href: "https://momentjs.com/docs",
+                cls: "linkInfo",
+            })
+        );
 
         this.containerEl.createEl("h2", { text: "Complete tasks" });
 
@@ -202,7 +206,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         //                 await this.plugin.saveSettings();
         //             })
         //     );
-        
+
         this.containerEl.createEl("h2", { text: "Mark tasks" });
 
         this.containerEl.createEl("p", {
@@ -238,7 +242,8 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                                 `Set of characters should not contain the marker for canceled tasks (-): ${value}`
                             );
                         } else {
-                            if (!value.contains(" ")) { // Not working if removed
+                            if (!value.contains(" ")) {
+                                // Not working if removed
                                 // make sure space is included
                                 value = " " + value;
                             }
@@ -248,7 +253,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         }
                     })
             );
-        
+
         new Setting(this.containerEl)
             .setName("Append text to marked task (row 1)")
             .setDesc(
@@ -272,43 +277,43 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         }
                     })
             );
-        
+
         new Setting(this.containerEl)
-        .setName("Additional task statuses (row 2)")
-        .setDesc(
-            "Specify the set of characters that indicate task statuses, e.g. 'Rip'. All of them can be assigned with hotkeys."
-        )
-        .addText((text) =>
-            text
-                .setPlaceholder("Rip")
-                .setValue(tempSettings.incompleteTaskValuesRow2)
-                .onChange(async (value) => {
-                    if (value.contains("x")) {
-                        console.log(
-                            `Set of characters should not contain the marker for completed tasks (x): ${value}`
-                        );
-                    } else if (
-                        !tempSettings.onlyLowercaseX &&
-                        value.contains("X")
-                    ) {
-                        console.log(
-                            `Set of characters should not contain the marker for completed tasks (X): ${value}`
-                        );
-                    } else if (
-                        tempSettings.supportCanceledTasks &&
-                        value.contains("-")
-                    ) {
-                        console.log(
-                            `Set of characters should not contain the marker for canceled tasks (-): ${value}`
-                        );
-                    } else {
-                        tempSettings.incompleteTaskValuesRow2 = value;
-                        this.taskMarker.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    }
-                })
-        );
-        
+            .setName("Additional task statuses (row 2)")
+            .setDesc(
+                "Specify the set of characters that indicate task statuses, e.g. 'Rip'. All of them can be assigned with hotkeys."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("Rip")
+                    .setValue(tempSettings.incompleteTaskValuesRow2)
+                    .onChange(async (value) => {
+                        if (value.contains("x")) {
+                            console.log(
+                                `Set of characters should not contain the marker for completed tasks (x): ${value}`
+                            );
+                        } else if (
+                            !tempSettings.onlyLowercaseX &&
+                            value.contains("X")
+                        ) {
+                            console.log(
+                                `Set of characters should not contain the marker for completed tasks (X): ${value}`
+                            );
+                        } else if (
+                            tempSettings.supportCanceledTasks &&
+                            value.contains("-")
+                        ) {
+                            console.log(
+                                `Set of characters should not contain the marker for canceled tasks (-): ${value}`
+                            );
+                        } else {
+                            tempSettings.incompleteTaskValuesRow2 = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        }
+                    })
+            );
+
         new Setting(this.containerEl)
             .setName("Append text to marked task (row 2)")
             .setDesc(
@@ -332,7 +337,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         }
                     })
             );
-        
+
         this.containerEl.createEl("h2", { text: "Cycle tasks" });
 
         // this.containerEl.createEl("p", {
@@ -343,17 +348,17 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             .setName("Cycled task (main)")
             .setDesc(
                 "Specify a set of characters that indicate any task statuses, e.g. 'x- Rip>'."
-        )
-        .addText((text) =>
-            text
-                .setPlaceholder("x- Rip")
-                .setValue(tempSettings.cycleTaskValues)
-                .onChange(async (value) => {
-                    tempSettings.cycleTaskValues = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("x- Rip")
+                    .setValue(tempSettings.cycleTaskValues)
+                    .onChange(async (value) => {
+                        tempSettings.cycleTaskValues = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
             .setName("Support cycling task reversely (main)")
@@ -368,53 +373,53 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
-        );
+            );
 
         new Setting(this.containerEl)
             .setName("Cycled task (list 1)")
             .setDesc(
                 "Specify an additional list of characters that indicate any task statuses."
-        )
-        .addText((text) =>
-            text
-                .setPlaceholder("ab")
-                .setValue(tempSettings.cycleTaskValuesList1)
-                .onChange(async (value) => {
-                    tempSettings.cycleTaskValuesList1 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("ab")
+                    .setValue(tempSettings.cycleTaskValuesList1)
+                    .onChange(async (value) => {
+                        tempSettings.cycleTaskValuesList1 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
         new Setting(this.containerEl)
             .setName("Cycled task (list 2)")
             .setDesc(
                 "Specify an additional list of characters that indicate any task statuses."
-        )
-        .addText((text) =>
-            text
-                .setPlaceholder("cd")
-                .setValue(tempSettings.cycleTaskValuesList2)
-                .onChange(async (value) => {
-                    tempSettings.cycleTaskValuesList2 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("cd")
+                    .setValue(tempSettings.cycleTaskValuesList2)
+                    .onChange(async (value) => {
+                        tempSettings.cycleTaskValuesList2 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
         new Setting(this.containerEl)
             .setName("Cycled task (list 3)")
             .setDesc(
                 "Specify an additional list of characters that indicate any task statuses."
-        )
-        .addText((text) =>
-            text
-                .setPlaceholder("ef")
-                .setValue(tempSettings.cycleTaskValuesList3)
-                .onChange(async (value) => {
-                    tempSettings.cycleTaskValuesList3 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("ef")
+                    .setValue(tempSettings.cycleTaskValuesList3)
+                    .onChange(async (value) => {
+                        tempSettings.cycleTaskValuesList3 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
             .setName("Support cycling with list item")
@@ -429,7 +434,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
-        );
+            );
 
         this.containerEl.createEl("h2", { text: "Append text" });
 
@@ -459,31 +464,31 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                             );
                         }
                     })
-        );
-        
+            );
+
         new Setting(this.containerEl)
-        .setName("Append text to any line (text 2)")
-        .setDesc(
-            "Default empty. If set non-empty, append the string of moment.js format to the end of the line text."
-        )
-        .addMomentFormat((momentFormat) =>
-            momentFormat
-                .setPlaceholder("[✅ ]YYYY-MM-DD")
-                .setValue(tempSettings.appendTextFormatAppendText2)
-                .onChange(async (value) => {
-                    try {
-                        // Try formatting "now" with the specified format string
-                        moment().format(value);
-                        tempSettings.appendTextFormatAppendText2 = value;
-                        this.taskMarker.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    } catch (e) {
-                        console.log(
-                            `Error parsing specified date format: ${value}`
-                        );
-                    }
-                })
-        );
+            .setName("Append text to any line (text 2)")
+            .setDesc(
+                "Default empty. If set non-empty, append the string of moment.js format to the end of the line text."
+            )
+            .addMomentFormat((momentFormat) =>
+                momentFormat
+                    .setPlaceholder("[✅ ]YYYY-MM-DD")
+                    .setValue(tempSettings.appendTextFormatAppendText2)
+                    .onChange(async (value) => {
+                        try {
+                            // Try formatting "now" with the specified format string
+                            moment().format(value);
+                            tempSettings.appendTextFormatAppendText2 = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        } catch (e) {
+                            console.log(
+                                `Error parsing specified date format: ${value}`
+                            );
+                        }
+                    })
+            );
 
         new Setting(this.containerEl)
             .setName("Append text to any line (text 3)")
@@ -507,17 +512,21 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                             );
                         }
                     })
-        );
+            );
 
         this.containerEl.createEl("h2", { text: "Append text automatically" });
 
         this.containerEl.createEl("p", {
-            text: "The settings below correspond to the command \"Append text automatically\"."
+            text: 'The settings below correspond to the command "Append text automatically".',
         });
 
-        this.containerEl.appendChild(createEl("a", {
-            text: 'See \"Setting.md\" for details.', href: "https://github.com/wenlzhang/obsidian-task-marker/blob/main/docs/Setting.md", cls: 'linkInfo'
-        }))
+        this.containerEl.appendChild(
+            createEl("a", {
+                text: 'See "Setting.md" for details.',
+                href: "https://github.com/wenlzhang/obsidian-task-marker/blob/main/docs/Setting.md",
+                cls: "linkInfo",
+            })
+        );
 
         new Setting(this.containerEl)
             .setName("Append text to a task automatically")
@@ -532,32 +541,57 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         this.taskMarker.updateSettings(tempSettings);
                         await this.plugin.saveSettings();
                     })
-        );
+            );
 
         new Setting(this.containerEl)
-            .setName("Set for a marked task the default text to append automatically")
+            .setName(
+                "Set for a marked task the default text to append automatically"
+            )
             .setDesc(
-                "Note that this requires \"Append text to a task automatically\" be enabled. Default \"None\"."
+                'Note that this requires "Append text to a task automatically" be enabled. Default "None".'
             )
             .addDropdown((dropdown) =>
                 dropdown
                     .addOption("none", "None")
-                    .addOption("text-rows-1-2", "Append text according to individual rows")
-                    .addOption("text-row-string", "Append text according to the row with string")
-                    .addOption("text-row-1", "Append text always according to row 1")
-                    .addOption("text-row-2", "Append text always according to row 2")
+                    .addOption(
+                        "text-rows-1-2",
+                        "Append text according to individual rows"
+                    )
+                    .addOption(
+                        "text-row-string",
+                        "Append text according to the row with string"
+                    )
+                    .addOption(
+                        "text-row-1",
+                        "Append text always according to row 1"
+                    )
+                    .addOption(
+                        "text-row-2",
+                        "Append text always according to row 2"
+                    )
                     .setValue(tempSettings.appendTextAutoTaskDefault)
-                    .onChange(async (value: "none" | "text-rows-1-2" | "text-row-string" | "text-row-1" | "text-row-2") => {
-                        tempSettings.appendTextAutoTaskDefault = value;
-                        this.taskMarker.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    }),
-        );
+                    .onChange(
+                        async (
+                            value:
+                                | "none"
+                                | "text-rows-1-2"
+                                | "text-row-string"
+                                | "text-row-1"
+                                | "text-row-2"
+                        ) => {
+                            tempSettings.appendTextAutoTaskDefault = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        }
+                    )
+            );
 
         new Setting(this.containerEl)
-            .setName("Set for a non-task line the default text to append automatically")
+            .setName(
+                "Set for a non-task line the default text to append automatically"
+            )
             .setDesc(
-                "Note that this requires \"Append text to a task automatically\" be enabled. Default \"None\"."
+                'Note that this requires "Append text to a task automatically" be enabled. Default "None".'
             )
             .addDropdown((dropdown) =>
                 dropdown
@@ -566,13 +600,17 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                     .addOption("text-2", "Append text to any line (text 2)")
                     .addOption("text-3", "Append text to any line (text 3)")
                     .setValue(tempSettings.appendTextAutoLineDefault)
-                    .onChange(async (value: "none" | "text-1" | "text-2" | "text-3") => {
-                        tempSettings.appendTextAutoLineDefault = value;
-                        this.taskMarker.updateSettings(tempSettings);
-                        await this.plugin.saveSettings();
-                    }),
-        );
-        
+                    .onChange(
+                        async (
+                            value: "none" | "text-1" | "text-2" | "text-3"
+                        ) => {
+                            tempSettings.appendTextAutoLineDefault = value;
+                            this.taskMarker.updateSettings(tempSettings);
+                            await this.plugin.saveSettings();
+                        }
+                    )
+            );
+
         // this.containerEl.createEl("h2", { text: "Moving completed tasks" });
 
         // new Setting(this.containerEl)
@@ -634,7 +672,7 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
         new Setting(this.containerEl)
             .setName("Add menu item for creating a task")
             .setDesc(
-                "This menu item will work in a way as specified in the section \"Create tasks\"."
+                'This menu item will work in a way as specified in the section "Create tasks".'
             )
             .addToggle((toggle) =>
                 toggle
@@ -645,26 +683,26 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-        
+
         new Setting(this.containerEl)
-        .setName("Add menu item for creating a newline")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Create tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCreateNewline)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCreateNewline = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for creating a newline")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Create tasks".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCreateNewline)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCreateNewline = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
             .setName("Add menu item for completing a task")
             .setDesc(
-                "This menu item will work in a way as specified in the section \"Complete tasks\"."
+                'This menu item will work in a way as specified in the section "Complete tasks".'
             )
             .addToggle((toggle) =>
                 toggle
@@ -675,11 +713,11 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-        
+
         new Setting(this.containerEl)
             .setName("Add menu item for marking a task")
             .setDesc(
-                "This menu item will work in a way as specified in the section \"Mark tasks\"."
+                'This menu item will work in a way as specified in the section "Mark tasks".'
             )
             .addToggle((toggle) =>
                 toggle
@@ -692,83 +730,81 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
             );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task (main)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCycle)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCycle = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for cycling a task (main)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Cycle tasks".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCycle)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCycle = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task reversely (main)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCycleReversely)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCycleReversely = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for cycling a task reversely (main)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Cycle tasks".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCycleReversely)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCycleReversely = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task (list 1)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCycleList1)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCycleList1 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for cycling a task (list 1)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Cycle tasks".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCycleList1)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCycleList1 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task (list 2)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCycleList2)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCycleList2 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for cycling a task (list 2)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Cycle tasks".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCycleList2)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCycleList2 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
         new Setting(this.containerEl)
-        .setName("Add menu item for cycling a task (list 3)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Cycle tasks\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickCycleList3)
-                .onChange(async (value) => {
-                    tempSettings.rightClickCycleList3 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
-        
+            .setName("Add menu item for cycling a task (list 3)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Cycle tasks".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickCycleList3)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickCycleList3 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
+
         new Setting(this.containerEl)
             .setName("Add menu item for resetting a task")
-            .setDesc(
-                "The menu item will reset the task."
-            )
+            .setDesc("The menu item will reset the task.")
             .addToggle((toggle) =>
                 toggle
                     .setValue(tempSettings.rightClickResetTask)
@@ -778,66 +814,66 @@ export class TaskMarkerSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-        
-        new Setting(this.containerEl)
-        .setName("Add menu item for appending text to a line (text 1)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Append text\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickAppend)
-                .onChange(async (value) => {
-                    tempSettings.rightClickAppend = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for appending text to a line (text 2)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Append text\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickAppendText2)
-                .onChange(async (value) => {
-                    tempSettings.rightClickAppendText2 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for appending text to a line (text 1)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Append text".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickAppend)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickAppend = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for appending text to a line (text 3)")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Append text\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickAppendText3)
-                .onChange(async (value) => {
-                    tempSettings.rightClickAppendText3 = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for appending text to a line (text 2)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Append text".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickAppendText2)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickAppendText2 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         new Setting(this.containerEl)
-        .setName("Add menu item for appending text automatically")
-        .setDesc(
-            "This menu item will work in a way as specified in the section \"Append text automatically\"."
-        )
-        .addToggle((toggle) =>
-            toggle
-                .setValue(tempSettings.rightClickAppendTextAuto)
-                .onChange(async (value) => {
-                    tempSettings.rightClickAppendTextAuto = value;
-                    this.taskMarker.updateSettings(tempSettings);
-                    await this.plugin.saveSettings();
-                })
-        );
+            .setName("Add menu item for appending text to a line (text 3)")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Append text".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickAppendText3)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickAppendText3 = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        new Setting(this.containerEl)
+            .setName("Add menu item for appending text automatically")
+            .setDesc(
+                'This menu item will work in a way as specified in the section "Append text automatically".'
+            )
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(tempSettings.rightClickAppendTextAuto)
+                    .onChange(async (value) => {
+                        tempSettings.rightClickAppendTextAuto = value;
+                        this.taskMarker.updateSettings(tempSettings);
+                        await this.plugin.saveSettings();
+                    })
+            );
 
         // new Setting(this.containerEl)
         //     .setName("Add menu item for completing all tasks")
