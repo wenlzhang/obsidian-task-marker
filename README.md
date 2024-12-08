@@ -4,6 +4,8 @@
 
 An [Obsidian](https://obsidian.md/) plugin to change task status and append text with hotkeys and right-click context menu.
 
+![demo](/docs/attachment/demo.gif)
+
 ## Features
 
 - Create tasks
@@ -31,8 +33,6 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
     - Command to append text such as `❎ 2023-01-01` to any line
 - Append text automatically 📝 2023-03-04
     - Automatically append text according to task/line status
-
-![demo](/docs/attachment/demo.gif)
 
 ### Miscellaneous
 
