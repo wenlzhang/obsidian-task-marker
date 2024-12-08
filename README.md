@@ -6,7 +6,7 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 ![demo](/docs/attachment/demo.gif)
 
-## Features
+## Key Features
 
 - Create tasks
     - Mark list items with `[ ]`
@@ -41,7 +41,7 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
     - The cursor location is set with respect to text, excluding item/task prefix.
     - The behaviour is the same as the default Obsidian command `Cycle bullet/checkbox`.
 
-## The story behind this plugin
+## The Story Behind Task Marker
 
 [Obsidian Task Marker](https://exp.ptkm.net/obsidian-task-marker) was crafted with two [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles) that shape its functionality:
 
@@ -53,6 +53,12 @@ This plugin was developed to address a simple yet essential need: tasks can have
 Recognizing the need to mark tasks with different statuses, I developed this plugin to simplify the process. With it, you can easily assign different statuses to items and use hotkeys to cycle through them. Additionally, when marking tasks, the plugin automatically adds timestamps to indicate when tasks were created, completed, and marked. This timestamp information is crucial, which is also why I developed the [Obsidian Timestamp Link](https://exp.ptkm.net/obsidian-timestamp-link) plugin.
 
 I hope you enjoy using this plugin!
+
+## Documentation
+
+📚 **[View Full Documentation](https://exp.ptkm.net/obsidian-task-marker)**
+
+Visit the documentation site to learn how to make the most of Task Marker in your Obsidian workflow.
 
 ## Support & Community
 
@@ -80,49 +86,6 @@ You can support this project in several ways:
 - [Sponsor](https://github.com/sponsors/wenlzhang) my work on GitHub
 - 💌 Share your success stories and feedback
 - 📢 Spread the word about the plugin
-- 🐛 [Report issues](https://github.com/wenlzhang/obsidian-todoist-context-bridge/issues) to help improve the plugin
+- 🐛 [Report issues](https://github.com/wenlzhang/obsidian-task-marker/issues) to help improve the plugin
 
 Thank you for being part of this journey! 🙏
-
-## Usage
-
-### How to use
-
-See [Usage](docs/Usage.md) for details.
-
-### How to configure
-
-Task Marker uses [moment.js](https://momentjs.com/docs/#/displaying/format/) to format the date and time to be appended. In addition, **square brackets** are needed to surround the content that is not part of the format string.
-
-- For example, if `[completion::2023-01-01]` is the desired text to be appended, then `[[completion::]YYYY-MM-DD[]]` needs to be configured in settings.
-
-See [Setting](docs/Setting.md) for more detailed settings.
-
-### How to install
-
-Install the plugin from the Obsidian Community Plugins store:
-
-1. Go to `Settings > Community plugins` and disable "Restricted mode"
-2. Click "Browse" to search for plugins and type "task marker"
-3. Select **Task Marker** and click "Install"
-4. Enable Task Marker and configure it as desired
-
-<!-- The plugin has been submitted to the Obsidian **Community Plugins** for review but is not available in the community plugin store yet. For now, there are two methods to install this plugin:
-
-- Manually download `main.js`, `manifest.json` and `styles.css` and put them inside `.obsidian/obsidian-task-marker` of your Obsidian vault.
-- Alternatively, you can use [obsidian42-brat](https://github.com/TfTHacker/obsidian42-brat) to install and update the plugin. -->
-
-### Resources
-
-See [Resource](docs/Resource.md) for details.
-
-## Development process
-
-You can see how this plugin is developed starting from scratch as follows:
-
-- [Project actions - Develop an Obsidian plugin for changing task status - 202212262317 - PTKM Experiment](https://exp.ptkm.net/220-Development/Project+action/Project+actions+-+Develop+an+Obsidian+plugin+for+changing+task+status+-+202212262317)
-
-## Credits
-
-- [Obsidian: Task Collector](https://github.com/ebullient/obsidian-task-collector)
-    - This plugin serves as a starting template.
