@@ -64,13 +64,7 @@ Visit the documentation site to learn how to make the most of Task Marker in you
 
 This plugin is a labor of love, developed and maintained during my free time after work and on weekends. A lot of thought, energy, and care goes into making it reliable, user-friendly, and aligned with PTKM principles.
 
-If you find this plugin valuable in your daily workflow:
-
-- If it helps you manage tasks more effectively
-- If it saves you time and mental energy
-- If it makes your work between Obsidian and Todoist smoother
-
-Please consider supporting my work. Your support would mean the world to me and would help me dedicate more time and energy to:
+If you find this plugin valuable in your daily workflow, please consider supporting my work. Your support would mean the world to me and would help me dedicate more time and energy to:
 
 - Developing new features
 - Maintaining code quality
