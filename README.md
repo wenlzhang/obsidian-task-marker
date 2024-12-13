@@ -6,53 +6,26 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 ![demo](/docs/attachment/demo.gif)
 
-## Key Features
+## Why You Need Task Marker
 
-- Create tasks
-    - Mark list items with `[ ]`
-    - Optionally append text such as `📝 2023-01-01`
-- Complete and cancel tasks
-    - Mark tasks with `[x]` and `[-]`
-    - Optionally append text such as `✅ 2023-01-01`
-- Mark tasks
-    - Mark tasks with statuses such as `[>]` and `[/]`
-    - Mark individual task statuses with hotkeys
-    - Optionally append text such as `❎ 2023-01-01`
-- Cycle tasks
-    - Cycle among configured statuses such as `[x]`, `[-]`, `[>]` and `[/]`
-    - Reversely cycle among configured statuses
-    - Include list item as the first cycled status 📝 2023-11-06
-        - A toggle is added for selecting whether to include the list item as the first cycled status or not.
-- Cycle tasks among additional lists of statuses 📝 2023-11-04
-    - E.g., list 1 `x->/` for task execution status
-    - E.g., list 2 `?!biI` for task importance
-    - E.g., list 3 `pcud` for task pro/con/up/down
-- Append text
-    - Command to append text such as `📝 2023-01-01` to any line
-    - Command to append text such as `✅ 2023-01-01` to any line
-    - Command to append text such as `❎ 2023-01-01` to any line
-- Append text automatically 📝 2023-03-04
-    - Automatically append text according to task/line status
-
-### Miscellaneous
-
-- Support operating on items that start with `-+*` 📝 2023-07-24
-- Retain cursor location when operating on tasks 📝 2023-11-07
-    - The cursor location is set with respect to text, excluding item/task prefix.
-    - The behaviour is the same as the default Obsidian command `Cycle bullet/checkbox`.
-
-## The Story Behind Task Marker
-
-[Obsidian Task Marker](https://exp.ptkm.net/obsidian-task-marker) was crafted with two [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles) that shape its functionality:
+Task management in Obsidian can be challenging when tasks of varying statuses—such as open, completed, or transferred—are scattered throughout extensive notes like meeting summaries. Recognizing this need, we created [Task Marker](https://exp.ptkm.net/obsidian-task-marker), guided by two essential [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles):
 
 - **Task-Centered Workflow**: Prioritizing efficient task management
-- **Focus on Priority**: Helping users concentrate on what truly matters
+- **Focus on Important Matters**: Helping users concentrate on what truly matters
 
-This plugin was developed to address a simple yet essential need: tasks can have various statuses, such as open, completed, or transferred. In lengthy notes, like meeting notes, there can be numerous list items. When organizing and reviewing these notes, it’s helpful to mark different items with various statuses to highlight their importance and difference. Later, when revisiting the meeting notes, you can easily focus on these key items—such as ideas, questions, bookmarks, information, pros, cons, and similar elements—without having to sift through all the lengthy content.
+### The Challenge
 
-Recognizing the need to mark tasks with different statuses, I developed this plugin to simplify the process. With it, you can easily assign different statuses to items and use hotkeys to cycle through them. Additionally, when marking tasks, the plugin automatically adds timestamps to indicate when tasks were created, completed, and marked. This timestamp information is crucial, which is also why I developed the [Obsidian Timestamp Link](https://exp.ptkm.net/obsidian-timestamp-link) plugin.
+When dealing with lengthy notes filled with numerous list items, key information can easily get lost in the clutter. Consider meeting notes, where ideas, questions, action points, and follow-ups often blend into a single, overwhelming document. Without clear differentiation, finding relevant tasks during reviews becomes time-consuming and error-prone.
 
-I hope you enjoy using this plugin!
+### The Solution
+
+**Task Marker** was developed to tackle this challenge head-on by allowing users to assign distinct statuses to tasks directly within their notes. Important items can be marked and highlighted, making it easy to spot critical elements like action points, ideas, questions, pros, and cons at a glance.
+
+Through intuitive status cycling and customizable hotkeys, you can seamlessly update task states while focusing on what matters most. Moreover, every task status change is timestamped, enabling you to track when tasks were created, completed, or updated.
+
+Given the importance of accurate time records, we also developed the [[Introducing Timestamp Link|Timestamp Link]] plugin, ensuring time-based task management is built right into your workflow.
+
+With **Task Marker**, your tasks gain clarity, context, and focus—transforming task management in Obsidian from scattered lists into a streamlined, efficient process.
 
 ## Documentation
 
