@@ -8,7 +8,7 @@ An [Obsidian](https://obsidian.md/) plugin to change task status and append text
 
 ## Why You Need Task Marker
 
-Task management in Obsidian can be challenging when tasks of varying statuses—such as open, completed, or transferred—are scattered throughout extensive notes like meeting summaries. Recognizing this need, we created [Task Marker](https://exp.ptkm.net/obsidian-task-marker), guided by two essential [PTKM Core Principles](https://exp.ptkm.net/ptkm-core-principles):
+Task management in Obsidian can be challenging when tasks of varying statuses—such as open, completed, or transferred—are scattered throughout extensive notes like meeting summaries. Recognizing this need, we created [Task Marker](https://ptkm.net/obsidian-task-marker), guided by two essential [PTKM Core Principles](https://ptkm.net/ptkm-core-principles):
 
 - **Task-Centered Workflow**: Prioritizing efficient task management
 - **Focus on Important Matters**: Helping users concentrate on what truly matters
@@ -29,7 +29,7 @@ With **Task Marker**, your tasks gain clarity, context, and focus—transforming
 
 ## Documentation
 
-📚 **[View Full Documentation](https://exp.ptkm.net/obsidian-task-marker)**
+📚 **[View Full Documentation](https://ptkm.net/obsidian-task-marker)**
 
 Visit the documentation site to learn how to make the most of Task Marker in your Obsidian workflow.
 
