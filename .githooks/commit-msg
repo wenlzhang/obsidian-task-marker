@@ -1,0 +1,4 @@
+#!/bin/sh
+# Shared privacy guard first (never bypass it).
+"$(dirname "$0")/privacy-guard" commit-msg "$@" || exit 1
+exit 0

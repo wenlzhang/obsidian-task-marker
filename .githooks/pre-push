@@ -1,0 +1,5 @@
+#!/bin/sh
+# Shared privacy guard first (never bypass it).
+updates=$(cat)
+printf '%s\n' "$updates" | "$(dirname "$0")/privacy-guard" pre-push "$@" || exit 1
+exit 0

@@ -1,0 +1,24 @@
+#!/bin/sh
+# Privacy guard: runs the shared privacy guard core in place (one implementation, nothing copied here).
+# Usage from a git hook in this folder:  "$(dirname "$0")/privacy-guard" pre-commit|commit-msg|pre-push "$@"
+# The shared scripts folder is found through $AGENT_HARNESS_DIR, then `git config agent.harnessDir`, then
+# "agent_harness_dir" in the git-ignored local/vault-link.json. Not found = refused. Never bypass it.
+unset PYTHONPATH PYTHONHOME PYTHONSTARTUP
+root=$(git rev-parse --show-toplevel) || exit 1
+cd "$root" || exit 1
+h=${AGENT_HARNESS_DIR:-$(git config --get agent.harnessDir)}
+if [ -z "$h" ] && [ -f local/vault-link.json ]; then
+  h=$(python3 -I -c 'import json; print(json.load(open("local/vault-link.json")).get("agent_harness_dir", ""))' 2>/dev/null)
+fi
+if [ ! -f "$h/scripts/privacy_guard/hook.py" ]; then
+  echo "privacy guard: shared core not found; set AGENT_HARNESS_DIR (refused)" >&2
+  exit 1
+fi
+# The core needs Python 3.11+ (tomllib); a GUI or non-login shell may put an older python3 first.
+for py in "${PRIVACY_GUARD_PYTHON:-python3}" python3.14 python3.13 python3.12 python3.11 /opt/homebrew/bin/python3; do
+  if command -v "$py" >/dev/null 2>&1 && "$py" -I -c 'import tomllib' 2>/dev/null; then
+    exec "$py" -I -B "$h/scripts/privacy_guard/hook.py" "$@"
+  fi
+done
+echo "privacy guard: no Python 3.11+ found; set PRIVACY_GUARD_PYTHON (refused)" >&2
+exit 1

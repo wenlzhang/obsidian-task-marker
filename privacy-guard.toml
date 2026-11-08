@@ -1,0 +1,11 @@
+# Shared privacy guard, run in place (see the hooks folder's privacy-guard wrapper).
+[paths]
+hooks = ".githooks"
+
+[terms]
+user_file = true
+
+[scan]
+scope = "added-lines"
+gzip = "text"
+message_rules = true
